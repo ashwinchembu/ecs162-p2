@@ -75,7 +75,7 @@ app.use(
 // should be used in your template files. 
 // 
 app.use((req, res, next) => {
-    res.locals.appName = 'MicroBlog';
+    res.locals.appName = 'IndieArcade';
     res.locals.copyrightYear = 2024;
     res.locals.postNeoType = 'Post';
     res.locals.loggedIn = req.session.loggedIn || false;
@@ -175,16 +175,30 @@ let users = [
 // Function to find a user by username
 function findUserByUsername(username) {
     // TODO: Return user object if found, otherwise return undefined
+    for(let i = 0; i < users.length(); i++){
+        if (users[i].username === username){
+            return users[i];
+        }
+    }
+    return undefined;
 }
 
 // Function to find a user by user ID
 function findUserById(userId) {
     // TODO: Return user object if found, otherwise return undefined
+    for(let i = 0; i < users.length(); i++){
+        if (users[i].id === id){
+            return users[i];
+        }
+    }
+    return undefined;
 }
 
 // Function to add a new user
 function addUser(username) {
     // TODO: Create a new user object and add to users array
+    let user = {id: users.length() + 1, username: username, avatar_url: undefined, memberSince: Date.now() };
+    users.push(user);
 }
 
 // Middleware to check if user is authenticated
@@ -258,4 +272,24 @@ function generateAvatar(letter, width = 100, height = 100) {
     // 3. Draw the background color
     // 4. Draw the letter in the center
     // 5. Return the avatar as a PNG buffer
+    let char  = letter.charCodeAt(0);
+    let color = 'rgb((char / 26) * 255, (char / 26) * 255, (char / 26) * 255)';
+    const avatar = createCanvas(width, height);
+    const ctx = avatar.getContext('2d');
+    ctx.fillStyle('color');
+    ctx.fillText(letter, 30, 60);
+    /*
+    const letter = 'O';
+  let char  = letter.charCodeAt(0);
+  const rgb = (char  % 26) * (255/26);
+  let color = 'rgb(' + rgb + ',' + rgb + ','+ rgb')';
+  const avatar = document.getElementById("canvas");
+  const ctx = avatar.getContext('2d');
+  ctx.strokeStyle="rgba(0,0,0,1)";
+  ctx.strokeRect(0,0,100,100);
+  ctx.font = "48px serif";
+  ctx.fillStyle = color;
+  ctx.fillRect(0,0,100,100);
+  ctx.fillText(letter, 30, 65, 100);*/ 
+
 }
