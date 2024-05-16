@@ -273,12 +273,15 @@ function generateAvatar(letter, width = 100, height = 100) {
     // 4. Draw the letter in the center
     // 5. Return the avatar as a PNG buffer
     let char  = letter.charCodeAt(0);
-    let color = 'rgb((char / 26) * 255, (char / 26) * 255, (char / 26) * 255)';
+    const rgb = ((char * 2));
+    let color = `#${rgb}`;
     const avatar = createCanvas(width, height);
     const ctx = avatar.getContext('2d');
-    ctx.fillStyle('color');
-    ctx.fillText(letter, 30, 60);
-    /*
+    ctx.fillStyle = color;
+    ctx.fillRect(0,0,100,100);
+    ctx.fillText(letter, 30, 65, 100);
+    return canvas.toBuffer('image/png');
+  /*
     const letter = 'O';
   let char  = letter.charCodeAt(0);
   const rgb = (char  % 26) * (255/26);
