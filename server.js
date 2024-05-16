@@ -199,7 +199,14 @@ function isAuthenticated(req, res, next) {
 
 // Function to register a user
 function registerUser(req, res) {
-    // TODO: Register a new user and redirect appropriately
+    const username = req.body.username;
+    console.log("Attempting to register:", username);
+    if (findUserByUsername(username)){
+        res.redirect('/register?error=Username+already+exists')
+    } else {
+        addUser(username);
+        res.redirect('/login');
+    }
 }
 
 // Function to login a user
