@@ -332,6 +332,7 @@ function updatePostLikes(req, res) {
                 posts[i].likes.push(user.username);
             } else {
                 posts[i].likes.splice(userIndex, 1);
+                return false;
             }
         }
 
