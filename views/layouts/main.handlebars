@@ -19,12 +19,12 @@
             <h1>{{{appName}}}</h1>
         </div>
         <nav>
-            <ul>
+            <div class="navLinks">
                 <!-- conditional rendering based on variables - Is the user logged in?-->
                 {{#if loggedIn}}
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/profile">Profile</a></li>
-                    <li><a href="/logout">Logout <span>{{user.username}}</span> </a></li>
+                    <a href="/">Home</a>
+                    <a href="/profile">Profile</a>
+                    <a href="/logout">Logout <span>{{user.username}}</span> </a>
                     <div class="user-info">
 
                         <!-- conditional rendering based on variables -->
@@ -42,7 +42,7 @@
                         <a href="/login">Login/Register</a>
                     </div>
                 {{/if}}
-            </ul>
+            </div>
         </nav>
     </header>
 
