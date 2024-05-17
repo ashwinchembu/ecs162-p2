@@ -219,7 +219,7 @@ function findUserById(userId) {
 // Function to add a new user
 function addUser(username) {
     // TODO: Create a new user object and add to users array
-    let user = {id: users.length + 1, username: username, avatar_url: undefined, memberSince: Date.now() };
+    let user = {id: users.length + 1, username: username, avatar_url: undefined, memberSince: new Date().toUTCString() };
     users.push(user);
 }
 
@@ -308,13 +308,15 @@ function handleAvatar(req, res) {
     const avatarPath = path.join(__dirname, 'public', 'avatars', `${username}.png`);
 
     if (fs.existsSync(avatarPath)) {
-        // If avatar already exists, serve it
         return res.sendFile(avatarPath);
     } else {
-        // Generate new avatar
         const avatarBuffer = generateAvatar(username.charAt(0).toUpperCase());
         fs.writeFileSync(avatarPath, avatarBuffer);
         user.avatar_url = `/avatars/${username}.png`;
+        const userIndex = users.findIndex(u => u.username === username);
+        if (userIndex !== -1) {
+            users[userIndex] = user;
+        }
         return res.sendFile(avatarPath);
     }
 
@@ -337,7 +339,8 @@ function getPosts() {
 // Function to add a new post
 function addPost(title, content, user) {
     // TODO: Create a new post object and add to posts array
-    posts.push({id: posts.length + 1, title: title, content: content, username: user.username, timestamp: Date.now(), likes: 0 })
+    console.log(users)
+    posts.push({id: posts.length + 1, title: title, content: content, username: user.username, timestamp: new Date().toUTCString(), likes: 0 })
     console.log(posts);
 }
 
