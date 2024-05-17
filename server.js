@@ -1,7 +1,9 @@
 const express = require('express');
 const expressHandlebars = require('express-handlebars');
 const session = require('express-session');
-const canvas = require('canvas');
+const { createCanvas, loadImage } = require('canvas');
+const fs = require('fs');
+const path = require('path');
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Configuration and Setup
@@ -127,8 +129,8 @@ app.get('/post/:id', (req, res) => {
 });
 app.post('/posts', (req, res) => {
     // TODO: Add a new post and redirect to home
-    console.log(req);
-    //addPost()
+    addPost(req.body.title, req.body.content, getCurrentUser(req));
+    res.redirect('/');
 });
 app.post('/like/:id', (req, res) => {
     // TODO: Update post likes
@@ -141,7 +143,6 @@ app.get('/profile', isAuthenticated, (req, res) => {
 
 app.get('/avatar/:username', (req, res) => {
     // TODO: Serve the avatar image for the user
-    console.log('new avatar');
     handleAvatar(req,res);
 });
 app.post('/register', (req, res) => {
@@ -159,6 +160,15 @@ app.get('/logout', (req, res) => {
 });
 app.post('/delete/:id', isAuthenticated, (req, res) => {
     // TODO: Delete a post if the current user is the owner
+    if(isAuthenticated){
+        let user = getCurrentUser(req);
+        let username = user.username;
+        for(let i = 0; i < posts.length; i++){
+            if (posts[i].username === username){
+                posts.splice(i,i);
+            }
+        }
+    }
 
 });
 
@@ -292,23 +302,23 @@ function updatePostLikes(req, res) {
 // Function to handle avatar generation and serving
 function handleAvatar(req, res) {
     // TODO: Generate and serve the user's avatar image
-    /*
-    let username = req.params.username;
+    const username = req.params.username;
     const user = findUserByUsername(username);
-    let name = (username).charAt(0);
-    let image = generateAvatar(name);
-    const avatarPath = path.join(__dirname, 'public', 'avatars', `${username}.png`);
-    fs.writeFile(avatarPath, image, (err) => {
-        if (err) {
-            res.status(500).send('Error saving avatar');
-        } else {
-            user.avatar_url = `/avatars/${username}.png`;
 
-            res.setHeader('Content-Type', 'image/png');
-            res.send(image);
-        }
-    });
-    */
+    const avatarPath = path.join(__dirname, 'public', 'avatars', `${username}.png`);
+
+    if (fs.existsSync(avatarPath)) {
+        // If avatar already exists, serve it
+        return res.sendFile(avatarPath);
+    } else {
+        // Generate new avatar
+        const avatarBuffer = generateAvatar(username.charAt(0).toUpperCase());
+        fs.writeFileSync(avatarPath, avatarBuffer);
+        user.avatar_url = `/avatars/${username}.png`;
+        return res.sendFile(avatarPath);
+    }
+
+    
 
     
 }
@@ -328,6 +338,7 @@ function getPosts() {
 function addPost(title, content, user) {
     // TODO: Create a new post object and add to posts array
     posts.push({id: posts.length + 1, title: title, content: content, username: user.username, timestamp: Date.now(), likes: 0 })
+    console.log(posts);
 }
 
 // Function to generate an image avatar
@@ -346,8 +357,12 @@ function generateAvatar(letter, width = 100, height = 100) {
     const ctx = avatar.getContext('2d');
     ctx.fillStyle = color;
     ctx.fillRect(0,0,100,100);
-    ctx.fillText(letter, 30, 65, 100);
-    return canvas.toBuffer('image/png');
+    ctx.fillStyle = 'white';
+    ctx.font = "48px serif";
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(letter, 50, 50, 100);
+    return avatar.toBuffer('image/png');
   /*
     const letter = 'O';
   let char  = letter.charCodeAt(0);
