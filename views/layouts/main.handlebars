@@ -9,11 +9,12 @@
     
     <title>{{{appName}}}</title>
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <header>
         <div class="logo">
+             <!-- Game controller logo by formycity found on veryicon (https://www.veryicon.com/icons/miscellaneous/ionicons/logo-game-controller-b-1.html)-->
             <img src="images/logo.png" class="header-logo">
             <h1>{{{appName}}}</h1>
         </div>
@@ -36,12 +37,17 @@
                                     class="header-avatar">
                     </div>
                 {{else}}
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/login">Login/Register</a></li>
+                    <div class="navLinks">
+                        <a href="/">Home</a>
+                        <a href="/login">Login/Register</a>
+                    </div>
                 {{/if}}
             </ul>
         </nav>
     </header>
+
+    <!-- TEMPORARY BACKGROUND, CHANGE LATER-->
+    <img src="/images/tempBackground.jpg" alt = "Blue background with game controller" class = HomeBackground>
 
     {{{body}}}
 

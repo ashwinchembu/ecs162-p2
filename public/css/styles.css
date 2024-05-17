@@ -1,0 +1,102 @@
+body, html {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+}
+
+.HomeBackground {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 30px;
+}
+
+.header-logo {
+    width: 75px;
+}
+
+h1 {
+    margin-left: 20px;
+    font-size: 50px;
+    z-index: 20;
+    color: rgb(8, 51, 8);
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    z-index: 20;
+}
+
+.navLinks a {
+    color: white;
+    margin: 0 10px;
+}
+
+/* .post {
+    background: white;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    z-index: 2;
+    color: black;
+} */
+
+/* .post-avatar {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: top;
+    margin: 20px;
+    max-width: 50px;
+    border-radius: 10px;
+    z-index: 3;
+} */
+
+.login-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20;
+    gap: 50px;
+    z-index: 3;
+}
+
+.login-area, .register-area {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    bottom: 10px;
+    z-index: 3;
+    position: absolute;
+}
+
+footer p {
+    color: white;
+}
