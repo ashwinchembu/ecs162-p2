@@ -130,18 +130,27 @@ app.post('/posts', (req, res) => {
 });
 app.post('/like/:id', (req, res) => {
     // TODO: Update post likes
+    for(let i = 0; i < posts.length; i++){
+        if (posts[i].id === id){
+            posts[i].likes +=1;
+        }
+    }
 });
 app.get('/profile', isAuthenticated, (req, res) => {
     // TODO: Render profile page
 });
+
 app.get('/avatar/:username', (req, res) => {
     // TODO: Serve the avatar image for the user
 });
 app.post('/register', (req, res) => {
     // TODO: Register a new user
+    registerUser(req,res);
+    
 });
 app.post('/login', (req, res) => {
     // TODO: Login a user
+    loginUser(req,res);
 });
 app.get('/logout', (req, res) => {
     // TODO: Logout the user
@@ -175,7 +184,7 @@ let users = [
 // Function to find a user by username
 function findUserByUsername(username) {
     // TODO: Return user object if found, otherwise return undefined
-    for(let i = 0; i < users.length(); i++){
+    for(let i = 0; i < users.length; i++){
         if (users[i].username === username){
             return users[i];
         }
@@ -186,7 +195,7 @@ function findUserByUsername(username) {
 // Function to find a user by user ID
 function findUserById(userId) {
     // TODO: Return user object if found, otherwise return undefined
-    for(let i = 0; i < users.length(); i++){
+    for(let i = 0; i < users.length; i++){
         if (users[i].id === id){
             return users[i];
         }
@@ -197,7 +206,7 @@ function findUserById(userId) {
 // Function to add a new user
 function addUser(username) {
     // TODO: Create a new user object and add to users array
-    let user = {id: users.length() + 1, username: username, avatar_url: undefined, memberSince: Date.now() };
+    let user = {id: users.length + 1, username: username, avatar_url: undefined, memberSince: Date.now() };
     users.push(user);
 }
 
@@ -215,17 +224,30 @@ function isAuthenticated(req, res, next) {
 function registerUser(req, res) {
     const username = req.body.username;
     console.log("Attempting to register:", username);
+    console.log(users);
     if (findUserByUsername(username)){
         res.redirect('/register?error=Username+already+exists')
     } else {
         addUser(username);
-        res.redirect('/login');
+        req.session.loggedIn = true;
+        req.session.userId = findUserByUsername(req.body.username).id;
+        res.redirect('/');
     }
+    console.log("registerUser", users);
 }
 
 // Function to login a user
 function loginUser(req, res) {
     // TODO: Login a user and redirect appropriately
+    const username = req.body.username;
+    if (findUserByUsername(username) == undefined){
+        res.redirect('/login?error=User+does+not+exist')
+    } else {
+        req.session.loggedIn = true;
+        req.session.userId = findUserByUsername(req.body.username).id;
+        res.redirect('/');
+    }
+    console.log("loginUser", users);
 }
 
 // Function to logout a user
