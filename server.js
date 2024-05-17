@@ -142,6 +142,7 @@ app.get('/profile', isAuthenticated, (req, res) => {
 
 app.get('/avatar/:username', (req, res) => {
     // TODO: Serve the avatar image for the user
+    handleAvatar(req,res);
 });
 app.post('/register', (req, res) => {
     // TODO: Register a new user
@@ -268,6 +269,9 @@ function updatePostLikes(req, res) {
 // Function to handle avatar generation and serving
 function handleAvatar(req, res) {
     // TODO: Generate and serve the user's avatar image
+    let username = req.body.username;
+    generateAvatar(username[0]);
+    
 }
 
 // Function to get the current user from session
