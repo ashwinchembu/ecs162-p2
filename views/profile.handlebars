@@ -19,7 +19,9 @@
     {{#if user.posts.length}}
         <ul>
             {{#each user.posts}}
-                {{> post this}}
+                 <li>
+                    {{> post this}}
+                </li>
             {{/each}}
         </ul>
     {{else}}
