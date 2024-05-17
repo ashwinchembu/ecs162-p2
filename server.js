@@ -53,11 +53,16 @@ app.engine(
                 }
                 return options.inverse(this);
             },
+            ifEqual: function (arg1, arg2, options) {
+                return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+            },
         },
     })
 );
 
 app.set('view engine', 'handlebars');
+
+
 app.set('views', './views');
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -134,7 +139,9 @@ app.post('/posts', (req, res) => {
 });
 app.post('/like/:id', (req, res) => {
     // TODO: Update post likes
+    console.log("liking post");
     updatePostLikes(req,res);
+    console.log(posts);
 });
 app.get('/profile', isAuthenticated, (req, res) => {
     // TODO: Render profile page
@@ -160,16 +167,16 @@ app.get('/logout', (req, res) => {
 });
 app.post('/delete/:id', isAuthenticated, (req, res) => {
     // TODO: Delete a post if the current user is the owner
-    if(isAuthenticated){
+        console.log("deleting post");
         let user = getCurrentUser(req);
         let username = user.username;
         for(let i = 0; i < posts.length; i++){
             if (posts[i].username === username){
-                posts.splice(i,i);
+                posts.splice(i,1);
             }
         }
-    }
-
+        res.redirect('/');
+        console.log(posts);
 });
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -186,8 +193,8 @@ app.listen(PORT, () => {
 
 // Example data for posts and users
 let posts = [
-    { id: 1, title: 'Sample Post', content: 'This is a sample post.', username: 'SampleUser', timestamp: '2024-01-01 10:00', likes: 0 },
-    { id: 2, title: 'Another Post', content: 'This is another sample post.', username: 'AnotherUser', timestamp: '2024-01-02 12:00', likes: 0 },
+    { id: 1, title: 'Sample Post', content: 'This is a sample post.', username: 'SampleUser', timestamp: '2024-01-01 10:00', likes: [] },
+    { id: 2, title: 'Another Post', content: 'This is another sample post.', username: 'AnotherUser', timestamp: '2024-01-02 12:00', likes: [] },
 ];
 let users = [
     { id: 1, username: 'SampleUser', avatar_url: undefined, memberSince: '2024-01-01 08:00' },
@@ -219,7 +226,7 @@ function findUserById(userId) {
 // Function to add a new user
 function addUser(username) {
     // TODO: Create a new user object and add to users array
-    let user = {id: users.length + 1, username: username, avatar_url: undefined, memberSince: new Date().toUTCString() };
+    let user = {id: users.length + 1, username: username, avatar_url: undefined, memberSince: new Date().toISOString() };
     users.push(user);
 }
 
@@ -292,11 +299,24 @@ function renderProfile(req, res) {
 // Function to update post likes
 function updatePostLikes(req, res) {
     // TODO: Increment post likes if conditions are met
+    let user = getCurrentUser(req);
+    if (user){
     for(let i = 0; i < posts.length; i++){
-        if (posts[i].id === req.params.id){
-            posts[i].likes +=1;
+        console.log(posts[i].id);
+        console.log(req.params.id);
+
+        if (posts[i].id == req.params.id){
+            let userIndex = posts[i].likes.indexOf(user.username);
+            console.log('inside logs');
+            if (userIndex === -1) {
+                posts[i].likes.push(user.username);
+            } else {
+                posts[i].likes.splice(userIndex, 1);
+            }
         }
     }
+    console.log('inside update post likes', posts);
+}
 }
 
 // Function to handle avatar generation and serving
@@ -340,7 +360,7 @@ function getPosts() {
 function addPost(title, content, user) {
     // TODO: Create a new post object and add to posts array
     console.log(users)
-    posts.push({id: posts.length + 1, title: title, content: content, username: user.username, timestamp: new Date().toUTCString(), likes: 0 })
+    posts.push({id: posts.length + 1, title: title, content: content, username: user.username, timestamp: new Date().toISOString(), likes: 0 })
     console.log(posts);
 }
 
