@@ -4,6 +4,8 @@ const session = require('express-session');
 const { createCanvas, loadImage } = require('canvas');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config();
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Configuration and Setup
@@ -98,6 +100,16 @@ app.use(express.json());                            // Parse JSON bodies (as sen
 // Routes
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+app.get('/emojis', async (req,res)=>{
+    try {
+        const response = await fetch(`https://emoji-api.com/emojis?access_key=c4d606297612407b2dd7b3f9b026bcb5686d8d9a`);
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        res.status(500).send('Error fetching emojis');
+    }
+});
+
 // Home route: render home view with posts and user
 // We pass the posts and user variables into the home
 // template
@@ -140,8 +152,15 @@ app.post('/posts', (req, res) => {
 app.post('/like/:id', (req, res) => {
     // TODO: Update post likes
     console.log("liking post");
-    updatePostLikes(req,res);
+    let worked = updatePostLikes(req,res);
     console.log(posts);
+if(worked){
+    res.status(200).send({ message: "Like updated successfully" });
+}
+else{
+    res.status(500).send({ message: "Failed to update like" });
+}
+   
 });
 app.get('/profile', isAuthenticated, (req, res) => {
     // TODO: Render profile page
@@ -299,6 +318,7 @@ function renderProfile(req, res) {
 // Function to update post likes
 function updatePostLikes(req, res) {
     // TODO: Increment post likes if conditions are met
+
     let user = getCurrentUser(req);
     if (user){
     for(let i = 0; i < posts.length; i++){
@@ -314,8 +334,14 @@ function updatePostLikes(req, res) {
                 posts[i].likes.splice(userIndex, 1);
             }
         }
+
     }
+   
     console.log('inside update post likes', posts);
+    return true;
+}
+else{
+    return false;
 }
 }
 

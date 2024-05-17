@@ -21,7 +21,8 @@
 
             <div id="emoji-container" class="emoji-panel" style="display: none;">
                 <!-- input field for the emoji search, use oninput="searchEmojis() -->
-                <!-- a div, id = "emoji-grid" -->
+                <input type="text" id="emoji-search" oninput="searchEmojis()" placeholder="Search emojis...">
+                <div id = "emoji-grid"></div>
             </div>
         </section>
     {{/if}}
@@ -56,13 +57,29 @@
 
 let allEmojis = [];  // Global list to hold all emojis
 
-function toggleEmojiPanel() {
+async function toggleEmojiPanel() {
+    console.log("toogle button clicked");
     const container = document.getElementById('emoji-container');
     container.style.display = container.style.display === 'none' ? 'block' : 'none';
 
 
     if(container.style.display === 'block' && allEmojis.length == 0){
         // go "Fetch" you some emojis and show them off with displayEmojies
+        const apiKey = "%EMOJI%";
+        try {
+            const response = await fetch(`/emojis`);
+            if (response.ok){
+            allEmojis = await response.json();
+            console.log(allEmojis);
+            displayEmojis(allEmojis);
+            }
+            else{
+                console.log('failed to get emojis');
+            }
+        } catch (error) {
+            console.error("Error fetching emojis:", error);
+        }
+
     }
 }
 
@@ -88,17 +105,28 @@ function searchEmojis() {
     // array.filter takes a predicate
     // use string.includes. 
 
-    const filteredEmojis = allEmojis.filter(...);
+    const filteredEmojis = allEmojis.filter((emoji) => emoji.slug.includes(searchTerm));
     
     displayEmojis(filteredEmojis);
 }
 
 function insertEmoji(emoji) {
     // put an emoji on a form somehow. 
+    const form = document.getElementById('content');
+    const start = form.selectionStart;
+    const end = form.selectionEnd;
+    const text = form.value;
+
+    const before = text.substring(0, start);
+    const after = text.substring(end, text.length);
+
+    form.value = before + emoji + after;
+    form.selectionStart = form.selectionEnd = start + emoji.length;
+
 
     // do this when you're doing getting the emoji on the form
     //
-    textarea.focus();  // Keep focus on the textarea
+    form.focus();  // Keep focus on the textarea
 }
 </script>
 

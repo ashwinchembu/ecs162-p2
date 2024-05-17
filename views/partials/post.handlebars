@@ -23,6 +23,7 @@
             <!-- everything that is shown in the status bar -->
             <!-- Heart = ♥ -->
             <!-- font awesome  trashcan = <i class="fas fa-trash-alt"> </i>-->
+        <p id= 'likes-{{id}}'>{{likes.length}} likes</p>
         <p>Posted by {{username}} on  {{timestamp}}</p>
         </div>        
     </div>
@@ -31,7 +32,7 @@
 
     async function handleLikeClick(event) {
         const postId = event.target.getAttribute('data-id');
-        //console.log("liking post on frontend");
+        console.log("liking post on frontend");
         try {
             const response = await fetch(`/like/${postId}`, {
                 method: 'POST',
@@ -39,10 +40,25 @@
                     'Content-Type': 'application/json'
                 }
             });
+            console.log('-------before setting likes');
+            console.log(`Response status: ${response.status}`);
+            console.log('Response body:', await response.text());
+
+            if (response.ok){
+            console.log('likes');
+
+            const likes = document.getElementById(`likes-${postId}`);
+            const currentLikes = parseInt(likes.textContent.split(' ')[0], 10);
+            likes.textContent = `${currentLikes + 1} likes`;
+        }
+        else{
+            console.log("failed");
+        }
         }
         catch{
             console.error('Error liking the post:', error);
         }
+        console.log("done");
 
         // you might want to "fetch" something...        
     }
