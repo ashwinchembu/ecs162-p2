@@ -23,6 +23,7 @@
             <!-- everything that is shown in the status bar -->
             <!-- Heart = ♥ -->
             <!-- font awesome  trashcan = <i class="fas fa-trash-alt"> </i>-->
+        <p>Posted by {{username}} on  {{timestamp}}</p>
         </div>        
     </div>
 </div>
@@ -30,7 +31,7 @@
 
     async function handleLikeClick(event) {
         const postId = event.target.getAttribute('data-id');
-        console.log("liking post on frontend");
+        //console.log("liking post on frontend");
         try {
             const response = await fetch(`/like/${postId}`, {
                 method: 'POST',
@@ -49,7 +50,7 @@
     async function handleDeleteClick(event) {
         const buttonElement = event.target.closest('.delete-button');
         const postId = buttonElement.getAttribute('data-id');    
-        console.log("deleting post on frontend");
+        //console.log("deleting post on frontend");
     
 
         // you might want to "fetch" something... 
