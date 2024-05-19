@@ -236,6 +236,8 @@ footer p {
     width: 100%;
     display: flex;
     flex-direction: row; 
+    margin-bottom: 10px;
+
 }
 
 .form-actions .emoji-button, .form-actions .post-button {
@@ -250,10 +252,18 @@ footer p {
     margin-right: 10px;
 }
 
+
+
 .form-actions .emoji-button {
     width: 10%;
+   
 }
 
 .form-actions .post-button {
     width: 90%;
 }
+
+.emoji-search {
+    margin-top: 10px;
+}
+
