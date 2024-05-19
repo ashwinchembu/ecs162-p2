@@ -45,8 +45,7 @@ h1 {
     position: absolute;
     top: 100px;
     left: 20px;
-    z-index: 20;/* 
-    margin: 0 10px; */
+    z-index: 20;
 }
 
 .navLinks a {
@@ -54,15 +53,23 @@ h1 {
     margin: 0 10px;
 }
 
+.welcomeMessage {
+    margin-left: 20px;
+    font-size: 20px;
+    color: white;
+}
+
 .user-info {
     display: flex;
     align-items: center;
-    margin-right: 20px;
+    position: absolute;
+    top: 20px;
+    right: 30px;
 }
 
 .header-avatar {
     width: 50px;
-    border-radius: 50%;
+    border-radius: 20%;
     top: 0;
     right: 30px;
 }
@@ -88,8 +95,7 @@ h1 {
     gap: 10px;
 }
 
-.post-submission input,
-.post-submission textarea {
+.post-submission input, .post-submission textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -144,7 +150,7 @@ h1 {
 .post-avatar img {
     max-width: 50px;
     max-height: 50px;
-    border-radius: 50%;
+    border-radius: 20%;
     margin-right: 10px;
 }
 
