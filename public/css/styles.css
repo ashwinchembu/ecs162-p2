@@ -124,7 +124,7 @@ a:visited {
 /*********************************************/
 
 .posts-list {
-    width: 50%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -135,7 +135,7 @@ a:visited {
     background: white;
     min-width: 400px;
     min-height: 100px;
-    margin: 20px auto;
+    margin: 50px;
     margin-bottom: 40px;
     padding: 10px;
     z-index: 2;
@@ -199,7 +199,7 @@ footer p {
     color: white;
 }
 
-.content-container{
+.content-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -210,35 +210,50 @@ footer p {
 
 .post-form {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     border: 1px solid black;
     padding: 30px;
     border-radius: 5px;
-    width: 30%;
-}
-
-.post-form input{
-    width: 100%;
-    padding: 10px;
-    font-size: 18px;
-}
-
-.form-actions button{
-    width: 100%;
-    padding: 20px;
+    width: 50%; /* Set width to match the post width */
 }
 
 .post-form input, .post-form textarea {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     font-size: 18px;
-    margin-bottom: 10px; 
+    margin-bottom: 10px; /* Add some margin for better spacing */
+    margin-right: 10px;
 }
 
-.post-form title {
-    width: 100%;
+.post-form textarea {
+    height: 200px; /* Increase the size of the text input */
+    font-size: 18px; /* Ensure the text input size is larger */
 }
-.post-form content {
-    height: 200px; 
+
+
+.form-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: row; 
+}
+
+.form-actions .emoji-button, .form-actions .post-button {
+    padding: 10px;
     font-size: 18px;
+    background: none;
+    border: 1px solid white;
+}
+
+
+.emoji-button{
+    margin-right: 10px;
+}
+
+.form-actions .emoji-button {
+    width: 10%;
+}
+
+.form-actions .post-button {
+    width: 90%;
 }
