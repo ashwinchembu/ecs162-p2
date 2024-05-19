@@ -13,6 +13,8 @@ require('dotenv').config();
 
 const app = express();
 const PORT = 3000;
+let postcount = 2;
+let usercount = 2; 
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -140,10 +142,6 @@ app.get('/error', (req, res) => {
 
 // Additional routes that you must implement
 
-
-app.get('/post/:id', (req, res) => {
-    // TODO: Render post detail page
-});
 app.post('/posts', (req, res) => {
     // TODO: Add a new post and redirect to home
     addPost(req.body.title, req.body.content, getCurrentUser(req));
@@ -188,14 +186,19 @@ app.post('/delete/:id', isAuthenticated, (req, res) => {
     // TODO: Delete a post if the current user is the owner
         console.log("deleting post");
         let user = getCurrentUser(req);
+        if(user){
         let username = user.username;
         for(let i = 0; i < posts.length; i++){
             if (posts[i].username === username){
                 posts.splice(i,1);
             }
         }
-        res.redirect('/');
         console.log(posts);
+        res.status(200).send({ message: "Deleted post successfully" });
+    }
+    else{
+        res.status(500).send({ message: "Failed to delete post" });
+    }
 });
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -219,6 +222,17 @@ let users = [
     { id: 1, username: 'SampleUser', avatar_url: undefined, memberSince: '2024-01-01 08:00' },
     { id: 2, username: 'AnotherUser', avatar_url: undefined, memberSince: '2024-01-02 09:00' },
 ];
+
+
+function formatPostDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+}
 
 // Function to find a user by username
 function findUserByUsername(username) {
@@ -245,7 +259,7 @@ function findUserById(userId) {
 // Function to add a new user
 function addUser(username) {
     // TODO: Create a new user object and add to users array
-    let user = {id: users.length + 1, username: username, avatar_url: undefined, memberSince: new Date().toISOString() };
+    let user = {id: usercount += 1, username: username, avatar_url: undefined, memberSince: formatPostDate(new Date()) };
     users.push(user);
 }
 
@@ -332,12 +346,10 @@ function updatePostLikes(req, res) {
                 posts[i].likes.push(user.username);
             } else {
                 posts[i].likes.splice(userIndex, 1);
-                return false;
             }
         }
 
     }
-   
     console.log('inside update post likes', posts);
     return true;
 }
@@ -366,17 +378,10 @@ function handleAvatar(req, res) {
         }
         return res.sendFile(avatarPath);
     }
-}
 
-// Function to set up date format for posts
-function formatPostDate(date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
+    
 
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
+    
 }
 
 // Function to get the current user from session
@@ -394,7 +399,7 @@ function getPosts() {
 function addPost(title, content, user) {
     // TODO: Create a new post object and add to posts array
     console.log(users)
-    posts.push({id: posts.length + 1, title: title, content: content, username: user.username, timestamp: formatPostDate(new Date()), likes: 0 })
+    posts.push({id: postcount += 1, title: title, content: content, username: user.username, timestamp: formatPostDate(new Date()), likes: [] })
     console.log(posts);
 }
 

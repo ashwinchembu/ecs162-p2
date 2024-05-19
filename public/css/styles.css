@@ -2,11 +2,24 @@ body, html {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     overflow: hidden;
     justify-content: center;
     align-items: center;
+}
+
+header {
+    display: flex;
+    position: fixed;
+    top: 0; 
+    align-items: start;
+    width: 99.5%;
+    height: 8%;
+    z-index: 10;
+    border-radius: 5px;
+    border: 1px solid white;
 }
 
 .HomeBackground {
@@ -25,7 +38,14 @@ body, html {
     align-items: center;
     position: absolute;
     top: 0;
+    font-size: 10px;
     left: 30px;
+
+}
+
+.logo img{
+    width:10%;
+    height: 10%;
 }
 
 .header-logo {
@@ -34,7 +54,7 @@ body, html {
 
 h1 {
     margin-left: 20px;
-    font-size: 50px;
+    font-size: 20px;
     z-index: 20;
     color: rgb(8, 51, 8);
 }
@@ -43,9 +63,10 @@ h1 {
     display: flex;
     align-items: center;
     position: absolute;
-    top: 100px;
     left: 20px;
     z-index: 20;
+    margin-top: 5px;
+
 }
 
 .navLinks a {
@@ -59,69 +80,55 @@ h1 {
     color: white;
 }
 
-.user-info {
+.user-info, .navLinks {
     display: flex;
-    align-items: center;
+    justify-content: flex-end; 
+    flex-direction: row;
     position: absolute;
-    top: 20px;
+    align-items: center;
     right: 30px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0; 
+}
+.user-info{
+    top: 12px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover,
+a:visited {
+    color: white;
+    text-decoration: none; /* Ensure no underline on hover and visited */
+}
+
+.user-info > li {
+    margin: 10px;
+    color: white;
+    text-decoration: none;
+
 }
 
 .header-avatar {
-    width: 50px;
+    width: 30px;
+    height: 30px;
     border-radius: 20%;
-    top: 0;
     right: 30px;
 }
 
-/*****************************/
-.post-submission {
-    width: 100%;
-    margin: 20px 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.9); /* Optional: Add background for readability */
-    border-radius: 10px; /* Optional: Add rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a slight shadow */
-}
 
-.post-submission form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 10px;
-}
-
-.post-submission input, .post-submission textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.post-submission button {
-    padding: 10px 20px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.post-submission button:hover {
-    background: #0056b3;
-}
 /*********************************************/
 
 .posts-list {
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-y: scroll;
-    height: 60%;
 }
 
 .post {
@@ -144,7 +151,6 @@ h1 {
     display: flex;
     flex-direction: row;
     justify-content: left;
-    align-items: top;
 } 
 
 .post-avatar img {
@@ -191,4 +197,48 @@ footer {
 
 footer p {
     color: white;
+}
+
+.content-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+    width: 100%;
+}
+
+.post-form {
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+    padding: 30px;
+    border-radius: 5px;
+    width: 30%;
+}
+
+.post-form input{
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.form-actions button{
+    width: 100%;
+    padding: 20px;
+}
+
+.post-form input, .post-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px; 
+}
+
+.post-form title {
+    width: 100%;
+}
+.post-form content {
+    height: 200px; 
+    font-size: 18px;
 }

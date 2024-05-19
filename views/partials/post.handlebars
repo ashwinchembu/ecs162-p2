@@ -1,22 +1,21 @@
 {{! Partial for a single post }}
-<div class="post">
+<div id = "post-{{id}}" class="post">
     <div class="post-avatar">
         <!-- the user's avatar -->
             <img src="/avatars/{{username}}.png" alt="{{username}}'s avatar" class="avatar">
     </div>
-    <div class="post-content preserve-newlines">
+    <div class= "post-content preserve-newlines">
         <!-- the post -->
         <h3>{{title}}</h3>
         <p>{{username}}</p>
         <p>{{content}}</p>
-        <p>{{id}}</p>
         <div class="post-status-bar">
             {{#ifEqual user.username  username}}
                 <button class="delete-button" data-id="{{id}}" onclick="handleDeleteClick(event)">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             {{else}}
-                <button class="like-button" data-id="{{id}}" onclick="handleLikeClick(event)">
+                <button class="like-button" data-id="{{id}}" onclick="handleLikeClick(event)" style="color: {{#if liked}}red{{/if}};">
                     ♥
                 </button>
             {{/ifEqual}}
@@ -29,9 +28,12 @@
     </div>
 </div>
 <script>
-
     async function handleLikeClick(event) {
         const postId = event.target.getAttribute('data-id');
+        const likeButton = event.target.closest('.like-button');
+        const isLiked = likeButton.style.color === 'red';
+
+
         console.log("liking post on frontend");
         try {
             const response = await fetch(`/like/${postId}`, {
@@ -49,7 +51,10 @@
 
             const likes = document.getElementById(`likes-${postId}`);
             const currentLikes = parseInt(likes.textContent.split(' ')[0], 10);
-            likes.textContent = `${currentLikes + 1} likes`;
+            likes.textContent = `${isLiked ? currentLikes - 1 : currentLikes + 1} likes`;
+
+            likeButton.style.color = isLiked ? '' : 'red';
+
         }
         else{
             console.log("failed");
@@ -77,6 +82,18 @@
                     'Content-Type': 'application/json'
                 }
             });
+            console.log('-------before setting likes');
+            console.log(`Response status: ${response.status}`);
+            console.log('Response body:', await response.text());
+
+            if (response.ok){
+            console.log('deleting posts');
+
+            const post = document.getElementById(`post-${postId}`);
+            if(post){
+                post.remove();
+            }
+        }        
         }
             catch (error) {
             console.error('Error deleting the post:', error);
