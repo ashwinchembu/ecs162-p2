@@ -13,7 +13,7 @@ body, html {
 header {
     display: flex;
     position: fixed;
-    top: 0; 
+    top: 0;
     align-items: center;
     width: 100%;
     height: 8%;
@@ -71,7 +71,7 @@ h1 {
 }
 
 .navLinks a {
-    color: white;
+    color: darGreen;
     margin: 0 10px;
     margin-top: -15px;
 }
@@ -102,19 +102,18 @@ h1 {
 }
 
 a {
-    color: solid darkGreen;
+    color: darkGreen;
     text-decoration: none;
 }
 
-a:hover,
-a:visited {
-    color: white;
-    text-decoration: none; /* Ensure no underline on hover and visited */
+
+a:hover {
+    color: black;
 }
 
 .user-info > li {
     margin: 10px;
-    color: white;
+    color: darkGreen;
 }
 
 .header-avatar {
@@ -155,6 +154,14 @@ a:visited {
 
 .posts-list::-webkit-scrollbar {
     display: none;
+}
+
+.user-posts::-webkit-scrollbar {
+    display: none;
+}
+
+h2, h3 {
+    color: darkGreen;
 }
 
 .post {
@@ -244,15 +251,18 @@ a:visited {
 
 footer {
     display: flex;
+    width: 100%;
     justify-content: center;
-    bottom: 10px;
+    bottom: 0;
     z-index: 3;
-    position: absolute;
-}
-
-footer p {
+    position: fixed;
     background-color: white;
     opacity: 80%;
+}
+
+
+footer p {
+    color: darkGreen;
 }
 
 .content-container {
