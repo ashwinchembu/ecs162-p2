@@ -93,6 +93,10 @@ h1 {
 }
 .user-info{
     top: 12px;
+    max-width: 30em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 a {
@@ -125,6 +129,7 @@ a:visited {
 
 .posts-list {
     width: 70%;
+    height: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -133,7 +138,7 @@ a:visited {
 
 .post {
     background: white;
-    min-width: 400px;
+    min-width: 650px;
     min-height: 100px;
     margin: 50px;
     margin-bottom: 40px;
@@ -166,10 +171,39 @@ a:visited {
 
 .post-status-bar {
     display: flex;
-    justify-content: space-between;
-    align-items: left;
     margin-top: 10px;
+    align-items: center;
+    justify-content: space-between;
+
 }
+
+.postedby{
+   display: flex;
+   justify-content: end;
+   align-items: center;
+   right:0;
+   height: auto;
+}
+
+.postedby span{
+    max-width: 200px;
+    margin-right: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.interact{
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    margin-right: 10px;
+}
+
+
 
 .login-register {
     display: flex;
@@ -265,5 +299,9 @@ footer p {
 
 .emoji-search {
     margin-top: 10px;
+}
+
+#post-username{
+    text-overflow: ellipsis;
 }
 

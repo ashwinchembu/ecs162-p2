@@ -412,11 +412,12 @@ function generateAvatar(letter, width = 100, height = 100) {
     // 3. Draw the background color
     // 4. Draw the letter in the center
     // 5. Return the avatar as a PNG buffer
-    let char  = 122 - (letter.toLowerCase()).charCodeAt(0);
+    let char  = 124 - (letter.toLowerCase()).charCodeAt(0);
     console.log(char);
-    const rgb = (char/26) * 16777215;
-    console.log(parseInt(rgb));
-    let color = `#${rgb}`;
+    const hex = parseInt((char/28) * 16777215).toString(16);
+    console.log("int" , hex);
+    let color = `#${hex}`;
+    console.log("int" , color);
     const avatar = createCanvas(width, height);
     const ctx = avatar.getContext('2d');
     ctx.fillStyle = color;

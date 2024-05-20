@@ -3,13 +3,14 @@
     <div class="post-avatar">
         <!-- the user's avatar -->
             <img src="/avatars/{{username}}.png" alt="{{username}}'s avatar" class="avatar">
+            <h3>{{title}}</h3>
+
     </div>
     <div class= "post-content preserve-newlines">
         <!-- the post -->
-        <h3>{{title}}</h3>
-        <p>{{username}}</p>
         <p>{{content}}</p>
         <div class="post-status-bar">
+            <span class = "interact">
             {{#ifEqual user.username  username}}
                 <button class="delete-button" data-id="{{id}}" onclick="handleDeleteClick(event)">
                     <i class="fas fa-trash-alt"></i>
@@ -22,9 +23,14 @@
             <!-- everything that is shown in the status bar -->
             <!-- Heart = ♥ -->
             <!-- font awesome  trashcan = <i class="fas fa-trash-alt"> </i>-->
+            
         <p id= 'likes-{{id}}'>{{likes.length}} likes</p>
-        <p>Posted by {{username}} on  {{timestamp}}</p>
-        </div>        
+        </span>
+        <span class = "postedby">
+            <span>Posted by {{username}}</span>
+            <span>on  {{timestamp}}</span>
+        </span>        
+        </div>
     </div>
 </div>
 <script>
