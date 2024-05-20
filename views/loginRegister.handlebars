@@ -3,6 +3,9 @@
 
 <link rel="stylesheet" href="/css/login.css">
 
+<!-- Playstation button images sourced from Wikipedia (https://commons.wikimedia.org/wiki/File:PlayStation_Certified2.svg) -->
+<img src="/images/PlayStationTriangle.png" alt = "PlayStation Triangle Button" class = PSButtons id="PSTriangle">
+
 
 <section class="login-register">
     <section class = "login-area">
@@ -14,11 +17,10 @@
         <form action="/login" method="POST">
             <!-- the login form goes here -->        
             <input type="text" id="username" name="username" placeholder = "Username" required><br><br>
-             <button id = "login-button" type="submit">Login</button>
+             <button type="submit" id="login-button"><img src="/images/PlayStationSquare.png" alt = "PlayStation Square Button" class = PSButtons id="PSSquare"> Login</button>
         </form>
     </section>
 
-    <!-- say --OR-- ... with style -->
 
     <section class = "register-area">
         <h2>Register</h2>
@@ -28,8 +30,12 @@
         {{/if}}
         <form action="/register" method="POST">
             <!-- the registration form goes here -->
-            <input type="text" id="username" name="username"  placeholder = "Username" required><br><br>
-            <button id = "register-button" type="submit">Register</button>
+            <input type="text" id="username" name="username" placeholder = "Username" required><br><br>
+            <button type="submit" id="register-button">Register <img src="/images/PlayStationCircle.png" alt = "PlayStation Circle Button" class = PSButtons id="PSCircle"> </button>
         </form>
     </section>
 </section>
+
+
+<!-- say --OR-- ... with style -->
+    <img src="/images/PlayStationX.png" alt = "PlayStation X Button" class = PSButtons id="PSCross">
