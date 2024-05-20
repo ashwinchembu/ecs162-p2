@@ -1,0 +1,62 @@
+.profile-container{
+    width: 30%;
+    display: flex;
+    justify-content: start;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.profile-avatar{
+    height: auto;    
+}
+
+.avatar{
+    width: 10em;
+    height: auto; 
+    border-radius: 10px;
+}
+
+.profile-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    margin: 0;
+    margin-left: 2em;
+
+
+}
+.profile-info p{
+    margin: 0.2em;
+    color: darkgreen;
+}
+
+.title{
+    text-decoration: bold;
+    font-size: 22px;
+    margin: none;
+}
+
+.user-posts{
+    height: 40%;
+    overflow-y: scroll;
+    
+    }
+.user-posts li{
+    list-style: none;
+}
+
+h2{
+    color: darkgreen;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.user-posts p{
+    color: darkgreen;
+    font-size: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+}

@@ -1,6 +1,9 @@
 {{! Use the main layout }}
 {{!< main }}
 
+<link rel="stylesheet" href="/css/profile.css">
+
+
 <div class="profile-container">
     <div class="profile-avatar">
         <!-- Correct path for the default avatar image -->
@@ -9,26 +12,29 @@
     
     <section class="profile-info">
         <!-- user profile info -->
+        <p class = 'title'>User Profile</p>
         <p>Username: {{user.username}}</p>
         <p>Member Since: {{user.memberSince}}</p>
     </section>
 </div>
 
+<h2>Your {{{postNeoType}}}s</h2>
+
 <section class="user-posts">
     <!-- you can call posts tweets, or truths, or whatever, these are neologisms. Choose your own new in server.js -->
-    <h2>Your {{{postNeoType}}}s</h2>
+    
     
     <!-- you'll need to make this conditional and #each expression work -->
     {{#if user.posts.length}}
         <ul>
             {{#each user.posts}}
                  <li>
-                    {{> post this}}
+                    {{> post this user=../user}}           
                 </li>
             {{/each}}
         </ul>
     {{else}}
         <!-- fix this up with some helper functions and other handlebars expressions, or add you own character -->
-        <p>You have not posted yet, poster.</p>
+        <p>No posts yet. :&#40;</p>
     {{/if}}
 </section>
