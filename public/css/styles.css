@@ -15,12 +15,10 @@ header {
     position: fixed;
     top: 0; 
     align-items: start;
-    width: 99.5%;
+    width: 100%;
     height: 8%;
-    z-index: 10;
-    border-radius: 5px;
-    background-color: white;
-    opacity: 50%;
+    z-index: 0;
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .HomeBackground {
@@ -42,11 +40,12 @@ header {
     top: 0;
     font-size: 10px;
     left: 30px;
+    top: -3px;
 
 }
 
-.logo img{
-    width:10%;
+.logo img {
+    width: 10%;
     height: 10%;
 }
 
@@ -68,18 +67,20 @@ h1 {
     left: 20px;
     z-index: 20;
     margin-top: 5px;
+    z-index: 20;
+    color: darkGreen;
 
 }
 
 .navLinks a {
-    color: white;
+    color: solid darkGreen;
     margin: 0 10px;
 }
 
 .welcomeMessage {
     margin-left: 20px;
     font-size: 20px;
-    color: white;
+    color: darkGreen;
 }
 
 .user-info, .navLinks {
@@ -92,7 +93,7 @@ h1 {
     list-style-type: none;
     margin: 0;
     padding: 0; 
-    color: darkgreen;
+    z-index: 10;
 }
 
 .user-info{
@@ -103,31 +104,27 @@ h1 {
     white-space: nowrap;
 }
 
-.user-info:hover {
+.user-info:hover, .navLinks:hover {
     color: black;
 }
 
 a {
-    color: white;
+    color: darkGreen;
     text-decoration: none;
 }
 
-a:hover,
-a:visited {
-    color: white;
-    text-decoration: none; /* Ensure no underline on hover and visited */
+a:hover {
+    color: black;
 }
 
 .user-info > li {
     margin: 10px;
-    color: white;
 }
 
 .header-avatar {
     width: 30px;
     height: 30px;
     border-radius: 20%;
-    right: 30px;
 }
 
 
@@ -214,8 +211,6 @@ a:visited {
     margin-right: 10px;
 }
 
-
-
 .login-register {
     display: flex;
     justify-content: center;
@@ -223,6 +218,10 @@ a:visited {
     margin: 20;
     gap: 50px;
     z-index: 3;
+}
+
+h2 {
+    color: darkGreen;
 }
 
 .login-area, .register-area {
@@ -234,15 +233,17 @@ a:visited {
 
 footer {
     display: flex;
+    width: 100%;
     justify-content: center;
-    bottom: 10px;
+    bottom: 0;
     z-index: 3;
-    position: absolute;
+    position: fixed;
+    background-color: white;
+    opacity: 80%;
 }
 
 footer p {
-    background-color: white;
-    opacity: 80%;
+    color: darkGreen;
 }
 
 .content-container {
@@ -263,20 +264,20 @@ footer p {
     padding: 30px;
     margin-left: 30px;
     border-radius: 5px;
-    width: 50%; /* Set width to match the post width */
+    width: 50%; 
 }
 
 .post-form input, .post-form textarea {
     width: 95%;
     padding: 10px;
     font-size: 18px;
-    margin-bottom: 10px; /* Add some margin for better spacing */
+    margin-bottom: 10px; 
     margin-right: 10px;
 }
 
 .post-form textarea {
-    height: 200px; /* Increase the size of the text input */
-    font-size: 18px; /* Ensure the text input size is larger */
+    height: 200px; 
+    font-size: 18px; 
 }
 
 

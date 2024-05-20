@@ -13,13 +13,15 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+    <!-- Background by freepik sourced from Freepik -->
+    <img src="/images/Background.jpg" alt = "Green video game background" class = HomeBackground>
+    
     <header>
         <div class="logo">
              <!-- Game controller logo by formycity found on veryicon (https://www.veryicon.com/icons/miscellaneous/ionicons/logo-game-controller-b-1.html)-->
             <img src="images/logo.png" class="header-logo">
             <h1>{{{appName}}}</h1>
         </div>
-
 
         <nav>
             <ul>
@@ -30,7 +32,6 @@
                     <li><a href="/profile">Profile</a></li>
                     <li><a href="/logout">Logout <span>{{user.username}}</span> </a></li>
                     
-
                         <!-- conditional rendering based on variables -->
                         <img src="{{#if user.avatar_url}}
                                         {{user.avatar_url}}
@@ -50,13 +51,7 @@
         </nav>
     </header>
 
-
-    <!-- Background by freepik sourced from Freepik -->
-    <img src="/images/Background.jpg" alt = "Green video game background" class = HomeBackground>
-
-
     {{{body}}}
-
 
     <footer>
         <p>© {{{copyrightYear}}} {{{appName}}}. Background by freepik. All rights reserved.</p>
