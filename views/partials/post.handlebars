@@ -106,4 +106,21 @@
         }       
         
     }    
+
+    // Event listeners to display placeholder text on post form
+    document.getElementById('title').addEventListener('input', function() {
+        if (this.value === '') {
+            this.classList.add('placeholder');
+        } else {
+            this.classList.remove('placeholder');
+        }
+    });
+
+    document.getElementById('content').addEventListener('input', function() {
+        if (this.value === '') {
+            this.classList.add('placeholder');
+        } else {
+            this.classList.remove('placeholder');
+        }
+    });
 </script>
