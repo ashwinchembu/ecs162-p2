@@ -65,7 +65,6 @@ h1 {
     position: absolute;
     left: 20px;
     z-index: 20;
-    z-index: 20;
     color: darkGreen;
 
 }
@@ -392,3 +391,20 @@ footer p {
     color: rgb(87, 87, 87);
 }
 
+@media (width <= 400px) {
+    .navLinks, .user-info {
+        right: 10px;
+    }
+
+  }
+
+  @media (width <= 574px) {
+    header {
+        height: 15%;
+    }
+
+    header {
+        display: flex;
+        flex-direction: column
+    }
+  }
