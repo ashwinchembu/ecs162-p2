@@ -13,6 +13,7 @@ body, html {
 header {
     display: flex;
     position: fixed;
+    flex-wrap: wrap;
     top: 0;
     align-items: center;
     width: 100%;
@@ -44,7 +45,7 @@ header {
 }
 
 .logo img{
-    width:10%;
+    width: 10%;
     height: 10%;
 }
 
@@ -70,7 +71,7 @@ h1 {
 }
 
 .navLinks a {
-    color: darGreen;
+    color: darkGreen;
     margin: 0 10px;
     margin-top: -15px;
 }
@@ -157,6 +158,13 @@ a:hover {
     overflow-x: hidden;
 }
 
+.post p {
+    display: inline-block;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
 .PSButtons {
     width: 50px;
 }
@@ -176,6 +184,7 @@ h2, h3 {
 .post {
     background: white;
     min-width: 650px;
+    max-width: 100%;
     min-height: 100px;
     margin: 50px;
     margin-bottom: 40px;
@@ -400,11 +409,119 @@ footer p {
 
   @media (width <= 574px) {
     header {
+        flex-direction: column;
+        align-items: flex-start;
         height: 15%;
     }
 
-    header {
-        display: flex;
-        flex-direction: column
+    .user-info, .navLinks {
+        width: 100%;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+    .logo, h1 {
+        justify-content: center;
+    }
+
+    .logo img {
+        width: 50px;
+    }
+
+    .profile-container {
+        margin-top: 110px;
     }
   }
+
+  @media (width <= 1279px) {
+    .content-container {
+        flex-direction: column;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        margin-top: 100px;
+    }
+
+
+    #title{
+        min-height: 20px;
+        max-height: 20px;
+    }
+    #content{
+        min-height: 70px;
+        max-height: 70px;
+    }
+
+    body, html {
+        flex-direction: column;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    .post-form {
+        max-height: 100%;
+    }
+
+    .posts-list {
+        min-width: 90%;
+    }
+
+    .post {
+        min-width: 40%;
+    }
+
+    .post h3 {
+        font-size: 15px;
+    }
+
+    .post img {
+        width: 40px;
+        height: 40px;
+        margin-left: 10px;
+    }
+
+    .content {
+        font-size: 15px;
+    }
+
+    .post span {
+        font-size: 10px;
+    }
+  }
+
+  @media (width <= 500px) {
+    h3{
+        text-overflow: clip;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .post{
+        max-width: 60%;
+    }
+    .liketext{
+        font-size: 1em;
+        text-overflow: clip;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 20%;
+        margin-left: 15px;
+    }
+    .delete-button{
+        margin-right: -20px;
+        margin-left: -10px;
+    }
+
+
+    .like-button {
+        margin-right: -20px;
+        margin-left: -15px;
+    }
+    #likes2{
+        display: none;
+    }
+  }
+
+  @media (min-width: 780px) and (max-width: 892px) {
+    .content-container {
+        margin-top: -200px;
+    }
+}

@@ -8,7 +8,7 @@
     </div>
     <div class= "post-content preserve-newlines">
         <!-- the post -->
-        <p>{{content}}</p>
+        <p class = 'content'>{{content}}</p>
         <div class="post-status-bar">
             <span class = "interact">
             {{#ifEqual user.username  username}}
@@ -24,7 +24,7 @@
             <!-- Heart = ♥ -->
             <!-- font awesome  trashcan = <i class="fas fa-trash-alt"> </i>-->
             
-        <p id= 'likes-{{id}}'>{{likes.length}} likes</p>
+        <p class = 'liketext' id= 'likes-{{id}}'>{{likes.length}} <em id = 'likes2'>likes</em></p>
         </span>
         <span class = "postedby">
             <span>Posted by {{username}}</span>
