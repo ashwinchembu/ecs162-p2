@@ -247,6 +247,7 @@ footer p {
     flex-direction: column;
     justify-content: center;
     border: 1px solid black;
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 30px;
     border-radius: 5px;
     width: 50%; /* Set width to match the post width */
@@ -275,15 +276,51 @@ footer p {
 }
 
 .form-actions .emoji-button, .form-actions .post-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 10px;
     font-size: 18px;
     background: none;
     border: 1px solid white;
 }
 
-
 .emoji-button{
     margin-right: 10px;
+    border-radius: 3px;
+    height: 30px;
+    width: 90%;
+    height: 90%;
+    background-color: green;
+}
+
+.like-button, .delete-button {
+    background: none;
+    border: none;
+    transition: all 0.3s;
+    width: 50px;
+}
+
+.delete-button {
+    width: 35px;
+}
+
+.like-button:hover {
+    transform: scale(1.5);
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    75% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+}
+
+.delete-button:hover {
+    animation: shake 0.5s;
+
+    animation-iteration-count: 1;
 }
 
 
@@ -295,13 +332,21 @@ footer p {
 
 .form-actions .post-button {
     width: 90%;
+    border-radius: 3px;
 }
 
 .emoji-search {
+    
     margin-top: 10px;
 }
 
 #post-username{
     text-overflow: ellipsis;
+}
+
+.post-button , .emoji-button {
+    background-color: white;
+    opacity: 0.9;
+    color: black;
 }
 
