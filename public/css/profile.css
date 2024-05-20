@@ -40,8 +40,8 @@
 .user-posts{
     height: 40%;
     overflow-y: scroll;
-    
-    }
+   
+}
 .user-posts li{
     list-style: none;
 }
@@ -53,10 +53,75 @@ h2{
     border-radius: 5px;
 }
 
-.user-posts p{
+.nothing{
     color: darkgreen;
     font-size: 40px;
     background-color: rgba(255, 255, 255, 0.8);
     padding: 10px;
     border-radius: 5px;
+}
+
+@media screen and (max-width: 890px) {
+    .profile-container {
+        width: 80%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .avatar {
+        width: 8em;
+    }
+
+    .profile-info {
+        margin-left: 0;
+        margin-top: 1em;
+        align-items: center;
+        text-align: center;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+
+    .user-posts {
+        height: auto;
+        width: 100%;
+        overflow-y: visible;
+    }
+
+    .user-posts p {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .profile-container {
+        width: 50%;
+        padding: 5px;
+    }
+
+    .avatar {
+        width: 6em;
+    }
+
+    .profile-info {
+        margin-left: 0;
+        margin-top: 0.5em;
+    }
+
+    .user-posts{
+        height: 40%;
+        width: 100%;
+        overflow-y: scroll;
+        overflow-x: none;
+       
+    }
+
+    .title {
+        font-size: 16px;
+    }
+
+    .user-posts p {
+        font-size: 18px;
+    }
 }
