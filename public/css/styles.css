@@ -295,8 +295,8 @@ footer p {
 }
 
 .post-form textarea {
-    height: 200px; /* Increase the size of the text input */
-    font-size: 18px; /* Ensure the text input size is larger */
+    height: 200px;
+    font-size: 18px;
 }
 
 

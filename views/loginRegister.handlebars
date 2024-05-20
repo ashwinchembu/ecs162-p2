@@ -1,6 +1,9 @@
 {{! Use the main layout }}
 {{!< main }}
 
+<link rel="stylesheet" href="/css/login.css">
+
+
 <section class="login-register">
     <section class = "login-area">
         <h2>Login</h2>
@@ -10,8 +13,8 @@
         {{/if}}
         <form action="/login" method="POST">
             <!-- the login form goes here -->        
-            <input type="text" id="username" name="username" required><br><br>
-             <button type="submit">Login</button>
+            <input type="text" id="username" name="username" placeholder = "Username" required><br><br>
+             <button id = "login-button" type="submit">Login</button>
         </form>
     </section>
 
@@ -25,8 +28,8 @@
         {{/if}}
         <form action="/register" method="POST">
             <!-- the registration form goes here -->
-            <input type="text" id="username" name="username" required><br><br>
-            <button type="submit">Register</button>
+            <input type="text" id="username" name="username"  placeholder = "Username" required><br><br>
+            <button id = "register-button" type="submit">Register</button>
         </form>
     </section>
 </section>

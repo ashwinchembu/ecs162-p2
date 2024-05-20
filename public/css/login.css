@@ -1,0 +1,46 @@
+.login-register{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-area, .register-area{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+#login-button, #register-button{
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    background: none;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgb(255, 255, 255);
+
+}
+
+#login-button:hover, #register-button:hover{
+    background-color:rgb(224, 224, 224);
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+}
+
+input {
+    width: 95%;
+    padding: 10px;
+    font-size: 18px;
+}
+
+@media screen and (max-width: 780px) {
+    input {
+        width: 90%;
+        padding: 5px;
+        font-size: 12px;
+    }
+    .login-area, .register-area{
+        margin: 10px;
+    }
+
+}
