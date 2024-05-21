@@ -104,7 +104,7 @@ app.use(express.json());                            // Parse JSON bodies (as sen
 
 app.get('/emojis', async (req,res)=>{
     try {
-        const response = await fetch(`https://emoji-api.com/emojis?access_key=c4d606297612407b2dd7b3f9b026bcb5686d8d9a`);
+        const response = await fetch(`https://emoji-api.com/emojis?access_key=${process.env.EMOJI_API_KEY}`);
         const data = await response.json();
         res.json(data);
     } catch (error) {

@@ -5,9 +5,14 @@ body, html {
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
     justify-content: center;
     align-items: center;
+    background-image: url('/images/Background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow: hidden;
 }
 
 header {
@@ -523,6 +528,22 @@ footer p {
     .profile-container {
         margin-top: 100px;
     }
+    #emoji-grid{
+        align-items: center;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        white-space: nowrap;
+        display: inline-block;
+        max-height: 22%;
+        width: 100%;
+        
+    }
+    #emoji-search{
+        align-items: center;
+        border: 1px gray solid;
+        max-height:10%;
+        border-radius: 2px;
+    }
   } 
 
 @media (width <= 400px) {
@@ -531,13 +552,17 @@ footer p {
     }
 
     .post-form {
-        margin-top: 30px;
+        width: 50%;
+        align-self: center;
+        margin-top: 20px;
+        margin-right: 10%;
     }
 
     .post {
         justify-content: center;
         margin-left: -20px;  
         margin-right: 20px;
+        margin-bottom: 5%;
     }
 
     .post p {
