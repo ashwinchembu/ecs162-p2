@@ -501,6 +501,12 @@ footer p {
   }
 
   @media (width <= 574px) {
+    .select-text{
+        font-size: 15%;
+        margin-right: -40px;
+        margin-left: -40px;
+        min-width: 15%;
+    }
     header {
         flex-direction: column;
         align-items: flex-start;
