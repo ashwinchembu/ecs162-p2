@@ -215,12 +215,16 @@ app.listen(PORT, () => {
 
 // Example data for posts and users
 let posts = [
-    { id: 1, title: 'Sample Post', content: 'This is a sample post.', username: 'SampleUser', timestamp: '2024-01-01 10:00', likes: [] },
-    { id: 2, title: 'Another Post', content: 'This is another sample post.', username: 'AnotherUser', timestamp: '2024-01-02 12:00', likes: [] },
+    { id: 1, title: 'Discovering Hidden Gems: "Celeste"',
+        content: 'I recently finished "Celeste" and the tight platforming mechanics, along with the touching story, really impressed me. Madeline\'s journey is beautifully crafted.',
+        username: 'PixelPioneer', timestamp: '2024-01-01 10:00', likes: [] },
+    { id: 2, title: 'The Charm of "Stardew Valley"',
+        content: 'I\'m completely hooked on "Stardew Valley." The game\'s relaxing vibe and the freedom to play at your own pace make it a cozy delight.',
+        username: 'RetroRaven', timestamp: '2024-01-02 12:00', likes: [] }
 ];
 let users = [
-    { id: 1, username: 'SampleUser', avatar_url: undefined, memberSince: '2024-01-01 08:00' },
-    { id: 2, username: 'AnotherUser', avatar_url: undefined, memberSince: '2024-01-02 09:00' },
+    { id: 1, username: 'PixelPioneer', avatar_url: '/avatars/PixelPioneer.png', memberSince: '2024-01-01 08:00' },
+    { id: 2, username: 'RetroRaven', avatar_url: '/avatars/RetroRaven.png', memberSince: '2024-01-02 09:00' },
 ];
 
 

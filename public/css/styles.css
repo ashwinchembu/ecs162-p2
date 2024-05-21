@@ -558,6 +558,12 @@ footer p {
     }
   } 
 
+  @media (width >=401) and (width <= 416) {
+    footer p {
+        text-align: center;
+    }
+  }
+
 @media (width <= 400px) {
     .navLinks, .user-info {
         right: 10px;
