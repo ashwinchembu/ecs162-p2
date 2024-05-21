@@ -248,16 +248,16 @@ let posts = [
 ];
 
 let users = [
-    { id: 1, username: 'PixelPioneer', avatar_url: undefined, memberSince: '2024-01-01 08:00' },
-    { id: 2, username: 'RetroRaven', avatar_url: undefined, memberSince: '2024-01-02 09:00' },
-    { id: 3, username: 'GamerGuru', avatar_url: undefined, memberSince: '2024-01-03 10:00' },
-    { id: 4, username: 'SoulSeeker', avatar_url: undefined, memberSince: '2024-01-04 11:00' },
-    { id: 5, username: 'StrategySavant', avatar_url: undefined, memberSince: '2024-01-05 12:00' },
-    { id: 6, username: 'IslandInnovator', avatar_url: undefined, memberSince: '2024-01-06 13:00' },
-    { id: 7, username: 'SpeedDemon', avatar_url: undefined, memberSince: '2024-01-07 14:00' },
-    { id: 8, username: 'PuzzleMaster', avatar_url: undefined, memberSince: '2024-01-08 15:00' },
-    { id: 9, username: 'UnderworldExplorer', avatar_url: undefined, memberSince: '2024-01-09 16:00' },
-    { id: 10, username: 'SpaceVoyager', avatar_url: undefined, memberSince: '2024-01-10 17:00' }
+    { id: 1, username: 'PixelPioneer', avatar_url: '/avatars/PixelPioneer.png', memberSince: '2024-01-01 08:00' },
+    { id: 2, username: 'RetroRaven', avatar_url: '/avatars/RetroRaven.png', memberSince: '2024-01-02 09:00' },
+    { id: 3, username: 'GamerGuru', avatar_url: '/avatars/GamerGuru.png', memberSince: '2024-01-03 10:00' },
+    { id: 4, username: 'SoulSeeker', avatar_url: '/avatars/SoulSeeker.png', memberSince: '2024-01-04 11:00' },
+    { id: 5, username: 'StrategySavant', avatar_url: '/avatars/StrategySavant.png', memberSince: '2024-01-05 12:00' },
+    { id: 6, username: 'IslandInnovator', avatar_url: '/avatars/IslandInnovator.png', memberSince: '2024-01-06 13:00' },
+    { id: 7, username: 'SpeedDemon', avatar_url: '/avatars/SpeedDemon.png', memberSince: '2024-01-07 14:00' },
+    { id: 8, username: 'PuzzleMaster', avatar_url: '/avatars/PuzzleMaster.png', memberSince: '2024-01-08 15:00' },
+    { id: 9, username: 'UnderworldExplorer', avatar_url: '/avatars/UnderworldExplorer.png', memberSince: '2024-01-09 16:00' },
+    { id: 10, username: 'SpaceVoyager', avatar_url: '/avatars/SpaceVoyager.png', memberSince: '2024-01-10 17:00' }
 ];
 
 
