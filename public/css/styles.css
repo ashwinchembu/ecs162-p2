@@ -550,6 +550,12 @@ footer p {
         max-height:10%;
         border-radius: 2px;
     }
+
+    footer {
+        justify-content: center;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
   } 
 
 @media (width <= 400px) {
@@ -590,10 +596,17 @@ footer p {
 
     footer {
         height: 35px;
+        justify-content: center;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
     footer p {
         font-size: 10px;
+    }
+
+    .user-posts {
+        margin-bottom: 35px;
     }
 
 }
