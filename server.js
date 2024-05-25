@@ -4,6 +4,8 @@ const session = require('express-session');
 const { createCanvas, loadImage } = require('canvas');
 const fs = require('fs');
 const path = require('path');
+const sqlite = require('sqlite');
+const sqlite3 = require('sqlite3');
 require('dotenv').config();
 
 
@@ -13,8 +15,8 @@ require('dotenv').config();
 
 const app = express();
 const PORT = 3000;
-let postcount = 2;
-let usercount = 2; 
+let postcount = posts.length;
+let usercount = users.length; 
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -41,6 +43,15 @@ let usercount = 2;
             {{/ifCond}}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
+
+
+//database setup
+
+async function connectToDatabase() {
+    const db = await sqlite.open({ filename: 'indie_arcade.db', driver: sqlite3.Database });
+    console.log('Connected to the SQLite database.');
+    return db;
+}
 
 // Set up Handlebars view engine with custom helpers
 //
@@ -204,10 +215,14 @@ app.post('/delete/:id', isAuthenticated, (req, res) => {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Server Activation
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+async function init(){
+await connectToDatabase();
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+}
+
+init();
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Support Functions and Variables
