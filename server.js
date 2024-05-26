@@ -129,9 +129,9 @@ app.get('/emojis', async (req,res)=>{
 // We pass the posts and user variables into the home
 // template
 //
-app.get('/', (req, res) => {
-    const posts = getPosts();
-    const user = getCurrentUser(req) || {};
+app.get('/', async (req, res) => {
+    const posts = await getPosts();
+    const user = await getCurrentUser(req) || {};
     res.render('home', { posts, user });
 });
 
@@ -579,16 +579,16 @@ async function updatePostLikes(req, res) {
     // TODO: Increment post likes if conditions are met
     let user = await getCurrentUser(req);
     if (user){
-        let posts = await db.all('SELECT likes FROM posts WHERE id = ?', [req.params.id]);
+        let post = await db.get('SELECT likes FROM posts WHERE id = ?', [req.params.id]);
         const likes = JSON.parse(post.likes);
-        const usernameIndex = likes.indexOf(username);
+        const userIndex = likes.indexOf(username);
         if (userIndex === -1) {
             likes.push(user.username);
         } else {
             likes.splice(userIndex, 1);
         }
         await db.run('UPDATE posts SET likes = ? WHERE id = ?', [JSON.stringify(likes),req.params.id]);
-    console.log('inside update post likes', posts);
+    console.log('inside update post likes');
     return true;
 }
 else{
@@ -622,7 +622,7 @@ async function handleAvatar(req, res) {
 }
 
 async function getPosts() {
-    return posts.slice().reverse();
+    return await db.all('SELECT * FROM posts ORDER BY timestamp DESC');
 }
 
 // Function to add a new post
@@ -642,9 +642,8 @@ async function addPost(title, content, user) {
 async function deletePost(req,res, id){
     let user = await getCurrentUser(req);
     let username = user.username;
-        for(let i = 0; i < posts.length; i++){
-            if (posts[i].username === username){
-                posts.splice(i,1);
-            }
-        }
+    let post = await db.get('SELECT * FROM posts WHERE id = ?', [id]);
+    if (post.username === username){
+    await db.run('DELETE FROM posts WHERE id = ?', [id]);
+    }
 }
