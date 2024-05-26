@@ -73,6 +73,11 @@ app.engine(
             ifEqual: function (arg1, arg2, options) {
                 return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
             },
+            calculateLikes: function (likes){
+                let currentlikes = [];
+                currentlikes = JSON.parse(likes);
+                return currentlikes.length
+            },
         },
     })
 );
@@ -178,9 +183,9 @@ app.get('/profile', isAuthenticated, (req, res) => {
    renderProfile(req,res);
 });
 
-app.get('/avatar/:username', (req, res) => {
+app.get('/avatar/:username', async (req, res) => {
     // TODO: Serve the avatar image for the user
-    handleAvatar(req,res);
+    await handleAvatar(req,res);
 });
 app.post('/register', (req, res) => {
     // TODO: Register a new user
@@ -604,10 +609,14 @@ async function handleAvatar(req, res) {
     const user = await findUserByUsername(username);
 
     const avatarPath = path.join(__dirname, 'public', 'avatars', `${username}.png`);
+    
+    console.log("handle avatar");
 
     if (fs.existsSync(avatarPath)) {
+        console.log("exists");
         return res.sendFile(avatarPath);
     } else {
+        console.log("new user");
         const avatarBuffer = generateAvatar(username.charAt(0).toUpperCase());
         fs.writeFileSync(avatarPath, avatarBuffer);
         await db.run('UPDATE users SET avatar_url = ? WHERE username = ?', [avatarPath,username]);
