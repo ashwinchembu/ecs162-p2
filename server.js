@@ -155,9 +155,9 @@ app.get('/error', (req, res) => {
 
 // Additional routes that you must implement
 
-app.post('/posts', (req, res) => {
+app.post('/posts', async (req, res) => {
     // TODO: Add a new post and redirect to home
-    addPost(req.body.title, req.body.content, getCurrentUser(req));
+    addPost(req.body.title, req.body.content, await getCurrentUser(req));
     res.redirect('/');
 });
 app.post('/like/:id', (req, res) => {
@@ -195,12 +195,12 @@ app.get('/logout', (req, res) => {
     // TODO: Logout the user
     logoutUser(req,res);
 });
-app.post('/delete/:id', isAuthenticated, (req, res) => {
+app.post('/delete/:id', isAuthenticated, async (req, res) => {
     // TODO: Delete a post if the current user is the owner
         console.log("deleting post");
-        let user = getCurrentUser(req);
+        let user = await getCurrentUser(req);
         if(user){
-        deletePost(req, res);
+        await deletePost(req, res);
         res.status(200).send({ message: "Deleted post successfully" });
     }
     else{
@@ -580,8 +580,10 @@ async function updatePostLikes(req, res) {
     let user = await getCurrentUser(req);
     if (user){
         let post = await db.get('SELECT likes FROM posts WHERE id = ?', [req.params.id]);
-        const likes = JSON.parse(post.likes);
-        const userIndex = likes.indexOf(username);
+        let likes = [];
+        likes = JSON.parse(post.likes);
+        console.log('likes', likes);
+        const userIndex = likes.indexOf(user.username);
         if (userIndex === -1) {
             likes.push(user.username);
         } else {
@@ -633,17 +635,21 @@ async function addPost(title, content, user) {
     posts.push({id: postcount += 1, title: title, content: content, username: user.username, timestamp: formatPostDate(new Date()), likes: [] })
     console.log(posts);
     */
-    db.run(
+    await db.run(
         'INSERT INTO posts (title, content, username, timestamp, likes) VALUES (?, ?, ?, ?, ?)',
-        [title, content, user.username, formatPostDate(new Date()), []]
+        [title, content, user.username, formatPostDate(new Date()), JSON.stringify([])]
     );
 }
 
 async function deletePost(req,res, id){
     let user = await getCurrentUser(req);
     let username = user.username;
-    let post = await db.get('SELECT * FROM posts WHERE id = ?', [id]);
+    console.log("delete please:", req.params.id);
+    let post = await db.get('SELECT * FROM posts WHERE id = ?', [req.params.id]);
+    console.log("delete please:", post);
+    if (post ){
     if (post.username === username){
-    await db.run('DELETE FROM posts WHERE id = ?', [id]);
+    await db.run('DELETE FROM posts WHERE id = ?', [req.params.id]);
     }
+}
 }
