@@ -7,6 +7,8 @@ const path = require('path');
 const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 const { exec } = require('child_process'); 
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
 
 
@@ -19,6 +21,114 @@ const PORT = 3000;
 let db;
 //let postcount = posts.length;
 //let usercount = users.length; 
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// OAuth Stuff
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// Use environment variables for client ID and secret
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+
+// Configure passport
+passport.use(new GoogleStrategy({
+    clientID: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    callbackURL: `http://localhost:${PORT}/auth/google/callback`
+}, (token, tokenSecret, profile, done) => {
+    return done(null, profile);
+}));
+
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+    done(null, obj);
+});
+
+
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+
+
+// Handle Google callback 
+app.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/'}),
+    async (req, res) => {
+        // Extracts the user's Google ID.
+        const googleId = req.user.id;
+        const hashedGoogleId = hash(googleId);
+        req.session.hashedGoogleId = hashedGoogleId;
+
+        // Check if user already exists 
+        try {
+            // Hashes the Google ID and checks if the user exists in the database.
+            let localUser = await findUserByHashedGoogleId(hashedGoogleId);
+            if (localUser) {
+                // If the user exists, sets session variables and redirects to home.
+                req.session.userId = localUser.id;
+                req.session.loggedIn = true;
+                res.redirect('/');
+            } else {
+                // If the user does not exist, redirects to the /registerUsername route.
+                res.redirect ('/registerUsername');
+            }
+        }
+        catch(err){
+            console. error('Error finding user:', err); 
+            res. redirect ('/error');
+        }
+    }
+);
+
+app.get('/registerUsername', (req, res) => {
+    res.render('registerUsername', { error: req.query.error });
+});
+
+app.post('/registerUsername', async (req, res) => {
+    const username = req.body.username;
+    const hashedGoogleId = req.session.hashedGoogleId;
+
+    try {
+        // Checks if the username already exists in the database.
+        let existingUser = await findUserByUsername(username);
+        if (existingUser) {
+            // If the username exists, re-renders the form with an error message.
+            return res.render('registerUsername', { error: 'Username already taken' });
+        }
+        else{
+            //If the username does not exist, creates a new user entry and sets session variables.
+            await addUser(username, hashedGoogleId);
+
+            let newUser = await findUserByUsername(username);
+            req.session.userId = newUser.id;
+            req.session.loggedIn = true;
+
+            //Redirects to the home page on successful registration.
+            res.redirect('/');
+        }
+
+        // Add the new user to the database
+       
+
+    } catch (err) {
+        console.error('Error registering username:', err);
+        res.redirect('/error');
+    }
+});
+
+app.get('/googleLogout', (req, res) => {
+    res.render('googleLogout');
+});
+
+//database setup
+
+async function connectToDatabase() {
+    db = await sqlite.open({ filename: 'indie_arcade.db', driver: sqlite3.Database });
+    console.log('Connected to the SQLite database.');
+    return db;
+}
+
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -47,14 +157,6 @@ let db;
 */
 
 
-//database setup
-
-async function connectToDatabase() {
-    db = await sqlite.open({ filename: 'indie_arcade.db', driver: sqlite3.Database });
-    console.log('Connected to the SQLite database.');
-    return db;
-}
-
 // Set up Handlebars view engine with custom helpers
 //
 app.engine(
@@ -78,6 +180,13 @@ app.engine(
                 currentlikes = JSON.parse(likes);
                 return currentlikes.length
             },
+            userLikedPost: function (likes, username, options) {
+                let currentLikes = JSON.parse(likes);
+                if (currentLikes.includes(username)) {
+                    return options.fn(this);
+                }
+                return options.inverse(this);
+            }
         },
     })
 );
@@ -109,6 +218,7 @@ app.use((req, res, next) => {
     res.locals.postNeoType = 'Post';
     res.locals.loggedIn = req.session.loggedIn || false;
     res.locals.userId = req.session.userId || '';
+    res.locals.hashedGoogleId = req.session.hashedGoogleId || '';
     next();
 });
 
@@ -199,6 +309,7 @@ app.post('/login', (req, res) => {
 app.get('/logout', (req, res) => {
     // TODO: Logout the user
     logoutUser(req,res);
+    res.redirect('/googleLogout');
 });
 app.post('/delete/:id', isAuthenticated, async (req, res) => {
     // TODO: Delete a post if the current user is the owner
@@ -218,8 +329,6 @@ app.post('/delete/:id', isAuthenticated, async (req, res) => {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 async function init(){
 await connectToDatabase();
-let postcount = posts.length;
-let usercount = users.length; 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
@@ -231,7 +340,7 @@ init();
 // Support Functions and Variables
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
+/*
 // Example data for posts and users
 let posts = [
     { id: 1, title: 'Discovering Hidden Gems: "Celeste"',
@@ -278,6 +387,11 @@ let users = [
     { id: 9, username: 'UnderworldExplorer', avatar_url: '/avatars/UnderworldExplorer.png', memberSince: '2024-01-09 16:00' },
     { id: 10, username: 'SpaceVoyager', avatar_url: '/avatars/SpaceVoyager.png', memberSince: '2024-01-10 17:00' }
 ];
+*/
+
+function hash(key){
+    return Math.log((parseInt(key) % 240) ** 2) * 10000000000000000; 
+}
 
 
 
@@ -344,7 +458,7 @@ function isAuthenticated(req, res, next) {
         res.redirect('/login');
     }
 }
-
+/*
 // Function to register a user
 async function registerUser(req, res) {
     const username = req.body.username;
@@ -357,7 +471,7 @@ async function registerUser(req, res) {
         await addUser(username);
         req.session.loggedIn = true;
         console.log("finding user by username from register");
-        req.session.userId = await findUserByUsername(req.body.username).hashedGoogleId;
+        req.session.userId = (await findUserByUsername(req.body.username)).hashedGoogleId;
         res.redirect('/');
     }
     console.log("registerUser");
@@ -379,6 +493,7 @@ async function loginUser(req, res) {
     console.log("loginUser");
 }
 
+*/
 // Function to logout a user
 function logoutUser(req, res) {
     // TODO: Destroy session and redirect appropriately
@@ -386,6 +501,7 @@ function logoutUser(req, res) {
     req.session.userId = '';
     res.redirect('/');
 }
+
 
 // Function to render the profile page
 /*
@@ -548,7 +664,7 @@ async function findUserById(userId) {
     // TODO: Return user object if found, otherwise return undefined
     console.log("finding by id using:", userId);
     try {
-        let find = await db.get('SELECT * FROM Users WHERE hashedGoogleId = ?', [userId]);
+        let find = await db.get('SELECT * FROM Users WHERE id = ?', [userId]);
         console.log("finduserbyid:" , find);
         return find;
     } catch (error) {
@@ -557,10 +673,25 @@ async function findUserById(userId) {
     }
 }
 
-async function addUser(username) {
+
+
+async function findUserByHashedGoogleId(hashedGoogleId) {
+    // TODO: Return user object if found, otherwise return undefined
+    console.log("finding by hashedGoogleId using:", hashedGoogleId);
+    try {
+        let find = await db.get('SELECT * FROM Users WHERE hashedGoogleId = ?', [hashedGoogleId]);
+        console.log("finduserbyhashedGoogleId:" , find);
+        return find;
+    } catch (error) {
+        console.error('Error finding user by hashedGoogleId:', error);
+        return undefined;
+    }
+}
+
+
+async function addUser(username, hashedGoogleId) {
     // TODO: Create a new user object and add to users array
-    //TODO 2: fix hashed googleID
-    let user = {username: username, hashedGoogleId: String(Math.random() * 100), avatar_url: undefined, memberSince: formatPostDate(new Date()) };
+    let user = {username: username, hashedGoogleId: hashedGoogleId, avatar_url: undefined, memberSince: formatPostDate(new Date()) };
     //users.push(user);
     db.run(
         'INSERT INTO users (username, hashedGoogleId, avatar_url, memberSince) VALUES (?, ?, ?, ?)',

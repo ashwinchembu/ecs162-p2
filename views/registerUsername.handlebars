@@ -1,0 +1,24 @@
+{{! Use the main layout }}
+{{!< main }}
+
+<link rel="stylesheet" href="/css/login.css">
+
+<!-- Playstation button images sourced from Wikipedia (https://commons.wikimedia.org/wiki/File:PlayStation_Certified2.svg) -->
+<img src="/images/PlayStationTriangle.png" alt="PlayStation Triangle Button" class="PSButtons" id="PSTriangle">
+
+<section class="register">
+    <section class="register-area">
+        <h2>Register</h2>
+        <!-- errors will appear here -->
+        {{#if error}}
+            <p style="color: red;">{{error}}</p>
+        {{/if}}
+        <form action="/registerUsername" method="POST">
+            <!-- the registration form goes here -->
+            <input type="text" id="username" name="username" placeholder="Username" required><br><br>
+            <button type="submit" id="register-button">Register 
+                <img src="/images/PlayStationCircle.png" alt="PlayStation Circle Button" class="PSButtons" id="PSCircle"> 
+            </button>
+        </form>
+    </section>
+</section>

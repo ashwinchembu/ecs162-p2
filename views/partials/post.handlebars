@@ -16,7 +16,7 @@
                     <i class="fas fa-trash-alt"></i>
                 </button>
             {{else}}
-                <button class="like-button" data-id="{{id}}" onclick="handleLikeClick(event)" style="color: {{#if liked}}red{{/if}};">
+                <button class="like-button" data-id="{{id}}" onclick="handleLikeClick(event)" style="color: {{#userLikedPost likes user.username}}red{{else}}black{{/userLikedPost}};">
                     ♥
                 </button>
             {{/ifEqual}}
