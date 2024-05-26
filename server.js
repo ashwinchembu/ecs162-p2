@@ -175,7 +175,7 @@ else{
 });
 app.get('/profile', isAuthenticated, (req, res) => {
     // TODO: Render profile page
-    renderProfile(req,res);
+   renderProfile(req,res);
 });
 
 app.get('/avatar/:username', (req, res) => {
@@ -332,7 +332,7 @@ function addUser(username) {
 
 // Middleware to check if user is authenticated
 function isAuthenticated(req, res, next) {
-    console.log(req.session.userId);
+    console.log("isauthentiated: ", req.session.userId);
     if (req.session.userId) {
         next();
     } else {
@@ -351,24 +351,27 @@ async function registerUser(req, res) {
     } else {
         await addUser(username);
         req.session.loggedIn = true;
-        req.session.userId = findUserByUsername(req.body.username).id;
+        console.log("finding user by username from register");
+        req.session.userId = await findUserByUsername(req.body.username).hashedGoogleId;
         res.redirect('/');
     }
     console.log("registerUser");
 }
 
 // Function to login a user
-function loginUser(req, res) {
+async function loginUser(req, res) {
     // TODO: Login a user and redirect appropriately
     const username = req.body.username;
-    if (findUserByUsername(username) == undefined){
+    if (await findUserByUsername(username) == undefined){
         res.redirect('/login?error=User+does+not+exist')
     } else {
         req.session.loggedIn = true;
-        req.session.userId = findUserByUsername(req.body.username).id;
+        console.log("finding user by username from login", (await findUserByUsername(req.body.username)).hashedGoogleId);
+        req.session.userId = (await findUserByUsername(req.body.username)).hashedGoogleId;
+        console.log("logging in and setting userId", req.session.userId);
         res.redirect('/');
     }
-    console.log("loginUser", users);
+    console.log("loginUser");
 }
 
 // Function to logout a user
@@ -460,6 +463,7 @@ function handleAvatar(req, res) {
 // Function to get the current user from session
 async function getCurrentUser(req) {
     // TODO: Return the user object if the session user ID matches
+    console.log("getCurrentUser: ",req.session.userId);
     return await findUserById(req.session.userId);
 }
 /*
@@ -524,10 +528,10 @@ function generateAvatar(letter, width = 100, height = 100) {
 
 async function findUserByUsername(username) {
     // TODO: Return user object if found, otherwise return undefined
-    console.log(username);
+    console.log("finding by username using:" , username);
     try {
         let find = await db.get('SELECT * FROM Users WHERE username = ?', [username]);
-        console.log(find);
+        console.log("finduserbyusername" , find);
         return find;
     } catch (error) {
         console.error('Error finding user by username:', error);
@@ -537,10 +541,10 @@ async function findUserByUsername(username) {
 
 async function findUserById(userId) {
     // TODO: Return user object if found, otherwise return undefined
-    console.log(userId);
+    console.log("finding by id using:", userId);
     try {
         let find = await db.get('SELECT * FROM Users WHERE hashedGoogleId = ?', [userId]);
-        console.log(find);
+        console.log("finduserbyid:" , find);
         return find;
     } catch (error) {
         console.error('Error finding user by Id:', error);
@@ -561,25 +565,18 @@ async function addUser(username) {
 
 async function renderProfile(req, res) {
     // TODO: Fetch user posts and render the profile page
-    let user = getCurrentUser(req);
+    let user = await getCurrentUser(req);
+    console.log("renderProfile:", user);
     let username = user.username;
-    let userposts = [];
-    posts.forEach((post) =>{
-        if (post.username === username){
-            userposts.push(post);
-        }
-    }
-    );
-    console.log(userposts)
+    let userposts = await db.all('SELECT * FROM posts WHERE username = ?', [username]);
+    console.log('userposts:' , userposts)
     user.posts = userposts;
     res.render('profile', {user});
-
 }
 
 async function updatePostLikes(req, res) {
     // TODO: Increment post likes if conditions are met
-
-    let user = getCurrentUser(req);
+    let user = await getCurrentUser(req);
     if (user){
     for(let i = 0; i < posts.length; i++){
         console.log(posts[i].id);
@@ -607,7 +604,7 @@ else{
 async function handleAvatar(req, res) {
     // TODO: Generate and serve the user's avatar image
     const username = req.params.username;
-    const user = findUserByUsername(username);
+    const user = await findUserByUsername(username);
 
     const avatarPath = path.join(__dirname, 'public', 'avatars', `${username}.png`);
 
@@ -642,7 +639,7 @@ async function addPost(title, content, user) {
 }
 
 async function deletePost(req,res, id){
-    let user = getCurrentUser(req);
+    let user = await getCurrentUser(req);
     let username = user.username;
         for(let i = 0; i < posts.length; i++){
             if (posts[i].username === username){
