@@ -552,7 +552,11 @@ async function addUser(username) {
     // TODO: Create a new user object and add to users array
     //TODO 2: fix hashed googleID
     let user = {username: username, hashedGoogleId: String(Math.random() * 100), avatar_url: undefined, memberSince: formatPostDate(new Date()) };
-    users.push(user);
+    //users.push(user);
+    db.run(
+        'INSERT INTO users (username, hashedGoogleId, avatar_url, memberSince) VALUES (?, ?, ?, ?)',
+        [user.username, user.hashedGoogleId, user.avatar_url, user.memberSince]
+    );
 }
 
 async function renderProfile(req, res) {
