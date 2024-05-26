@@ -610,11 +610,7 @@ async function handleAvatar(req, res) {
     } else {
         const avatarBuffer = generateAvatar(username.charAt(0).toUpperCase());
         fs.writeFileSync(avatarPath, avatarBuffer);
-        user.avatar_url = `/avatars/${username}.png`;
-        const userIndex = users.findIndex(u => u.username === username);
-        if (userIndex !== -1) {
-            users[userIndex] = user;
-        }
+        await db.run('UPDATE users SET avatar_url = ? WHERE username = ?', [avatarPath,username]);
         return res.sendFile(avatarPath);
     }
 
