@@ -13,6 +13,7 @@ async function showDatabaseContents() {
 
     // Check if the users table exists
     const usersTableExists = await db.get(`SELECT name FROM sqlite_master WHERE type='table' AND name='users';`);
+    console.log(usersTableExists);
     if (usersTableExists) {
         console.log('Users table exists.');
         const users = await db.all('SELECT * FROM users');

@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
+const { exec } = require('child_process'); 
 require('dotenv').config();
 
 
@@ -15,6 +16,7 @@ require('dotenv').config();
 
 const app = express();
 const PORT = 3000;
+let db;
 //let postcount = posts.length;
 //let usercount = users.length; 
 
@@ -48,7 +50,7 @@ const PORT = 3000;
 //database setup
 
 async function connectToDatabase() {
-    const db = await sqlite.open({ filename: 'indie_arcade.db', driver: sqlite3.Database });
+    db = await sqlite.open({ filename: 'indie_arcade.db', driver: sqlite3.Database });
     console.log('Connected to the SQLite database.');
     return db;
 }
@@ -211,6 +213,8 @@ app.post('/delete/:id', isAuthenticated, (req, res) => {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 async function init(){
 await connectToDatabase();
+let postcount = posts.length;
+let usercount = users.length; 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
@@ -222,7 +226,7 @@ init();
 // Support Functions and Variables
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-/*
+
 // Example data for posts and users
 let posts = [
     { id: 1, title: 'Discovering Hidden Gems: "Celeste"',
@@ -269,7 +273,7 @@ let users = [
     { id: 9, username: 'UnderworldExplorer', avatar_url: '/avatars/UnderworldExplorer.png', memberSince: '2024-01-09 16:00' },
     { id: 10, username: 'SpaceVoyager', avatar_url: '/avatars/SpaceVoyager.png', memberSince: '2024-01-10 17:00' }
 ];
-*/
+
 
 
 
@@ -337,19 +341,20 @@ function isAuthenticated(req, res, next) {
 }
 
 // Function to register a user
-function registerUser(req, res) {
+async function registerUser(req, res) {
     const username = req.body.username;
     console.log("Attempting to register:", username);
-    console.log(users);
-    if (findUserByUsername(username)){
+    //console.log(users);
+    console.log("username:" ,findUserByUsername(username));
+    if (await findUserByUsername(username)){
         res.redirect('/register?error=Username+already+exists')
     } else {
-        addUser(username);
+        await addUser(username);
         req.session.loggedIn = true;
         req.session.userId = findUserByUsername(req.body.username).id;
         res.redirect('/');
     }
-    console.log("registerUser", users);
+    console.log("registerUser");
 }
 
 // Function to login a user
@@ -519,27 +524,34 @@ function generateAvatar(letter, width = 100, height = 100) {
 
 async function findUserByUsername(username) {
     // TODO: Return user object if found, otherwise return undefined
-    for(let i = 0; i < users.length; i++){
-        if (users[i].username === username){
-            return users[i];
-        }
+    console.log(username);
+    try {
+        let find = await db.get('SELECT * FROM Users WHERE username = ?', [username]);
+        console.log(find);
+        return find;
+    } catch (error) {
+        console.error('Error finding user by username:', error);
+        return undefined;
     }
-    return undefined;
 }
 
 async function findUserById(userId) {
     // TODO: Return user object if found, otherwise return undefined
-    for(let i = 0; i < users.length; i++){
-        if (users[i].id === userId){
-            return users[i];
-        }
+    console.log(userId);
+    try {
+        let find = await db.get('SELECT * FROM Users WHERE username = ?', [userId]);
+        console.log(find);
+        return find;
+    } catch (error) {
+        console.error('Error finding user by username:', error);
+        return undefined;
     }
-    return undefined;
 }
 
 async function addUser(username) {
     // TODO: Create a new user object and add to users array
-    let user = {id: usercount += 1, username: username, avatar_url: undefined, memberSince: formatPostDate(new Date()) };
+    //TODO 2: fix hashed googleID
+    let user = {username: username, hashedGoogleId: String(Math.random() * 100), avatar_url: undefined, memberSince: formatPostDate(new Date()) };
     users.push(user);
 }
 
