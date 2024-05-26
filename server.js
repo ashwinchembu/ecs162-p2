@@ -458,9 +458,9 @@ function handleAvatar(req, res) {
 */
 
 // Function to get the current user from session
-function getCurrentUser(req) {
+async function getCurrentUser(req) {
     // TODO: Return the user object if the session user ID matches
-    return findUserById(req.session.userId);
+    return await findUserById(req.session.userId);
 }
 /*
 // Function to get all posts, sorted by latest first
@@ -539,11 +539,11 @@ async function findUserById(userId) {
     // TODO: Return user object if found, otherwise return undefined
     console.log(userId);
     try {
-        let find = await db.get('SELECT * FROM Users WHERE username = ?', [userId]);
+        let find = await db.get('SELECT * FROM Users WHERE hashedGoogleId = ?', [userId]);
         console.log(find);
         return find;
     } catch (error) {
-        console.error('Error finding user by username:', error);
+        console.error('Error finding user by Id:', error);
         return undefined;
     }
 }
