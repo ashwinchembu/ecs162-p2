@@ -561,6 +561,7 @@ async function addUser(username) {
         'INSERT INTO users (username, hashedGoogleId, avatar_url, memberSince) VALUES (?, ?, ?, ?)',
         [user.username, user.hashedGoogleId, user.avatar_url, user.memberSince]
     );
+
 }
 
 async function renderProfile(req, res) {
@@ -578,21 +579,15 @@ async function updatePostLikes(req, res) {
     // TODO: Increment post likes if conditions are met
     let user = await getCurrentUser(req);
     if (user){
-    for(let i = 0; i < posts.length; i++){
-        console.log(posts[i].id);
-        console.log(req.params.id);
-
-        if (posts[i].id == req.params.id){
-            let userIndex = posts[i].likes.indexOf(user.username);
-            console.log('inside logs');
-            if (userIndex === -1) {
-                posts[i].likes.push(user.username);
-            } else {
-                posts[i].likes.splice(userIndex, 1);
-            }
+        let posts = await db.all('SELECT likes FROM posts WHERE id = ?', [req.params.id]);
+        const likes = JSON.parse(post.likes);
+        const usernameIndex = likes.indexOf(username);
+        if (userIndex === -1) {
+            likes.push(user.username);
+        } else {
+            likes.splice(userIndex, 1);
         }
-
-    }
+        await db.run('UPDATE posts SET likes = ? WHERE id = ?', [JSON.stringify(likes),req.params.id]);
     console.log('inside update post likes', posts);
     return true;
 }
@@ -633,9 +628,15 @@ async function getPosts() {
 // Function to add a new post
 async function addPost(title, content, user) {
     // TODO: Create a new post object and add to posts array
+    /*
     console.log(users)
     posts.push({id: postcount += 1, title: title, content: content, username: user.username, timestamp: formatPostDate(new Date()), likes: [] })
     console.log(posts);
+    */
+    db.run(
+        'INSERT INTO posts (title, content, username, timestamp, likes) VALUES (?, ?, ?, ?, ?)',
+        [title, content, user.username, formatPostDate(new Date()), []]
+    );
 }
 
 async function deletePost(req,res, id){
