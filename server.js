@@ -8,7 +8,7 @@ const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 const { exec } = require('child_process'); 
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
 
 
@@ -30,14 +30,22 @@ let db;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
+console.log("CLIENT_ID:", process.env.CLIENT_ID);
+console.log("CLIENT_SECRET:", process.env.CLIENT_SECRET);
+
+
+
 // Configure passport
 passport.use(new GoogleStrategy({
     clientID: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
-    callbackURL: `http://localhost:${PORT}/auth/google/callback`
-}, (token, tokenSecret, profile, done) => {
+    callbackURL: `http://localhost:${PORT}/auth/google/callback`,
+    passReqToCallback: true
+}, (request, accessToken, refreshToken, profile, done) => {
+    console.log('Google profile:', profile);
     return done(null, profile);
 }));
+
 
 passport.serializeUser((user, done) => {
     done(null, user);
@@ -48,86 +56,7 @@ passport.deserializeUser((obj, done) => {
 });
 
 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
 
-
-// Handle Google callback 
-app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/'}),
-    async (req, res) => {
-        // Extracts the user's Google ID.
-        const googleId = req.user.id;
-        const hashedGoogleId = hash(googleId);
-        req.session.hashedGoogleId = hashedGoogleId;
-
-        // Check if user already exists 
-        try {
-            // Hashes the Google ID and checks if the user exists in the database.
-            let localUser = await findUserByHashedGoogleId(hashedGoogleId);
-            if (localUser) {
-                // If the user exists, sets session variables and redirects to home.
-                req.session.userId = localUser.id;
-                req.session.loggedIn = true;
-                res.redirect('/');
-            } else {
-                // If the user does not exist, redirects to the /registerUsername route.
-                res.redirect ('/registerUsername');
-            }
-        }
-        catch(err){
-            console. error('Error finding user:', err); 
-            res. redirect ('/error');
-        }
-    }
-);
-
-app.get('/registerUsername', (req, res) => {
-    res.render('registerUsername', { error: req.query.error });
-});
-
-app.post('/registerUsername', async (req, res) => {
-    const username = req.body.username;
-    const hashedGoogleId = req.session.hashedGoogleId;
-
-    try {
-        // Checks if the username already exists in the database.
-        let existingUser = await findUserByUsername(username);
-        if (existingUser) {
-            // If the username exists, re-renders the form with an error message.
-            return res.render('registerUsername', { error: 'Username already taken' });
-        }
-        else{
-            //If the username does not exist, creates a new user entry and sets session variables.
-            await addUser(username, hashedGoogleId);
-
-            let newUser = await findUserByUsername(username);
-            req.session.userId = newUser.id;
-            req.session.loggedIn = true;
-
-            //Redirects to the home page on successful registration.
-            res.redirect('/');
-        }
-
-        // Add the new user to the database
-       
-
-    } catch (err) {
-        console.error('Error registering username:', err);
-        res.redirect('/error');
-    }
-});
-
-app.get('/googleLogout', (req, res) => {
-    res.render('googleLogout');
-});
-
-//database setup
-
-async function connectToDatabase() {
-    db = await sqlite.open({ filename: 'indie_arcade.db', driver: sqlite3.Database });
-    console.log('Connected to the SQLite database.');
-    return db;
-}
 
 
 /*
@@ -209,6 +138,9 @@ app.use(
     })
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Replace any of these variables below with constants for your application. These variables
 // should be used in your template files. 
 // 
@@ -229,6 +161,82 @@ app.use(express.json());                            // Parse JSON bodies (as sen
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Routes
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+app.get('/auth/google', (req, res, next) => {
+    passport.authenticate('google', { scope: ['email', 'profile'] })(req, res, next);
+});
+
+app.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login?error=Failed to authenticate with Google' }),
+    async (req, res) => {
+        const googleId = req.user.id;
+        const hashedGoogleId = hash(googleId);
+        req.session.hashedGoogleId = hashedGoogleId;
+
+        try {
+            let localUser = await findUserByHashedGoogleId(hashedGoogleId);
+            if (localUser) {
+                req.session.userId = localUser.id;
+                req.session.loggedIn = true;
+                res.redirect('/');
+            } else {
+                res.redirect('/registerUsername');
+            }
+        } catch (err) {
+            console.error('Error finding user:', err);
+            res.redirect('/error');
+        }
+    }
+);
+
+
+app.get('/registerUsername', (req, res) => {
+    res.render('registerUsername', { error: req.query.error });
+});
+
+app.post('/registerUsername', async (req, res) => {
+    const username = req.body.username;
+    const hashedGoogleId = req.session.hashedGoogleId;
+
+    try {
+        // Checks if the username already exists in the database.
+        let existingUser = await findUserByUsername(username);
+        if (existingUser) {
+            // If the username exists, re-renders the form with an error message.
+            return res.render('registerUsername', { error: 'Username already taken' });
+        }
+        else{
+            //If the username does not exist, creates a new user entry and sets session variables.
+            await addUser(username, hashedGoogleId);
+
+            let newUser = await findUserByUsername(username);
+            req.session.userId = newUser.id;
+            req.session.loggedIn = true;
+
+            //Redirects to the home page on successful registration.
+            res.redirect('/');
+        }
+
+        // Add the new user to the database
+       
+
+    } catch (err) {
+        console.error('Error registering username:', err);
+        res.redirect('/error');
+    }
+});
+
+app.get('/googleLogout', (req, res) => {
+    res.render('googleLogout');
+});
+
+//database setup
+
+async function connectToDatabase() {
+    db = await sqlite.open({ filename: 'indie_arcade.db', driver: sqlite3.Database });
+    console.log('Connected to the SQLite database.');
+    return db;
+}
 
 app.get('/emojis', async (req,res)=>{
     try {
@@ -307,10 +315,18 @@ app.post('/login', (req, res) => {
     loginUser(req,res);
 });
 app.get('/logout', (req, res) => {
-    // TODO: Logout the user
-    logoutUser(req,res);
-    res.redirect('/googleLogout');
+    // Destroy the session
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            // Handle the error appropriately
+            return res.redirect('/error');
+        }
+        // After destroying the session, redirect to the Google logout page
+        res.redirect('/googleLogout');
+    });
 });
+
 app.post('/delete/:id', isAuthenticated, async (req, res) => {
     // TODO: Delete a post if the current user is the owner
         console.log("deleting post");
