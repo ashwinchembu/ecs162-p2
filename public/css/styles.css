@@ -1,3 +1,4 @@
+/***** Main Page Styling *****/
 body, html {
     display: flex;
     flex-direction: column;
@@ -28,10 +29,10 @@ header {
 }
 
 .HomeBackground {
-    background-size: cover; /* Maintain the aspect ratio and contain the image within the container */
-    background-position: center center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent the background image from repeating */
-    background-attachment: fixed; /* Keep the background fixed while scrolling */
+    background-size: cover;
+    background-position: center center; 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     position: fixed;
     z-index: -1;
     top: 0;
@@ -47,10 +48,9 @@ header {
     top: 0;
     font-size: 10px;
     left: 30px;
-
 }
 
-.logo img{
+.logo img {
     width: 10%;
     height: 10%;
 }
@@ -66,6 +66,7 @@ h1 {
     color: darkGreen;
 }
 
+/***** Navigation Styling *****/
 .navLinks {
     display: flex;
     align-items: center;
@@ -73,7 +74,6 @@ h1 {
     left: 20px;
     z-index: 20;
     color: darkGreen;
-
 }
 
 .navLinks a {
@@ -95,7 +95,7 @@ h1 {
     color: darkgreen;
 }
 
-.user-info{
+.user-info {
     top: 12px;
     max-width: 30em;
     text-overflow: ellipsis;
@@ -103,15 +103,14 @@ h1 {
     white-space: nowrap;
 }
 
-.user-info:hover {
+.user-info:hover, .navLinks:hover {
     color: black;
 }
 
 a {
-    color: darkGreen;
+    color: #006400;
     text-decoration: none;
 }
-
 
 a:hover {
     color: black;
@@ -131,12 +130,7 @@ a:hover {
     z-index: 20;
 }
 
-/* .welcomeMessage {
-    margin-left: 20px;
-    font-size: 20px;
-    color: darkGreen;
-} */
-
+/***** Post Submission Form Styling *****/
 #title::placeholder, #content::placeholder {
     color: rgb(0, 0, 0, 0.4);
     z-index: 20;
@@ -154,14 +148,117 @@ a:hover {
     resize: vertical;
 }
 
+.content-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.post-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    margin-left: 30px;
+    border-radius: 5px;
+    width: 50%; 
+    flex: 1;
+}
+
+.post-form input, .post-form textarea {
+    width: 95%;
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px; 
+    margin-right: 10px;
+}
+
+.post-form textarea {
+    height: 200px; 
+    font-size: 18px; 
+}
+
+.form-actions .emoji-button, .form-actions .post-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-size: 18px;
+    background: none;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid white;
+}
+
+.form-actions {
+    width: 100%;
+    flex-direction: row; 
+    margin-bottom: 10px;
+}
+
+#title {
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.emoji-button {
+    margin-right: 10px;
+    border-radius: 3px;
+    height: 30px;
+    width: 90%;
+    height: 90%;
+}
+
+.emoji-button:hover, .post-button:hover {
+    background-color:rgb(224, 224, 224);
+    border: 1px solid rgb(224, 224, 224);
+}
+
+.form-actions .emoji-button {    /* COME BACK TO THIS, EXTRA CHANGE FOR EMOJI BUTTON WIDTH?*/
+    width: 10%;
+}
+
+.form-actions .post-button { /* COME BACK TO THIS, EXTRA CHANGE FOR FORM ACTIONS WIDTH?*/
+    width: 90%;
+    border-radius: 3px;
+}
+
+.emoji-search {
+    margin-top: 10px;
+}
+
+.post-button, .emoji-button {
+    background-color: green;
+    color: rgb(87, 87, 87);
+}
+
+/***** Posts Styling *****/
+.postsContainer {
+    flex: 2;
+    position: relative;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
 .posts-list {
     width: 70%;
-    height: 80%;
+    height: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-y: scroll;
     overflow-x: hidden;
+    margin-top:-100px;
 }
 
 .post p {
@@ -171,12 +268,12 @@ a:hover {
     word-break: break-word;
 }
 
-.PSButtons {
-    width: 50px;
-}
-
 .posts-list::-webkit-scrollbar {
     display: none;
+}
+
+#post-username{
+    text-overflow: ellipsis;
 }
 
 .user-posts::-webkit-scrollbar {
@@ -189,8 +286,6 @@ h2, h3 {
 
 .post {
     background: white;
-    /* min-width: 650px; */
-    /* max-width: 100%; */
     min-height: 100px;
     margin: 50px;
     margin-bottom: 40px;
@@ -208,6 +303,7 @@ h2, h3 {
     display: flex;
     flex-direction: row;
     justify-content: left;
+    left: 10px;
 } 
 
 .post-avatar img {
@@ -226,10 +322,9 @@ h2, h3 {
     margin-top: 10px;
     align-items: center;
     justify-content: space-between;
-
 }
 
-.postedby{
+.postedby {
    display: flex;
    justify-content: end;
    align-items: center;
@@ -237,7 +332,7 @@ h2, h3 {
    height: auto;
 }
 
-.postedby span{
+.postedby span {
     max-width: 200px;
     margin-right: 5px;
     text-overflow: ellipsis;
@@ -246,126 +341,13 @@ h2, h3 {
     display: inline-block;
 }
 
-.interact{
+.interact {
     display: flex;
     flex-direction: row; 
     align-items: center;
     justify-content: start;
     gap: 10px;
     margin-right: 10px;
-}
-
-#login-button img {
-    margin-right: 30px;
-}
-
-#register-button img {
-    margin-left: 30px;
-}
-
-.login-register {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20;
-    gap: 50px;
-    z-index: 3;
-}
-
-.login-area, .register-area {
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-footer {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    bottom: 0;
-    z-index: 3;
-    position: fixed;
-    background-color: white;
-    opacity: 80%;
-}
-
-
-footer p {
-    color: darkGreen;
-}
-
-.content-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding: 20px;
-    width: 100%;
-}
-
-.post-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 30px;
-    margin-left: 30px;
-    border-radius: 5px;
-    width: 50%; /* Set width to match the post width */
-}
-
-.post-form input, .post-form textarea {
-    width: 95%;
-    padding: 10px;
-    font-size: 18px;
-    margin-bottom: 10px; /* Add some margin for better spacing */
-    margin-right: 10px;
-}
-
-.post-form textarea {
-    height: 200px; /* Increase the size of the text input */
-    font-size: 18px; /* Ensure the text input size is larger */
-}
-
-
-.form-actions {
-    width: 100%;
-    display: flex;
-    flex-direction: row; 
-    margin-bottom: 10px;
-
-}
-
-.form-actions .emoji-button, .form-actions .post-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    font-size: 18px;
-    background: none;
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid white;
-}
-
-#title {
-    overflow: hidden;
-    white-space: nowrap;
-    display: inline-block;
-}
-
-.emoji-button{
-    margin-right: 10px;
-    border-radius: 3px;
-    height: 30px;
-    width: 90%;
-    height: 90%;
-}
-
-.emoji-button:hover, .post-button:hover {
-    background-color:rgb(224, 224, 224);
-    border: 1px solid rgb(224, 224, 224);
 }
 
 .like-button, .delete-button {
@@ -395,29 +377,52 @@ footer p {
     animation: shake 0.5s;
 }
 
-.form-actions .emoji-button {
-    width: 10%;
+/***** Login/Register Styling *****/
+.PSButtons {
+    width: 50px;
 }
 
-.form-actions .post-button {
-    width: 90%;
-    border-radius: 3px;
+#login-button img {
+    margin-right: 30px;
 }
 
-.emoji-search {
-    
-    margin-top: 10px;
+#register-button img {
+    margin-left: 30px;
 }
 
-#post-username{
-    text-overflow: ellipsis;
+.login-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20;
+    gap: 50px;
+    z-index: 3;
 }
 
-.post-button , .emoji-button {
-    background-color: green;
-    color: rgb(87, 87, 87);
+.login-area, .register-area {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/***** Footer Styling *****/
+footer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    bottom: 0;
+    z-index: 3;
+    position: fixed;
+    background-color: white;
+    opacity: 80%;
+}
+
+footer p {
+    color: darkGreen;
+}
+
+/***** Media Queries *****/
 @media (width >= 1930px) {
     .HomeBackground {
         width: 100%;
@@ -492,6 +497,14 @@ footer p {
     .post span {
         font-size: 10px;
     }
+
+    .post-avatar {
+        margin-left: -10px;
+    }
+
+    footer p {
+        text-align: center;
+    }
   }
 
   @media (width >= 781px) and (width <=890) {
@@ -534,7 +547,8 @@ footer p {
     .profile-container {
         margin-top: 100px;
     }
-    #emoji-grid{
+
+    #emoji-grid {
         align-items: center;
         overflow-y: hidden;
         overflow-x: scroll;
@@ -544,6 +558,7 @@ footer p {
         width: 100%;
         
     }
+
     #emoji-search{
         align-items: center;
         border: 1px gray solid;
@@ -557,6 +572,16 @@ footer p {
         margin-right: 10px;
     }
   } 
+
+  @media (width <=485px) {
+    footer p {
+        font-size: 75%;
+        text-align: center;
+    }
+
+  }
+
+  /*@media (width >= 401px) and */
 
   @media (width >=401) and (width <= 416) {
     footer p {
@@ -607,12 +632,55 @@ footer p {
         margin-right: 10px;
     }
 
-    footer p {
-        font-size: 10px;
-    }
-
     .user-posts {
         margin-bottom: 35px;
     }
+}
 
+/* Post-Sorting Form Styling */
+#sortByForm {
+    margin-top: 200px;
+}
+
+.dropdown {
+    position: absolute;
+    top: 0;
+    right: 70px;
+    z-index: 10;
+    margin-bottom: -100px;
+    margin-top: 50px;
+    margin-right: 205px;
+}
+
+.dropdownOptions {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 9;
+}
+
+.dropdownOptions a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdownOptions a:hover {
+    background-color: #f1f1f1;
+}
+
+.show {
+    display: block;
+}
+
+.dropdownButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: white;
+    cursor: pointer;
 }
