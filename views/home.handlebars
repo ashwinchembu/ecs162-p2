@@ -70,7 +70,6 @@
         let allEmojis = [];  // Global list to hold all emojis
 
         async function toggleEmojiPanel() {
-            console.log("toogle button clicked");
             const container = document.getElementById('emoji-container');
             container.style.display = container.style.display === 'none' ? 'block' : 'none';
 
@@ -82,7 +81,6 @@
                     const response = await fetch(`/emojis`);
                     if (response.ok) {
                         allEmojis = await response.json();
-                        console.log(allEmojis);
 
                         // Show off emojis
                         displayEmojis(allEmojis);

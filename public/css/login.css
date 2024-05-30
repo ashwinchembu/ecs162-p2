@@ -62,12 +62,6 @@ input {
     justify-content: center;
 }
 
-/* #returnHomeButton p {
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-} */
-
 #returnHomeButton:hover {
     background-color:rgb(224, 224, 224);
     border: 1px solid rgb(224, 224, 224);

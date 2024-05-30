@@ -474,7 +474,7 @@ footer p {
         flex-direction: column;
         overflow-y: none;
         overflow-x: hidden;
-        margin-top: 300px;
+        margin-top: 500px;
         height: 70%;
     }
 
@@ -678,7 +678,7 @@ footer p {
     }
 
     .postsContainer {
-        margin-top: 1000px;
+        margin-top: 1200px;
     }
 
     .posts-list {
@@ -691,6 +691,10 @@ footer p {
     footer p {
         font-size: 75%;
         text-align: center;
+    }
+
+    .postsContainer {
+        margin-top: 1250px;
     }
 
   }
@@ -711,6 +715,7 @@ footer p {
         align-self: center;
         margin-top: 20px;
         margin-right: 10%;
+        margin-left: 10px;
     }
 
     .post {
@@ -746,6 +751,11 @@ footer p {
 
     .user-posts {
         margin-bottom: 35px;
+    }
+
+    .postsContainer {
+        margin-top: 1050px;
+        height: 820px;
     }
 }
 

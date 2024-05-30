@@ -30,11 +30,11 @@
                     <li><a href="/logout">Logout <span>{{user.username}}</span> </a></li>
                     
                         <!-- conditional rendering based on variables -->
-                        <img src="{{#ifEqual user.avatar_url ''}}
-                                        /avatar/{{user.username}}
+                        <img src="{{#if user.avatar_url }}
+                                       {{user.avatar_url}}
                                     {{else}}
-                                        {{user.avatar_url}}  
-                                    {{/ifEqual}}"
+                                        /avatar/{{user.username}}  
+                                    {{/if}}"
                                     alt="User Avatar"
                                     class="header-avatar">
                     </div>
