@@ -2,7 +2,7 @@
 {{!< main }}
 
 {{! New Post Submission Form }}
-<div class="wrapper">
+<div class="wrapper {{#unless loggedIn}}form-hidden{{/unless}}">
     <section class="content-container">
         {{#if loggedIn}}
 

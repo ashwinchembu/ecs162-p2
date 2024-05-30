@@ -256,6 +256,7 @@ a:hover {
     flex: 2;
     display: flex;
     position: relative;
+    top: 0;
     width: 100%;
     padding: 10px;
     flex-direction: column;
@@ -461,6 +462,11 @@ footer {
 footer p {
     color: darkGreen;
 }
+
+.form-hidden .postsContainer, .form-hidden .dropdown {
+    margin-top: 0;
+}
+
 
 /***** Media Queries *****/
 @media (width >= 1930px) {
