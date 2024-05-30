@@ -2,139 +2,141 @@
 {{!< main }}
 
 {{! New Post Submission Form }}
-<section class="content-container">
-    {{#if loggedIn}}
+<div class="wrapper">
+    <section class="content-container">
+        {{#if loggedIn}}
 
-        <!-- show the create post form when logged in -->
-        <section class="post-form">
+            <!-- show the create post form when logged in -->
+            <section class="post-form">
 
-            <!-- make a header here -->
-            <form action="/posts" method="POST">
+                <!-- make a header here -->
+                <form action="/posts" method="POST">
 
-                <!-- title input field name = "title" -->
-                <input type="text" id="title" name="title" placeholder="Title" required><br><br>
+                    <!-- title input field name = "title" -->
+                    <input type="text" id="title" name="title" placeholder="Title" required><br><br>
 
-                <!-- text area input field name = "content" -->
-                <textarea id="content" name="content" placeholder="What's the vibe, gamer?" required></textarea><br><br>
+                    <!-- text area input field name = "content" -->
+                    <textarea id="content" name="content" placeholder="What's the vibe, gamer?" required></textarea><br><br>
 
-                <div class="form-actions">
-                    <button type="button" class="emoji-button" onclick="toggleEmojiPanel()">😀</button>
-                    <button type="submit" class="post-button">Post</button>
+                    <div class="form-actions">
+                        <button type="button" class="emoji-button" onclick="toggleEmojiPanel()">😀</button>
+                        <button type="submit" class="post-button">Post</button>
+                    </div>
+                </form>
+
+                <div id="emoji-container" class="emoji-panel" style="display: none;">
+
+                    <!-- input field for the emoji search, use oninput="searchEmojis() -->
+                    <input type="text" id="emoji-search" oninput="searchEmojis()" placeholder="Search emojis...">
+                    <div id = "emoji-grid"></div>
                 </div>
+            </section>
+        {{/if}}
+
+        <div class="postsContainer">
+            <form id="sortByForm" method="get" action="/">
+                <div class="dropdown" id="dropdown">
+                    <button type="button" class="dropdownButton" id="sortButton">Sort By: {{sortLabel}}</button>
+                    <div class="dropdownOptions" id="dropdownOptions">
+                        <a href="#" onclick="setSortOption('newest', 'Newest')">Newest</a>
+                        <a href="#" onclick="setSortOption('oldest', 'Oldest')">Oldest</a>
+                        <a href="#" onclick="setSortOption('mostLikes', 'Most Likes')">Most Likes</a>
+                    </div>
+                </div>
+                <input type="hidden" name="order" id="sortOrder" value="{{order}}">
+                <input type="hidden" name="sortLabel" id="sortLabel" value="{{sortLabel}}">
             </form>
 
-            <div id="emoji-container" class="emoji-panel" style="display: none;">
-
-                <!-- input field for the emoji search, use oninput="searchEmojis() -->
-                <input type="text" id="emoji-search" oninput="searchEmojis()" placeholder="Search emojis...">
-                <div id = "emoji-grid"></div>
-            </div>
-        </section>
-    {{/if}}
-
-    <div class="postsContainer">
-        <form id="sortByForm" method="get" action="/">
-            <div class="dropdown" id="dropdown">
-                <button type="button" class="dropdownButton" id="sortButton">Sort By: {{sortLabel}}</button>
-                <div class="dropdownOptions" id="dropdownOptions">
-                    <a href="#" onclick="setSortOption('newest', 'Newest')">Newest</a>
-                    <a href="#" onclick="setSortOption('oldest', 'Oldest')">Oldest</a>
-                    <a href="#" onclick="setSortOption('mostLikes', 'Most Likes')">Most Likes</a>
-                </div>
-            </div>
-            <input type="hidden" name="order" id="sortOrder" value="{{order}}">
-            <input type="hidden" name="sortLabel" id="sortLabel" value="{{sortLabel}}">
-        </form>
-
-        <section class="posts-list">
-            <!-- recent posts -->
-            {{#if posts.length}}
-            <ul>
-                {{#each posts}}
-                <!-- pass the user in to posts and this is the syntax -->
-                {{> post this user=../user}}
-                {{/each}}
-            </ul>
-            {{else}}
-            <!-- no posts, oh no, what now? -->
-            <p>No Posts Yet!</p>
-            {{/if}}
-        </section>
-    </div>
-</section>
+            <section class="posts-list">
+                <!-- recent posts -->
+                {{#if posts.length}}
+                <ul>
+                    {{#each posts}}
+                    <!-- pass the user in to posts and this is the syntax -->
+                    {{> post this user=../user}}
+                    {{/each}}
+                </ul>
+                {{else}}
+                <!-- no posts, oh no, what now? -->
+                <p>No Posts Yet!</p>
+                {{/if}}
+            </section>
+        </div>
+    </section>
 
 
-{{! JavaScript for Emoji Integration }}
-<script>
-    let allEmojis = [];  // Global list to hold all emojis
+    {{! JavaScript for Emoji Integration }}
+    <script>
+        let allEmojis = [];  // Global list to hold all emojis
 
-    async function toggleEmojiPanel() {
-        console.log("toogle button clicked");
-        const container = document.getElementById('emoji-container');
-        container.style.display = container.style.display === 'none' ? 'block' : 'none';
+        async function toggleEmojiPanel() {
+            console.log("toogle button clicked");
+            const container = document.getElementById('emoji-container');
+            container.style.display = container.style.display === 'none' ? 'block' : 'none';
 
 
-        if(container.style.display === 'block' && allEmojis.length == 0){
-            const apiKey = "%EMOJI%";
-            try {
-                // Fetching emojis
-                const response = await fetch(`/emojis`);
-                if (response.ok) {
-                    allEmojis = await response.json();
-                    console.log(allEmojis);
+            if(container.style.display === 'block' && allEmojis.length == 0){
+                const apiKey = "%EMOJI%";
+                try {
+                    // Fetching emojis
+                    const response = await fetch(`/emojis`);
+                    if (response.ok) {
+                        allEmojis = await response.json();
+                        console.log(allEmojis);
 
-                    // Show off emojis
-                    displayEmojis(allEmojis);
+                        // Show off emojis
+                        displayEmojis(allEmojis);
+                    }
+                    else {
+                        console.log('failed to get emojis');
+                    }
+                } catch (error) {
+                    console.error("Error fetching emojis:", error);
                 }
-                else {
-                    console.log('failed to get emojis');
-                }
-            } catch (error) {
-                console.error("Error fetching emojis:", error);
             }
         }
-    }
 
-    function displayEmojis(emojis,limit=200) {
-        const container = document.getElementById('emoji-grid');
-        container.innerHTML = '';  // Clear previous results
-        if (Array.isArray(emojis) && emojis.length > 0) {
-            emojis.slice(0, limit).forEach(emoji => {
-                const emojiElement = document.createElement('span');
-                emojiElement.textContent = emoji.character;
-                emojiElement.title = emoji.slug;  // Showing the emoji name on hover
-                emojiElement.style.cursor = 'pointer';
-                emojiElement.onclick = () => insertEmoji(emoji.character);
-                container.appendChild(emojiElement);
-            });
-        } else {
-            container.textContent = 'No emojis found. Try a different search!';
+        function displayEmojis(emojis,limit=200) {
+            const container = document.getElementById('emoji-grid');
+            container.innerHTML = '';  // Clear previous results
+            if (Array.isArray(emojis) && emojis.length > 0) {
+                emojis.slice(0, limit).forEach(emoji => {
+                    const emojiElement = document.createElement('span');
+                    emojiElement.textContent = emoji.character;
+                    emojiElement.title = emoji.slug;  // Showing the emoji name on hover
+                    emojiElement.style.cursor = 'pointer';
+                    emojiElement.onclick = () => insertEmoji(emoji.character);
+                    container.appendChild(emojiElement);
+                });
+            } else {
+                container.textContent = 'No emojis found. Try a different search!';
+            }
         }
-    }
 
-    function searchEmojis() {
-        const searchTerm = document.getElementById('emoji-search').value.toLowerCase();
-        const filteredEmojis = allEmojis.filter((emoji) => emoji.slug.includes(searchTerm));
-        
-        displayEmojis(filteredEmojis);
-    }
+        function searchEmojis() {
+            const searchTerm = document.getElementById('emoji-search').value.toLowerCase();
+            const filteredEmojis = allEmojis.filter((emoji) => emoji.slug.includes(searchTerm));
+            
+            displayEmojis(filteredEmojis);
+        }
 
-    function insertEmoji(emoji) {
-        // Put emoji on the form 
-        const form = document.getElementById('content');
-        const start = form.selectionStart;
-        const end = form.selectionEnd;
-        const text = form.value;
+        function insertEmoji(emoji) {
+            // Put emoji on the form 
+            const form = document.getElementById('content');
+            const start = form.selectionStart;
+            const end = form.selectionEnd;
+            const text = form.value;
 
-        const before = text.substring(0, start);
-        const after = text.substring(end, text.length);
+            const before = text.substring(0, start);
+            const after = text.substring(end, text.length);
 
-        form.value = before + emoji + after;
-        form.selectionStart = form.selectionEnd = start + emoji.length;
+            form.value = before + emoji + after;
+            form.selectionStart = form.selectionEnd = start + emoji.length;
 
-        form.focus();  // Keep focus on the textarea
-    }
-</script>
+            form.focus();  // Keep focus on the textarea
+        }
+    </script>
+</div>
 
 {{! JavaScript for Sort-By Functionality }}
 <script>

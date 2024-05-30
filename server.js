@@ -273,16 +273,15 @@ app.post('/posts', async (req, res) => {
     res.redirect('/');
 });
 
-app.post('/like/:id', (req, res) => {
+app.post('/like/:id', async (req, res) => {
     // Update post likes
     console.log("liking post");
-    let worked = updatePostLikes(req,res);
-    console.log(posts);
-
+    let worked = await updatePostLikes(req,res);
+    
     if(worked) {
         res.status(200).send({ message: "Like updated successfully" });
     }
-    else{ 
+    else { 
         res.status(500).send({ message: "Failed to update like" });
     }
 });
@@ -601,12 +600,9 @@ function addPost(title, content, user) {
 function generateAvatar(letter, width = 100, height = 100) {
     // 1. Choose a color scheme based on the letter
     let char  = 124 - (letter.toLowerCase()).charCodeAt(0);
-    console.log(char);
     const hex = parseInt((char/28) * 16777215).toString(16);
-    console.log("int" , hex);
     let color = `#${hex}`;
-    console.log("int" , color);
-
+    
     // 2. Create a canvas with the specified width and height
     const avatar = createCanvas(width, height);
     const ctx = avatar.getContext('2d');
@@ -713,7 +709,36 @@ async function updatePostLikes(req, res) {
 }
 
 async function handleAvatar(req, res) {
-    // Generate and serve the user's avatar image
+    const username = req.params.username;
+    console.log("Handling avatar for username:", username);
+
+    const user = await findUserByUsername(username);
+    if (!user) {
+        console.error("User not found for username:", username);
+        return res.status(404).send('User not found');
+    }
+
+    const avatarDir = path.join(__dirname, 'public', 'avatars');
+    if (!fs.existsSync(avatarDir)) {
+        fs.mkdirSync(avatarDir, { recursive: true });
+    }
+
+    const avatarPath = path.join(avatarDir, `${username}.png`);
+    console.log("Avatar path:", avatarPath);
+
+    if (fs.existsSync(avatarPath)) {
+        console.log("Avatar already exists:", avatarPath);
+        return res.sendFile(avatarPath);
+    } else {
+        console.log("Generating new avatar for:", username);
+        const avatarBuffer = generateAvatar(username.charAt(0).toUpperCase());
+        fs.writeFileSync(avatarPath, avatarBuffer);
+        await db.run('UPDATE users SET avatar_url = ? WHERE username = ?', [`/avatars/${username}.png`, username]);
+        console.log("New avatar generated and saved:", avatarPath);
+        return res.sendFile(avatarPath);
+    }
+    
+    /* // Generate and serve the user's avatar image
     const username = req.params.username;
     const user = await findUserByUsername(username);
 
@@ -730,7 +755,7 @@ async function handleAvatar(req, res) {
         fs.writeFileSync(avatarPath, avatarBuffer);
         await db.run('UPDATE users SET avatar_url = ? WHERE username = ?', [avatarPath,username]);
         return res.sendFile(avatarPath);
-    }
+    } */
 }
 
 async function getPosts(order = 'newest') {
@@ -763,7 +788,7 @@ async function deletePost(req,res, id){
     console.log("delete please:", req.params.id);
     let post = await db.get('SELECT * FROM posts WHERE id = ?', [req.params.id]);
     console.log("delete please:", post);
-    if (post ){
+    if (post) {
     if (post.username === username){
     await db.run('DELETE FROM posts WHERE id = ?', [req.params.id]);
     }

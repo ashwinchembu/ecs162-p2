@@ -39,8 +39,8 @@
 
 .user-posts{
     height: 40%;
+    width: 70%;
     overflow-y: scroll;
-   
 }
 
 .user-posts li{
