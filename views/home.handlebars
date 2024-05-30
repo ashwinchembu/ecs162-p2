@@ -4,14 +4,18 @@
 {{! New Post Submission Form }}
 <section class="content-container">
     {{#if loggedIn}}
+
         <!-- show the create post form when logged in -->
         <section class="post-form">
+
             <!-- make a header here -->
             <form action="/posts" method="POST">
+
                 <!-- title input field name = "title" -->
                 <input type="text" id="title" name="title" placeholder="Title" required><br><br>
-                <textarea id="content" name="content" placeholder="What's the vibe, gamer?" required></textarea><br><br>
+
                 <!-- text area input field name = "content" -->
+                <textarea id="content" name="content" placeholder="What's the vibe, gamer?" required></textarea><br><br>
 
                 <div class="form-actions">
                     <button type="button" class="emoji-button" onclick="toggleEmojiPanel()">😀</button>
@@ -20,6 +24,7 @@
             </form>
 
             <div id="emoji-container" class="emoji-panel" style="display: none;">
+
                 <!-- input field for the emoji search, use oninput="searchEmojis() -->
                 <input type="text" id="emoji-search" oninput="searchEmojis()" placeholder="Search emojis...">
                 <div id = "emoji-grid"></div>
@@ -27,106 +32,156 @@
         </section>
     {{/if}}
 
-    <section class="posts-list">
-        <!-- recent posts -->
+    <div class="postsContainer">
+        <form id="sortByForm" method="get" action="/">
+            <div class="dropdown" id="dropdown">
+                <button type="button" class="dropdownButton" id="sortButton">Sort By: {{sortLabel}}</button>
+                <div class="dropdownOptions" id="dropdownOptions">
+                    <a href="#" onclick="setSortOption('newest', 'Newest')">Newest</a>
+                    <a href="#" onclick="setSortOption('oldest', 'Oldest')">Oldest</a>
+                    <a href="#" onclick="setSortOption('mostLikes', 'Most Likes')">Most Likes</a>
+                </div>
+            </div>
+            <input type="hidden" name="order" id="sortOrder" value="{{order}}">
+            <input type="hidden" name="sortLabel" id="sortLabel" value="{{sortLabel}}">
+        </form>
 
-        {{#if posts.length}}
-        <ul>
-            {{#each posts}}
-                <!-- you have to pass the user in to posts and this is the syntax -->
-                {{> post this user=../user}}            
-            {{/each}}
-        </ul>
-        {{else}}
+        <section class="posts-list">
+            <!-- recent posts -->
+            {{#if posts.length}}
+            <ul>
+                {{#each posts}}
+                <!-- pass the user in to posts and this is the syntax -->
+                {{> post this user=../user}}
+                {{/each}}
+            </ul>
+            {{else}}
             <!-- no posts, oh no, what now? -->
             <p>No Posts Yet!</p>
-        {{/if}}
-    </section>
+            {{/if}}
+        </section>
+    </div>
 </section>
 
 
 {{! JavaScript for Emoji Integration }}
 <script>
+    let allEmojis = [];  // Global list to hold all emojis
 
-/*
- You want to show a subset of the emojis. About 200. However,
- you also want the user to be able to search all emojis,
- so, put them in this array when the array is empty so 
- that you have them.
-*/
-
-let allEmojis = [];  // Global list to hold all emojis
-
-async function toggleEmojiPanel() {
-    console.log("toogle button clicked");
-    const container = document.getElementById('emoji-container');
-    container.style.display = container.style.display === 'none' ? 'block' : 'none';
+    async function toggleEmojiPanel() {
+        console.log("toogle button clicked");
+        const container = document.getElementById('emoji-container');
+        container.style.display = container.style.display === 'none' ? 'block' : 'none';
 
 
-    if(container.style.display === 'block' && allEmojis.length == 0){
-        // go "Fetch" you some emojis and show them off with displayEmojies
-        const apiKey = "%EMOJI%";
-        try {
-            const response = await fetch(`/emojis`);
-            if (response.ok){
-            allEmojis = await response.json();
-            console.log(allEmojis);
-            displayEmojis(allEmojis);
+        if(container.style.display === 'block' && allEmojis.length == 0){
+            const apiKey = "%EMOJI%";
+            try {
+                // Fetching emojis
+                const response = await fetch(`/emojis`);
+                if (response.ok) {
+                    allEmojis = await response.json();
+                    console.log(allEmojis);
+
+                    // Show off emojis
+                    displayEmojis(allEmojis);
+                }
+                else {
+                    console.log('failed to get emojis');
+                }
+            } catch (error) {
+                console.error("Error fetching emojis:", error);
             }
-            else{
-                console.log('failed to get emojis');
-            }
-        } catch (error) {
-            console.error("Error fetching emojis:", error);
         }
-
     }
-}
 
-function displayEmojis(emojis,limit=200) {
-    const container = document.getElementById('emoji-grid');
-    container.innerHTML = '';  // Clear previous results
-    if (Array.isArray(emojis) && emojis.length > 0) {
-        emojis.slice(0, limit).forEach(emoji => {
-            const emojiElement = document.createElement('span');
-            emojiElement.textContent = emoji.character;
-            emojiElement.title = emoji.slug;  // Showing the emoji name on hover
-            emojiElement.style.cursor = 'pointer';
-            emojiElement.onclick = () => insertEmoji(emoji.character);
-            container.appendChild(emojiElement);
-        });
-    } else {
-        container.textContent = 'No emojis found. Try a different search!';
+    function displayEmojis(emojis,limit=200) {
+        const container = document.getElementById('emoji-grid');
+        container.innerHTML = '';  // Clear previous results
+        if (Array.isArray(emojis) && emojis.length > 0) {
+            emojis.slice(0, limit).forEach(emoji => {
+                const emojiElement = document.createElement('span');
+                emojiElement.textContent = emoji.character;
+                emojiElement.title = emoji.slug;  // Showing the emoji name on hover
+                emojiElement.style.cursor = 'pointer';
+                emojiElement.onclick = () => insertEmoji(emoji.character);
+                container.appendChild(emojiElement);
+            });
+        } else {
+            container.textContent = 'No emojis found. Try a different search!';
+        }
     }
-}
 
-function searchEmojis() {
-    const searchTerm = document.getElementById('emoji-search').value.toLowerCase();
-    // array.filter takes a predicate
-    // use string.includes. 
+    function searchEmojis() {
+        const searchTerm = document.getElementById('emoji-search').value.toLowerCase();
+        const filteredEmojis = allEmojis.filter((emoji) => emoji.slug.includes(searchTerm));
+        
+        displayEmojis(filteredEmojis);
+    }
 
-    const filteredEmojis = allEmojis.filter((emoji) => emoji.slug.includes(searchTerm));
-    
-    displayEmojis(filteredEmojis);
-}
+    function insertEmoji(emoji) {
+        // Put emoji on the form 
+        const form = document.getElementById('content');
+        const start = form.selectionStart;
+        const end = form.selectionEnd;
+        const text = form.value;
 
-function insertEmoji(emoji) {
-    // put an emoji on a form somehow. 
-    const form = document.getElementById('content');
-    const start = form.selectionStart;
-    const end = form.selectionEnd;
-    const text = form.value;
+        const before = text.substring(0, start);
+        const after = text.substring(end, text.length);
 
-    const before = text.substring(0, start);
-    const after = text.substring(end, text.length);
+        form.value = before + emoji + after;
+        form.selectionStart = form.selectionEnd = start + emoji.length;
 
-    form.value = before + emoji + after;
-    form.selectionStart = form.selectionEnd = start + emoji.length;
-
-
-    // do this when you're doing getting the emoji on the form
-    //
-    form.focus();  // Keep focus on the textarea
-}
+        form.focus();  // Keep focus on the textarea
+    }
 </script>
 
+{{! JavaScript for Sort-By Functionality }}
+<script>
+    // Shows dropdown when user clicks on Sort By button
+    document.getElementById('sortButton').addEventListener('click', function() {
+        document.getElementById('dropdownOptions').classList.toggle('show');
+        setDropdownWidth();
+    });
+
+    // Closes dropdown when user clicks outside of it
+    document.addEventListener('click', function(e) {
+        if (!document.getElementById('dropdown').contains(e.target)) {
+            document.getElementById('dropdownOptions').classList.remove('show');
+        }
+    });
+
+    // Sets selected sorting option
+    function setSortOption(option, label) {
+        document.getElementById('sortOrder').value = option;
+        document.getElementById('sortLabel').value = label;
+        document.getElementById('sortByForm').submit();
+        localStorage.setItem('postOrder', option);
+    }
+
+    // Adjusts the height of the posts list based on the footer height
+        function adjustPostsListHeight() {
+            const footerHeight = document.getElementById('footing').offsetHeight;
+            const headerHeight = document.querySelector('heading').offsetHeight;
+            const contentContainer = document.querySelector('.content-container');
+            const additionalOffset = 100;
+            const availableHeight = window.innerHeight - footerHeight - headerHeight - additionalOffset;
+            contentContainer.style.height = availableHeight + 'px';
+        }
+
+    function getSortOption() {
+        const order = localStorage.getItem('postOrder');
+        const label = localStorage.getItem('sortLabel');
+        if (order && label) { 
+            setSortOption(order, label);
+        }
+    }
+
+    // Event listener for document load to retrieve stored sort option
+        document.addEventListener('DOMContentLoaded', function() {
+            getSortOption();
+            adjustPostsListHeight();
+        });
+
+window.addEventListener('resize', adjustPostsListHeight);
+</script>

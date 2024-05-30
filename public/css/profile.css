@@ -5,6 +5,7 @@
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 10px;
+    margin-top: 100px;
 }
 
 .profile-avatar{
@@ -23,9 +24,8 @@
     justify-content: end;
     margin: 0;
     margin-left: 2em;
-
-
 }
+
 .profile-info p{
     margin: 0.2em;
     color: darkgreen;
@@ -42,18 +42,19 @@
     overflow-y: scroll;
    
 }
+
 .user-posts li{
     list-style: none;
 }
 
-h2{
+h2 {
     color: darkgreen;
     background-color: rgba(255, 255, 255, 0.8);
     padding: 10px;
     border-radius: 5px;
 }
 
-.nothing{
+.nothing {
     color: darkgreen;
     font-size: 40px;
     background-color: rgba(255, 255, 255, 0.8);
@@ -114,7 +115,6 @@ h2{
         width: 100%;
         overflow-y: scroll;
         overflow-x: none;
-       
     }
 
     .title {

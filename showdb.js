@@ -3,7 +3,6 @@
 const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 
-
 const dbFileName = 'indie_arcade.db';
 
 async function showDatabaseContents() {

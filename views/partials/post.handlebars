@@ -28,8 +28,7 @@
         <p class = 'liketext' id= 'likes-{{id}}'>{{calculateLikes likes}} <span id = 'likes2'>likes</span></p>
         </span>
         <span class = "postedby">
-            <span>Posted by {{username}}</span>
-            <span>on  {{timestamp}}</span>
+            <span>Posted by {{username}} on  {{timestamp}}</span>
         </span>        
         </div>
     </div>
@@ -50,6 +49,7 @@
                     'Content-Type': 'application/json'
                 }
             });
+
             console.log('-------before setting likes');
             console.log(`Response status: ${response.status}`);
             console.log('Response body:', await response.text());
@@ -63,12 +63,12 @@
 
             likeButton.style.color = isLiked ? '' : 'red';
 
+            }
+            else {
+                console.log("failed");
+            }
         }
-        else{
-            console.log("failed");
-        }
-        }
-        catch{
+        catch {
             console.error('Error liking the post:', error);
         }
         console.log("done");
@@ -81,8 +81,6 @@
         const postId = buttonElement.getAttribute('data-id');    
         //console.log("deleting post on frontend");
     
-
-        // you might want to "fetch" something... 
         try {
             const response = await fetch(`/delete/${postId}`, {
                 method: 'POST',
@@ -94,16 +92,16 @@
             console.log(`Response status: ${response.status}`);
             console.log('Response body:', await response.text());
 
-            if (response.ok){
-            console.log('deleting posts');
+            if (response.ok) {
+                console.log('deleting posts');
 
-            const post = document.getElementById(`post-${postId}`);
-            if(post){
-                post.remove();
-            }
-        }        
+                const post = document.getElementById(`post-${postId}`);
+                if(post) {
+                    post.remove();
+                }
+            }        
         }
-            catch (error) {
+        catch (error) {
             console.error('Error deleting the post:', error);
         }       
         

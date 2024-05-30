@@ -11,7 +11,6 @@ const passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Configuration and Setup
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -19,8 +18,6 @@ require('dotenv').config();
 const app = express();
 const PORT = 3000;
 let db;
-//let postcount = posts.length;
-//let usercount = users.length; 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // OAuth Stuff
@@ -32,8 +29,6 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 console.log("CLIENT_ID:", process.env.CLIENT_ID);
 console.log("CLIENT_SECRET:", process.env.CLIENT_SECRET);
-
-
 
 // Configure passport
 passport.use(new GoogleStrategy({
@@ -54,10 +49,6 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((obj, done) => {
     done(null, obj);
 });
-
-
-
-
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -84,7 +75,6 @@ passport.deserializeUser((obj, done) => {
             {{/ifCond}}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-
 
 // Set up Handlebars view engine with custom helpers
 //
@@ -121,7 +111,6 @@ app.engine(
 );
 
 app.set('view engine', 'handlebars');
-
 
 app.set('views', './views');
 
@@ -167,28 +156,33 @@ app.get('/auth/google', (req, res, next) => {
 });
 
 app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login?error=Failed to authenticate with Google' }),
+    passport.authenticate('google', { failureRedirect: '/login?error=Failed to authenticate with Google'}),
     async (req, res) => {
+        // Extracts the user's Google ID.
         const googleId = req.user.id;
         const hashedGoogleId = hash(googleId);
         req.session.hashedGoogleId = hashedGoogleId;
 
+        // Check if user already exists 
         try {
+            // Hashes the Google ID and checks if the user exists in the database.
             let localUser = await findUserByHashedGoogleId(hashedGoogleId);
             if (localUser) {
+                // If the user exists, sets session variables and redirects to home.
                 req.session.userId = localUser.id;
                 req.session.loggedIn = true;
                 res.redirect('/');
             } else {
-                res.redirect('/registerUsername');
+                // If the user does not exist, redirects to the /registerUsername route.
+                res.redirect ('/registerUsername');
             }
-        } catch (err) {
-            console.error('Error finding user:', err);
-            res.redirect('/error');
+        }
+        catch(err) {
+            console. error('Error finding user:', err); 
+            res. redirect ('/error');
         }
     }
 );
-
 
 app.get('/registerUsername', (req, res) => {
     res.render('registerUsername', { error: req.query.error });
@@ -205,21 +199,20 @@ app.post('/registerUsername', async (req, res) => {
             // If the username exists, re-renders the form with an error message.
             return res.render('registerUsername', { error: 'Username already taken' });
         }
-        else{
-            //If the username does not exist, creates a new user entry and sets session variables.
+        else {
+            // If the username does not exist, creates a new user entry and sets session variables.
             await addUser(username, hashedGoogleId);
 
             let newUser = await findUserByUsername(username);
             req.session.userId = newUser.id;
             req.session.loggedIn = true;
 
-            //Redirects to the home page on successful registration.
+            // Redirects to the home page on successful registration.
             res.redirect('/');
         }
 
         // Add the new user to the database
        
-
     } catch (err) {
         console.error('Error registering username:', err);
         res.redirect('/error');
@@ -230,7 +223,7 @@ app.get('/googleLogout', (req, res) => {
     res.render('googleLogout');
 });
 
-//database setup
+// Database setup
 
 async function connectToDatabase() {
     db = await sqlite.open({ filename: 'indie_arcade.db', driver: sqlite3.Database });
@@ -249,71 +242,72 @@ app.get('/emojis', async (req,res)=>{
 });
 
 // Home route: render home view with posts and user
-// We pass the posts and user variables into the home
-// template
+// We pass the posts and user variables into the home template
 //
 app.get('/', async (req, res) => {
-    const posts = await getPosts();
+    const order = req.query.order || 'newest';
+    const posts = await getPosts(order);
     const user = await getCurrentUser(req) || {};
-    res.render('home', { posts, user });
+    const sortLabel = req.query.sortLabel || 'Newest';
+    res.render('home', { posts, user, order, sortLabel });
 });
 
 // Register GET route is used for error response from registration
-//
 app.get('/register', (req, res) => {
     res.render('loginRegister', { regError: req.query.error });
 });
 
 // Login route GET route is used for error response from login
-//
 app.get('/login', (req, res) => {
     res.render('loginRegister', { loginError: req.query.error });
 });
 
 // Error route: render error page
-//
 app.get('/error', (req, res) => {
     res.render('error');
 });
 
-// Additional routes that you must implement
-
+// Additional routes
 app.post('/posts', async (req, res) => {
-    // TODO: Add a new post and redirect to home
+    // Add a new post and redirect to home
     addPost(req.body.title, req.body.content, await getCurrentUser(req));
     res.redirect('/');
 });
+
 app.post('/like/:id', (req, res) => {
-    // TODO: Update post likes
+    // Update post likes
     console.log("liking post");
     let worked = updatePostLikes(req,res);
     console.log(posts);
-if(worked){
-    res.status(200).send({ message: "Like updated successfully" });
-}
-else{
-    res.status(500).send({ message: "Failed to update like" });
-}
-   
+
+    if(worked) {
+        res.status(200).send({ message: "Like updated successfully" });
+    }
+    else{ 
+        res.status(500).send({ message: "Failed to update like" });
+    }
 });
+
 app.get('/profile', isAuthenticated, (req, res) => {
-    // TODO: Render profile page
+    // Render profile page
    renderProfile(req,res);
 });
 
 app.get('/avatar/:username', async (req, res) => {
-    // TODO: Serve the avatar image for the user
+    // Serve the avatar image for the user
     await handleAvatar(req,res);
 });
+
 app.post('/register', (req, res) => {
-    // TODO: Register a new user
+    // Register a new user
     registerUser(req,res);
-    
 });
+
 app.post('/login', (req, res) => {
-    // TODO: Login a user
+    // Login a user
     loginUser(req,res);
 });
+
 app.get('/logout', (req, res) => {
     // Destroy the session
     req.session.destroy((err) => {
@@ -344,12 +338,12 @@ app.post('/delete/:id', isAuthenticated, async (req, res) => {
 // Server Activation
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 async function init(){
-await connectToDatabase();
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+    await connectToDatabase();
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
 }
-
+    
 init();
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -405,13 +399,12 @@ let users = [
 ];
 */
 
+// Function to hash user's Google ID
 function hash(key){
-    return Math.log((parseInt(key) % 240) ** 2) * 10000000000000000; 
+    return Math.log((parseInt(key) % 240) ** 2) * (10 ** 16); 
 }
 
-
-
-
+// Function to format post date for posts
 function formatPostDate(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -435,11 +428,6 @@ function findUserByUsername(username) {
 }
 */
 
-
-
-
-
-
 // Function to find a user by user ID
 /*
 function findUserById(userId) {
@@ -453,8 +441,6 @@ function findUserById(userId) {
 }
 */
 
-
-
 // Function to add a new user
 /*
 function addUser(username) {
@@ -463,7 +449,6 @@ function addUser(username) {
     users.push(user);
 }
 */
-
 
 // Middleware to check if user is authenticated
 function isAuthenticated(req, res, next) {
@@ -512,12 +497,11 @@ async function loginUser(req, res) {
 */
 // Function to logout a user
 function logoutUser(req, res) {
-    // TODO: Destroy session and redirect appropriately
+    // Destroy session and redirect appropriately
     req.session.loggedIn = false;
     req.session.userId = '';
     res.redirect('/');
 }
-
 
 // Function to render the profile page
 /*
@@ -590,17 +574,13 @@ function handleAvatar(req, res) {
         }
         return res.sendFile(avatarPath);
     }
-
-    
-
-    
 }
 */
 
 // Function to get the current user from session
 async function getCurrentUser(req) {
     // TODO: Return the user object if the session user ID matches
-    console.log("getCurrentUser: ",req.session.userId);
+    console.log("getCurrentUser: ", req.session.userId);
     return await findUserById(req.session.userId);
 }
 /*
@@ -618,45 +598,33 @@ function addPost(title, content, user) {
 }
 */
 
-// Function to generate an image avatar
+// Function to generate an image avatar with a letter
 function generateAvatar(letter, width = 100, height = 100) {
-    // TODO: Generate an avatar image with a letter
-    // Steps:
     // 1. Choose a color scheme based on the letter
-    // 2. Create a canvas with the specified width and height
-    // 3. Draw the background color
-    // 4. Draw the letter in the center
-    // 5. Return the avatar as a PNG buffer
     let char  = 124 - (letter.toLowerCase()).charCodeAt(0);
     console.log(char);
     const hex = parseInt((char/28) * 16777215).toString(16);
     console.log("int" , hex);
     let color = `#${hex}`;
     console.log("int" , color);
+
+    // 2. Create a canvas with the specified width and height
     const avatar = createCanvas(width, height);
     const ctx = avatar.getContext('2d');
+    
+    // 3. Draw the background color
     ctx.fillStyle = color;
     ctx.fillRect(0,0,100,100);
+
+    // 4. Draw the letter in the center
     ctx.fillStyle = 'white';
     ctx.font = "48px serif";
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(letter, 50, 50, 100);
-    return avatar.toBuffer('image/png');
-  /*
-    const letter = 'O';
-  let char  = letter.charCodeAt(0);
-  const rgb = (char  % 26) * (255/26);
-  let color = 'rgb(' + rgb + ',' + rgb + ','+ rgb')';
-  const avatar = document.getElementById("canvas");
-  const ctx = avatar.getContext('2d');
-  ctx.strokeStyle="rgba(0,0,0,1)";
-  ctx.strokeRect(0,0,100,100);
-  ctx.font = "48px serif";
-  ctx.fillStyle = color;
-  ctx.fillRect(0,0,100,100);
-  ctx.fillText(letter, 30, 65, 100);*/ 
 
+    // 5. Return the avatar as a PNG buffer
+    return avatar.toBuffer('image/png');
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -664,7 +632,7 @@ function generateAvatar(letter, width = 100, height = 100) {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 async function findUserByUsername(username) {
-    // TODO: Return user object if found, otherwise return undefined
+    // Return user object if found, otherwise return undefined
     console.log("finding by username using:" , username);
     try {
         let find = await db.get('SELECT * FROM Users WHERE username = ?', [username]);
@@ -677,7 +645,7 @@ async function findUserByUsername(username) {
 }
 
 async function findUserById(userId) {
-    // TODO: Return user object if found, otherwise return undefined
+    // Return user object if found, otherwise return undefined
     console.log("finding by id using:", userId);
     try {
         let find = await db.get('SELECT * FROM Users WHERE id = ?', [userId]);
@@ -689,10 +657,8 @@ async function findUserById(userId) {
     }
 }
 
-
-
 async function findUserByHashedGoogleId(hashedGoogleId) {
-    // TODO: Return user object if found, otherwise return undefined
+    // Return user object if found, otherwise return undefined
     console.log("finding by hashedGoogleId using:", hashedGoogleId);
     try {
         let find = await db.get('SELECT * FROM Users WHERE hashedGoogleId = ?', [hashedGoogleId]);
@@ -704,20 +670,17 @@ async function findUserByHashedGoogleId(hashedGoogleId) {
     }
 }
 
-
 async function addUser(username, hashedGoogleId) {
-    // TODO: Create a new user object and add to users array
+    // Create a new user object and add to users array
     let user = {username: username, hashedGoogleId: hashedGoogleId, avatar_url: undefined, memberSince: formatPostDate(new Date()) };
-    //users.push(user);
     db.run(
         'INSERT INTO users (username, hashedGoogleId, avatar_url, memberSince) VALUES (?, ?, ?, ?)',
         [user.username, user.hashedGoogleId, user.avatar_url, user.memberSince]
     );
-
 }
 
 async function renderProfile(req, res) {
-    // TODO: Fetch user posts and render the profile page
+    // Fetch user posts and render the profile page
     let user = await getCurrentUser(req);
     console.log("renderProfile:", user);
     let username = user.username;
@@ -728,9 +691,9 @@ async function renderProfile(req, res) {
 }
 
 async function updatePostLikes(req, res) {
-    // TODO: Increment post likes if conditions are met
+    // Increment post likes if conditions are met
     let user = await getCurrentUser(req);
-    if (user){
+    if (user) {
         let post = await db.get('SELECT likes FROM posts WHERE id = ?', [req.params.id]);
         let likes = [];
         likes = JSON.parse(post.likes);
@@ -742,16 +705,16 @@ async function updatePostLikes(req, res) {
             likes.splice(userIndex, 1);
         }
         await db.run('UPDATE posts SET likes = ? WHERE id = ?', [JSON.stringify(likes),req.params.id]);
-    console.log('inside update post likes');
-    return true;
-}
-else{
-    return false;
-}
+        console.log('inside update post likes');
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 async function handleAvatar(req, res) {
-    // TODO: Generate and serve the user's avatar image
+    // Generate and serve the user's avatar image
     const username = req.params.username;
     const user = await findUserByUsername(username);
 
@@ -769,19 +732,21 @@ async function handleAvatar(req, res) {
         await db.run('UPDATE users SET avatar_url = ? WHERE username = ?', [avatarPath,username]);
         return res.sendFile(avatarPath);
     }
-
-    
-
-    
 }
 
-async function getPosts() {
-    return await db.all('SELECT * FROM posts ORDER BY timestamp DESC');
+async function getPosts(order = 'newest') {
+    if (order === 'newest') {
+        return await db.all('SELECT * FROM posts ORDER BY timestamp DESC');
+    } else if (order === 'oldest') {
+        return await db.all('SELECT * FROM posts ORDER BY timestamp ASC');
+    } else if (order === 'mostLikes') {
+        return await db.all('SELECT * FROM posts ORDER BY json_array_length(likes) DESC');
+    }
 }
 
 // Function to add a new post
 async function addPost(title, content, user) {
-    // TODO: Create a new post object and add to posts array
+    // Create a new post object and add to posts array
     /*
     console.log(users)
     posts.push({id: postcount += 1, title: title, content: content, username: user.username, timestamp: formatPostDate(new Date()), likes: [] })
