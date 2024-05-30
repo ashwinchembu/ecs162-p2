@@ -257,7 +257,6 @@ a:hover {
     flex: 2;
     display: flex;
     position: relative;
-    top: 0;
     width: 100%;
     padding: 10px;
     flex-direction: column;
@@ -272,9 +271,8 @@ a:hover {
     align-items: center;
     overflow-y: scroll;
     overflow-x: hidden;
-
     width: 100%;
-    height: 565px;
+    height: 25em;
 }
 
 .post p {
@@ -290,6 +288,10 @@ a:hover {
 
 #post-username{
     text-overflow: ellipsis;
+}
+
+.user-posts{
+    max-height: 14.2em;
 }
 
 .user-posts::-webkit-scrollbar {
@@ -460,11 +462,6 @@ footer p {
     color: darkGreen;
 }
 
-.form-hidden .postsContainer, .form-hidden .dropdown {
-    margin-top: 0;
-}
-
-
 /***** Media Queries *****/
 @media (width >= 1930px) {
     .HomeBackground {
@@ -552,6 +549,7 @@ footer p {
         padding: 10px;
         box-sizing: border-box;
         margin-left: -7%;
+        max-height: 11.5em;
     } 
 
     .post {
@@ -584,6 +582,16 @@ footer p {
 
     footer p {
         text-align: center;
+    }
+
+    .user-posts{
+        max-height: 75%;
+        min-height: 30%;
+        margin-bottom: 3.5em;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        white-space: nowrap;
+        display: inline-block;
     }
   }
 
@@ -685,7 +693,7 @@ footer p {
     }
 
     .posts-list {
-        height: 100%;
+        max-height: 9.7em;
         margin-bottom: 350px;
     }
   } 
@@ -754,6 +762,8 @@ footer p {
 
     .user-posts {
         margin-bottom: 35px;
+        max-height: 14.5em;
+
     }
 
     .postsContainer {
