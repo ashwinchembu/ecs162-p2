@@ -20,11 +20,7 @@
                     ♥
                 </button>
             {{/ifEqual}}
-            <!-- everything that is shown in the status bar -->
-            <!-- Heart = ♥ -->
-            <!-- font awesome  trashcan = <i class="fas fa-trash-alt"> </i>-->
             
-        {{!-- <p class = 'liketext' id= 'likes-{{id}}'>{{likes.length}} <em id = 'likes2'>likes</em></p> --}}
         <p class = 'liketext' id= 'likes-{{id}}'>{{calculateLikes likes}} <span id = 'likes2'>likes</span></p>
         </span>
         <span class = "postedby">
@@ -40,8 +36,6 @@
         const likeButton = event.target.closest('.like-button');
         const isLiked = likeButton.style.color === 'red';
 
-
-        console.log("liking post on frontend");
         try {
             const response = await fetch(`/like/${postId}`, {
                 method: 'POST',
@@ -50,19 +44,10 @@
                 }
             });
 
-            console.log('-------before setting likes');
-            console.log(`Response status: ${response.status}`);
-            console.log('Response body:', await response.text());
-
-            if (response.ok){
-            console.log('likes');
-
-            const likes = document.getElementById(`likes-${postId}`);
-            const currentLikes = parseInt(likes.textContent.split(' ')[0], 10);
-            likes.textContent = `${isLiked ? currentLikes - 1 : currentLikes + 1} likes`;
-
-            likeButton.style.color = isLiked ? '' : 'red';
-
+            if (response.ok) {
+                const likes = document.getElementById(`likes-${postId}`);
+                const currentLikes = parseInt(likes.textContent.split(' ')[0], 10);
+                likes.textContent = `${isLiked ? currentLikes - 1 : currentLikes + 1} likes`;
             }
             else {
                 console.log("failed");
@@ -71,15 +56,11 @@
         catch {
             console.error('Error liking the post:', error);
         }
-        console.log("done");
-
-        // you might want to "fetch" something...        
     }
 
     async function handleDeleteClick(event) {
         const buttonElement = event.target.closest('.delete-button');
         const postId = buttonElement.getAttribute('data-id');    
-        //console.log("deleting post on frontend");
     
         try {
             const response = await fetch(`/delete/${postId}`, {
@@ -88,13 +69,8 @@
                     'Content-Type': 'application/json'
                 }
             });
-            console.log('-------before setting likes');
-            console.log(`Response status: ${response.status}`);
-            console.log('Response body:', await response.text());
 
             if (response.ok) {
-                console.log('deleting posts');
-
                 const post = document.getElementById(`post-${postId}`);
                 if(post) {
                     post.remove();

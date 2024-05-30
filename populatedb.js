@@ -93,34 +93,14 @@ async function initializeDB() {
         );
         
     }));
-/*
-    console.log("inserted users");
-    users1 = await db.all('SELECT * FROM users');
-        if (users1.length > 0) {
-            console.log('Users:');
-            users1.forEach(user => {
-                console.log(user);
-            });
-        } 
-*/
+    
     await Promise.all(posts.map(post => {
         return db.run(
             'INSERT INTO posts (title, content, username, timestamp, likes) VALUES (?, ?, ?, ?, ?)',
             [post.title, post.content, post.username, post.timestamp, post.likes]
         );
     }));
-/*
-    console.log("inserted posts");
-    posts1 = await db.all('SELECT * FROM posts');
-        if (posts1.length > 0) {
-            console.log('Posts:');
-            posts1.forEach(post => {
-                console.log(post);
-            });
-        }
-        */
 
-    console.log('Database populated with initial data.');
     await db.close();
 }
 
