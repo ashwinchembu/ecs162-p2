@@ -15,20 +15,17 @@ body, html {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
-.form-hidden .postsContainer {
-    margin-top: 50em;
-    
-    justify-content: flex-start; 
-}
 
 .wrapper {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     flex: 1;
     width: 100%;
+    overflow-y: auto; 
 }
 
 header {
@@ -189,6 +186,7 @@ a:hover {
     margin-left: 30px;
     border-radius: 5px;
     width: 35%; 
+    overflow-y: auto; 
 }
 
 .post-form input, .post-form textarea {
@@ -204,6 +202,7 @@ a:hover {
 }
 
 .form-actions .emoji-button, .form-actions .post-button {
+    z-index: 3000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -219,12 +218,16 @@ a:hover {
     display: flex;
     flex-direction: row; 
     margin-bottom: 10px;
+    overflow: auto; 
 }
 
 #title {
-    overflow: hidden;
-    white-space: nowrap;
-    display: inline-block;
+        margin-top: 15px;
+        overflow: auto; 
+        white-space: nowrap;
+        display: inline-block;
+        max-width: 100%; 
+    
 }
 
 .emoji-button {
@@ -269,7 +272,8 @@ a:hover {
     align-items: center;
     overflow: hidden;
     box-sizing: border-box;
-    height: 50%;
+    height: auto;
+    overflow: hidden;
 }
 
 .posts-list {
@@ -481,7 +485,6 @@ footer p {
         flex-direction: column;
         overflow-y: none;
         overflow-x: hidden;
-        margin-top: 500px;
         height: 70%;
     }
 
@@ -531,10 +534,12 @@ footer p {
     }
 
     .post-form {
-        max-height: 100%;
+        z-index: 3000;
+        padding-bottom: 8em;
         margin-bottom: -100px;
         width: 50%;
         margin-left: -60px;
+        margin-top: 10em;
     }
 
      .postsContainer {
@@ -555,8 +560,10 @@ footer p {
         margin: 0 auto;
         padding: 10px;
         box-sizing: border-box;
+        margin-top: 2em;
         margin-left: -7%;
-        max-height: 11.5em;
+        min-height: 75%;
+        max-height: 100%;
     } 
 
     .post {
@@ -606,6 +613,9 @@ footer p {
     .content-container {
         margin-top: 100px;
     }
+    .postsContainer{
+        margin-top: 0px;
+    }
   }
 
   @media (width >= 781px) and (width <=890) {
@@ -653,8 +663,16 @@ footer p {
     .postsContainer {
         position: fixed;
         overflow-y: hidden;
+        overflow-x: scroll;
+        white-space: nowrap;
+        display: inline-block;
         margin-bottom: 130px;
         height: 100%;
+
+    }
+
+    .post-list{
+        overflow: none;
     }
 
     .content-container {
@@ -667,16 +685,18 @@ footer p {
         overflow-x: scroll;
         white-space: nowrap;
         display: inline-block;
-        max-height: 22%;
+        min-height: 24%;
         width: 100%;
+        margin-top: -1em;
         
     }
 
     #emoji-search{
         align-items: center;
         border: 1px gray solid;
-        max-height:10%;
+        max-height:1%;
         border-radius: 2px;
+        margin-bottom: 5px;
     }
 
     footer {
@@ -726,6 +746,8 @@ footer p {
 @media (width <= 400px) {
     .navLinks, .user-info {
         right: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .post-form {
@@ -736,15 +758,24 @@ footer p {
         margin-left: 10px;
     }
 
+    ul{
+        width: 100%;
+    }
+
     .post {
         justify-content: center;
         margin-left: -20px;  
         margin-right: 20px;
         margin-bottom: 5%;
+        width: 90%;
+        max-width: 100%;
     }
 
+
     .post p {
-        overflow-x: hidden;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
     }
 
     .post-status-bar {
@@ -774,6 +805,19 @@ footer p {
     .postsContainer {
         margin-top: 1050px;
         height: 820px;
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .posts-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        width: 100%;
+        height: auto;
     }
 }
 
