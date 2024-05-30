@@ -18,6 +18,12 @@ body, html {
     overflow: hidden;
 }
 
+.form-hidden .postsContainer {
+    margin-top: 50em;
+    
+    justify-content: flex-start; 
+}
+
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -263,6 +269,7 @@ a:hover {
     align-items: center;
     overflow: hidden;
     box-sizing: border-box;
+    height: 50%;
 }
 
 .posts-list {
@@ -693,8 +700,8 @@ footer p {
     }
 
     .posts-list {
-        max-height: 9.7em;
-        margin-bottom: 350px;
+        max-height: 90%;
+        margin-bottom: 25em;
     }
   } 
 
@@ -762,8 +769,6 @@ footer p {
 
     .user-posts {
         margin-bottom: 35px;
-        max-height: 14.5em;
-
     }
 
     .postsContainer {
