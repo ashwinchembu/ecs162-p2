@@ -37,7 +37,7 @@ header {
     top: 0;
     align-items: center;
     width: 100%;
-    height: 8%;
+    height: 4.5em;
     z-index: 1;
     background-color: rgba(255, 255, 255, 0.8);
 }
@@ -110,7 +110,7 @@ h1 {
 }
 
 .user-info {
-    top: 12px;
+    top: 2em;
     max-width: 30em;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -710,7 +710,7 @@ footer p {
     }
     ul {
         max-width: 100%;
-        max-height: 40%;
+        max-height: 70%;
         overflow-y: scroll;
         overflow-x: none;
     }
@@ -767,7 +767,7 @@ footer p {
         margin-left: 0;
         width: 50%;
         align-self: center;
-        margin-top: 28em;
+        margin-top: 5em;
         margin-right: 10%;
     }
 
@@ -822,7 +822,7 @@ footer p {
     }
     ul {
         max-width: 100%;
-        max-height: 40%;
+        max-height: 70%;
         overflow-y: scroll;
         overflow-x: none;
     }
@@ -897,7 +897,7 @@ footer p {
         margin-left: 0;
         width: 50%;
         align-self: center;
-        margin-top: 28em;
+        margin-top: 3em;
         margin-right: 10%;
     }
 
@@ -952,7 +952,7 @@ footer p {
     }
     ul {
         max-width: 100%;
-        max-height: 40%;
+        max-height: 60%;
         overflow-y: scroll;
         overflow-x: none;
     }
@@ -987,9 +987,10 @@ footer p {
         margin-left: 0;
         max-height: 90%;
         width: 100%;
-
+        margin-top: -2em;
     }
 }
+
 /* Post-Sorting Form Styling */
 #sortByForm {
     margin-top: 200px;
