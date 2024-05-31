@@ -31,32 +31,38 @@
 </div>
 <script>
 
-    async function handleLikeClick(event) {
-        const postId = event.target.getAttribute('data-id');
-        const likeButton = event.target.closest('.like-button');
-        const isLiked = likeButton.style.color === 'red';
+   async function handleLikeClick(event) {
+    const postId = event.target.getAttribute('data-id');
+    const likeButton = event.target.closest('.like-button');
+    const isLiked = likeButton.style.color === 'red';
 
-        try {
-            const response = await fetch(`/like/${postId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+    try {
+        const response = await fetch(`/like/${postId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-            if (response.ok) {
-                const likes = document.getElementById(`likes-${postId}`);
-                const currentLikes = parseInt(likes.textContent.split(' ')[0], 10);
-                likes.textContent = `${isLiked ? currentLikes - 1 : currentLikes + 1} likes`;
+        if (response.ok) {
+            const likes = document.getElementById(`likes-${postId}`);
+            const currentLikes = parseInt(likes.textContent.split(' ')[0], 10);
+
+            if (isLiked) {
+                likes.textContent = `${currentLikes - 1} likes`;
+                likeButton.style.color = 'black';
+            } else {
+                likes.textContent = `${currentLikes + 1} likes`;
+                likeButton.style.color = 'red';
             }
-            else {
-                console.log("failed");
-            }
+        } else {
+            console.log("Failed to update like");
         }
-        catch {
-            console.error('Error liking the post:', error);
-        }
+    } catch (error) {
+        console.error('Error liking the post:', error);
     }
+}
+
 
     async function handleDeleteClick(event) {
         const buttonElement = event.target.closest('.delete-button');

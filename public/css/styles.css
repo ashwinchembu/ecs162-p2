@@ -288,9 +288,9 @@ a:hover {
 
 .post p {
     display: inline-block;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-word;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
 }
 
 .posts-list::-webkit-scrollbar {
@@ -744,22 +744,20 @@ footer p {
   }
 
 @media (width <= 400px) {
+    #title{
+        margin-top: 3em;
+    }
     .navLinks, .user-info {
         right: 10px;
-        flex-wrap: wrap;
-        justify-content: center;
     }
-
+    .postsContainer{
+        margin-top: 60em;
+    }
     .post-form {
         width: 50%;
         align-self: center;
         margin-top: 20px;
         margin-right: 10%;
-        margin-left: 10px;
-    }
-
-    ul{
-        width: 100%;
     }
 
     .post {
@@ -767,15 +765,10 @@ footer p {
         margin-left: -20px;  
         margin-right: 20px;
         margin-bottom: 5%;
-        width: 90%;
-        max-width: 100%;
     }
 
-
     .post p {
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        word-break: break-word;
+        overflow-x: hidden;
     }
 
     .post-status-bar {
@@ -798,29 +791,14 @@ footer p {
         margin-right: 10px;
     }
 
+    footer p {
+        font-size: 10px;
+    }
+
     .user-posts {
         margin-bottom: 35px;
     }
-
-    .postsContainer {
-        margin-top: 1050px;
-        height: 820px;
-        width: 100%;
-        padding: 10px;
-        box-sizing: border-box;
-    }
-
-    .posts-list {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        width: 100%;
-        height: auto;
-    }
 }
-
 /* Post-Sorting Form Styling */
 #sortByForm {
     margin-top: 200px;
