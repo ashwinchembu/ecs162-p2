@@ -16,6 +16,7 @@ body, html {
     background-repeat: no-repeat;
     background-attachment: fixed;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 
@@ -26,6 +27,7 @@ body, html {
     flex: 1;
     width: 100%;
     overflow-y: auto; 
+    overflow-x: hidden;
 }
 
 header {
@@ -744,6 +746,10 @@ footer p {
   }
 
 @media (width <= 400px) {
+   
+    .form-hidden{
+        margin-top: -20em;
+    }
     #title{
         margin-top: 3em;
     }
@@ -751,9 +757,12 @@ footer p {
         right: 10px;
     }
     .postsContainer{
-        margin-top: 60em;
+        margin-top: 40em;
+        margin-bottom: 14em;
+        align-items: center;
     }
     .post-form {
+        margin-left: 0;
         width: 50%;
         align-self: center;
         margin-top: 20px;
@@ -762,13 +771,19 @@ footer p {
 
     .post {
         justify-content: center;
-        margin-left: -20px;  
-        margin-right: 20px;
+        margin-left: -2em;  
+        margin-right: 2em;
         margin-bottom: 5%;
+        max-width: 100%;
     }
 
     .post p {
         overflow-x: hidden;
+        overflow-wrap: break-word; 
+        align-items: flex-start;
+        word-wrap: break-word;
+        height: fit-content;
+        
     }
 
     .post-status-bar {
@@ -797,6 +812,46 @@ footer p {
 
     .user-posts {
         margin-bottom: 35px;
+    }
+
+    .postsContainer {
+        margin-top: 60em;
+        width: 100%; 
+        overflow-x: hidden; 
+    }
+    ul {
+        max-width: 100%;
+        max-height: 40%;
+        overflow-y: scroll;
+        overflow-x: none;
+    }
+    ul p{
+        display: inline-block;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        text-wrap: wrap;
+
+    }
+
+    ul h3{
+            display: inline-block;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+            text-wrap: wrap;
+
+    }
+    .posts-list {
+        margin-right: 0 ;
+        margin-left: 0;
+        max-height: 90%;
+        margin-bottom: 35em;
+        width: 100%;
+
+    }
+    .big-post{
+        max-height: 50em;
     }
 }
 /* Post-Sorting Form Styling */

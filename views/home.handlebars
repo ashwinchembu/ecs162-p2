@@ -33,7 +33,7 @@
             </section>
         {{/if}}
 
-        <div class="postsContainer">
+        <div class="postsContainer {{#unless loggedIn}}big-post{{/unless}}" >
             <form id="sortByForm" method="get" action="/">
                 <div class="dropdown" id="dropdown">
                     <button type="button" class="dropdownButton" id="sortButton">Sort By: {{sortLabel}}</button>
