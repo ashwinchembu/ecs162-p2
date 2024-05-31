@@ -737,6 +737,30 @@ footer p {
         margin-top: 1250px;
     }
 
+    ul {
+        max-width: 100%;
+        max-height: 40%;
+        overflow-y: scroll;
+        overflow-x: none;
+    }
+    ul p{
+        display: inline-block;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        text-wrap: wrap;
+
+    }
+
+    ul h3{
+            display: inline-block;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+            text-wrap: wrap;
+
+    }
+
   }
 
   @media (width >=401) and (width <= 416) {
