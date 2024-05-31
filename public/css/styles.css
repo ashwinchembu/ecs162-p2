@@ -717,10 +717,6 @@ footer p {
         padding: 30px;
     }
 
-    .postsContainer {
-        margin-top: 1200px;
-    }
-
     .posts-list {
         max-height: 90%;
         margin-bottom: 25em;
@@ -728,6 +724,13 @@ footer p {
   } 
 
   @media (width <=485px) {
+
+    .content-container{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        display: block;
+       }
 
     .form-hidden{
         margin-top: -20em;
@@ -739,7 +742,6 @@ footer p {
         right: 10px;
     }
     .postsContainer{
-        margin-top: 40em;
         margin-bottom: 14em;
         align-items: center;
     }
@@ -747,7 +749,7 @@ footer p {
         margin-left: 0;
         width: 50%;
         align-self: center;
-        margin-top: 20px;
+        margin-top: 28em;
         margin-right: 10%;
     }
 
@@ -797,7 +799,6 @@ footer p {
     }
 
     .postsContainer {
-        margin-top: 60em;
         width: 100%; 
         overflow-x: hidden; 
     }
@@ -832,9 +833,7 @@ footer p {
         width: 100%;
 
     }
-    .big-post{
-        max-height: 50em;
-    }
+
 
     #emoji-grid{
         letter-spacing: 0.2em;
@@ -845,6 +844,7 @@ footer p {
     .user-posts ul{
         max-height: 100%;
     }
+   
 
   }
 
@@ -855,7 +855,12 @@ footer p {
   }
 
 @media (width <= 400px) {
-   
+   .content-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    display: block;
+   }
     .form-hidden{
         margin-top: -20em;
     }
@@ -866,7 +871,6 @@ footer p {
         right: 10px;
     }
     .postsContainer{
-        margin-top: 40em;
         margin-bottom: 14em;
         align-items: center;
     }
@@ -875,7 +879,7 @@ footer p {
         margin-left: 0;
         width: 50%;
         align-self: center;
-        margin-top: 20px;
+        margin-top: 28em;
         margin-right: 10%;
     }
 
@@ -923,9 +927,8 @@ footer p {
     .user-posts {
         margin-bottom: 35px;
     }
-
+    
     .postsContainer {
-        margin-top: 60em;
         width: 100%; 
         overflow-x: hidden; 
     }
@@ -958,16 +961,15 @@ footer p {
     .user-posts ul{
         max-height: 100%;
     }
+    .big-post{
+        margin-top: 50em;
+    }
     .posts-list {
         margin-right: 0 ;
         margin-left: 0;
         max-height: 90%;
-        margin-bottom: 35em;
         width: 100%;
 
-    }
-    .big-post{
-        max-height: 50em;
     }
 }
 /* Post-Sorting Form Styling */
