@@ -302,6 +302,7 @@ app.post('/delete/:id', isAuthenticated, async (req, res) => {
 async function init(){
     await connectToDatabase();
     app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
     });
 }
     

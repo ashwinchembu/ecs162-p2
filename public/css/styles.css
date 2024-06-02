@@ -1,6 +1,4 @@
 /***** Main Page Styling *****/
-
-/*******************************************************************************************************************/
 body, html {
     display: flex;
     flex-direction: column;
@@ -19,17 +17,6 @@ body, html {
     overflow-x: hidden;
 }
 
-
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 1;
-    width: 100%;
-    overflow-y: auto; 
-    overflow-x: hidden;
-}
-
 header {
     display: flex;
     position: fixed;
@@ -37,7 +24,8 @@ header {
     top: 0;
     align-items: center;
     width: 100%;
-    height: 4.5em;
+    height: 8%;
+    /*height: 4.5em;*/
     z-index: 1;
     background-color: rgba(255, 255, 255, 0.8);
 }
@@ -110,7 +98,8 @@ h1 {
 }
 
 .user-info {
-    top: 2em;
+    /* top: 2em; */
+    top: 12px;
     max-width: 30em;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -164,14 +153,13 @@ a:hover {
 
 .content-container {
     display: flex;
-    flex-direction: row;
-    flex: 1;
+    /* flex-direction: row */
     align-items: center;
     justify-content: center;
     height: 100%;
     padding: 20px;
     width: 100%;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .content-container::-webkit-scrollbar {
@@ -187,8 +175,9 @@ a:hover {
     padding: 30px;
     margin-left: 30px;
     border-radius: 5px;
-    width: 35%; 
-    overflow-y: auto; 
+    /* width: 35%; 
+    overflow-y: auto;  */
+    width: 50%;
 }
 
 .post-form input, .post-form textarea {
@@ -196,6 +185,9 @@ a:hover {
     padding: 10px;
     font-size: 18px;
     margin-bottom: 10px; 
+
+    /* New */
+    margin-right: 10px;
 }
 
 .post-form textarea {
@@ -220,16 +212,16 @@ a:hover {
     display: flex;
     flex-direction: row; 
     margin-bottom: 10px;
-    overflow: auto; 
+    /* overflow: auto;  */
 }
 
 #title {
-        margin-top: 15px;
-        overflow: auto; 
-        white-space: nowrap;
-        display: inline-block;
-        max-width: 100%; 
-    
+    /* margin-top: 15px;
+    overflow: auto;*/
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    /* max-width: 100%*/
 }
 
 .emoji-button {
@@ -265,34 +257,79 @@ a:hover {
 
 /***** Posts Styling *****/
 .postsContainer {
-    flex: 2;
+    width: 70%;
     display: flex;
-    position: relative;
-    width: 100%;
-    padding: 10px;
     flex-direction: column;
-    align-items: center;
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    margin-top: 2%;
+    position: relative;
+    padding: 20px;
     box-sizing: border-box;
-    height: auto;
-    overflow: hidden;
+    height: calc(100vh - 4% - 50px);
+}
+
+/* Post-Sorting Form Styling */
+
+.dropdown {
+    position: absolute;
+    /* top: 0; */
+    top: 20px;
+    z-index: 10;
+    /* margin-top: 150px;*/
+    right: 20px;
+}
+
+.dropdownOptions {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 9;
+}
+
+.dropdownOptions a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdownOptions a:hover {
+    background-color: #f1f1f1;
+}
+
+.show {
+    display: block;
+}
+
+.dropdownButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: white;
+    cursor: pointer;
+    right: 0;
 }
 
 .posts-list {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-y: scroll;
     overflow-x: hidden;
-    width: 100%;
-    height: 25em;
+    flex-grow: 1;
+    margin-top: 60px;
 }
 
 .post p {
     display: inline-block;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        word-break: break-word;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .posts-list::-webkit-scrollbar {
@@ -462,6 +499,7 @@ h2, h3 {
 footer {
     display: flex;
     width: 100%;
+    height: 50px;
     justify-content: center;
     align-items: center;
     bottom: 0;
@@ -476,37 +514,20 @@ footer p {
 }
 
 /***** Media Queries *****/
+/* BIGGEST SCREENS */
 @media (width >= 1930px) {
     .HomeBackground {
         width: 100%;
     }
 }
 
+/* BIGGER SCREENS */
 @media (width <= 1279px) {
-
-    .post-form {
-        z-index: 3000;
-        padding-top: 5em;
-        padding-bottom: 5em;
-        margin-bottom: -100px;
-        width: 50%;
-        margin-left: -60px;
-        margin-top: 5em;
-        height: 20%;
-    }
     .content-container {
         flex-direction: column;
-        overflow-y: none;
+        overflow-y: scroll;
         overflow-x: hidden;
-        height: 70%;
-    }
-
-    .dropdown {
-        margin-top: -100px;
-    }
-
-    .content-container::-webkit-scrollbar {
-        display: none;
+        margin-top: 80px;
     }
 
     .like-button {
@@ -527,6 +548,7 @@ footer p {
         min-height: 20px;
         max-height: 20px;
     }
+    
     #content{
         min-height: 70px;
         max-height: 70px;
@@ -546,17 +568,26 @@ footer p {
         display: none;
     }
 
-     .postsContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        padding: 10px;
-        box-sizing: border-box;
+    .post-form {
+        max-height: 100%;
+        
+        /* z-index: 3000;
+        padding-top: 5em;
+        padding-bottom: 5em;
+        margin-bottom: -100px;
+        width: 50%;
+        margin-left: -60px;
+        margin-top: 5em;
+        height: 20%; */
+    }
+
+    .content-container::-webkit-scrollbar {
+        display: none;
     }
 
     .posts-list {
-        display: flex;
+        min-width: 90%;
+        /* display: flex;
         flex-direction: column;
         align-items: center;
         min-width: 50%;
@@ -567,7 +598,7 @@ footer p {
         margin-top: 2em;
         margin-left: -7%;
         min-height: 75%;
-        max-height: 100%;
+        max-height: 100%; */
     } 
 
     .post {
@@ -601,25 +632,6 @@ footer p {
     footer p {
         text-align: center;
     }
-
-    .user-posts{
-        max-height: 75%;
-        min-height: 30%;
-        margin-bottom: 3.5em;
-        overflow-y: hidden;
-        overflow-x: scroll;
-        white-space: nowrap;
-        display: inline-block;
-    }
-  }
-
-  @media (width <=1279) and (width >= 575) {
-    .content-container {
-        margin-top: 100px;
-    }
-    .postsContainer{
-        margin-top: 0px;
-    }
   }
 
   @media (width >= 781px) and (width <=890) {
@@ -628,242 +640,94 @@ footer p {
     }
   }
 
+  /* New */
+  @media (max-width: 768px) {
+    .postsContainer {
+        width: 90%;
+        margin-top: 0; 
+    }
+
+    .dropdown {
+        top: 10px;
+        right: 10px;
+    }
+
+    .posts-list {
+        margin-top: 50px;
+    }
+}
+
+@media (width <= 600px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        height: 15%;
+    }
+
+    .navLinks, .user-info {
+        width: 100%;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+    .logo, h1 {
+        justify-content: center;
+    }
+
+    .logo img {
+        width: 50px;
+    }
+
+    .post-form {
+        margin-top: 50px;
+
+        /*
+        margin-left: 0;
+        width: 50%;
+        align-self: center;
+        margin-top: 3em;
+        margin-right: 10%;
+        max-height: 20%; */
+    }
+}
+
   @media (width <= 574px) {
-
-    .content-container{
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        display: block;
-       }
-
-    .form-hidden{
-        margin-top: -20em;
-    }
-    #title{
-        margin-top: 3em;
-    }
-    .navLinks, .user-info {
-        right: 10px;
-    }
-    .postsContainer{
-        margin-bottom: 14em;
-        align-items: center;
-    }
-    .post-form {
-        margin-left: 0;
-        width: 50%;
-        align-self: center;
-        margin-top: 3em;
-        margin-right: 10%;
-        max-height: 20%;
-    }
-
-    .post {
-        justify-content: center;
-        margin-left: -2em;  
-        margin-right: 2em;
-        margin-bottom: 5%;
-        max-width: 100%;
-    }
-
-    .post p {
-        overflow-x: hidden;
-        overflow-wrap: break-word; 
-        align-items: flex-start;
-        word-wrap: break-word;
-        height: fit-content;
-        
-    }
-
-    .post-status-bar {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .interact {
-        justify-self: left;
+    .select-text {
+        font-size: 15%;
+        margin-right: -40px;
+        margin-left: -40px;
+        min-width: 15%;
     }
 
     .profile-container {
-        margin-top: 120px;
+        /*margin-top: 120px;*/
+        margin-top: 100px;
     }
 
     footer {
-        height: 35px;
+        /* height: 35px; */
         justify-content: center;
         margin-left: 10px;
         margin-right: 10px;
     }
 
-    footer p {
-        font-size: 10px;
-    }
-
-    .user-posts {
-        margin-bottom: 35px;
-    }
-
-    .postsContainer {
-        width: 100%; 
-        overflow-x: hidden; 
-    }
-    ul {
-        max-width: 100%;
-        max-height: 70%;
-        overflow-y: scroll;
-        overflow-x: none;
-    }
-    ul p{
-        display: inline-block;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        word-break: break-word;
-        text-wrap: wrap;
-
-    }
-
-    ul h3{
-            display: inline-block;
-            overflow-wrap: break-word;
-            word-wrap: break-word;
-            word-break: break-word;
-            text-wrap: wrap;
-
-    }
-    .posts-list {
-        margin-right: 0 ;
-        margin-left: 0;
-        max-height: 90%;
-        margin-bottom: 35em;
-        width: 100%;
-
-    }
-  } 
-
-  @media (width <=485px) {
-
-    .content-container{
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        display: block;
-       }
-
-    .form-hidden{
-        margin-top: -20em;
-    }
-    #title{
-        margin-top: 3em;
-    }
-    .navLinks, .user-info {
-        right: 10px;
-    }
-    .postsContainer{
-        margin-bottom: 14em;
+    #emoji-grid {
         align-items: center;
-    }
-    .post-form {
-        margin-left: 0;
-        width: 50%;
-        align-self: center;
-        margin-top: 5em;
-        margin-right: 10%;
-    }
-
-    .post {
-        justify-content: center;
-        margin-left: -2em;  
-        margin-right: 2em;
-        margin-bottom: 5%;
-        max-width: 100%;
-    }
-
-    .post p {
-        overflow-x: hidden;
-        overflow-wrap: break-word; 
-        align-items: flex-start;
-        word-wrap: break-word;
-        height: fit-content;
-        
-    }
-
-    .post-status-bar {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .interact {
-        justify-self: left;
-    }
-
-    .profile-container {
-        margin-top: 120px;
-    }
-
-    footer {
-        height: 35px;
-        justify-content: center;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-
-    footer p {
-        font-size: 10px;
-    }
-
-    .user-posts {
-        margin-bottom: 35px;
-    }
-
-    .postsContainer {
-        width: 100%; 
-        overflow-x: hidden; 
-    }
-    ul {
-        max-width: 100%;
-        max-height: 70%;
-        overflow-y: scroll;
-        overflow-x: none;
-    }
-    ul p{
+        overflow-y: hidden;
+        overflow-x: scroll;
+        white-space: nowrap;
         display: inline-block;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        word-break: break-word;
-        text-wrap: wrap;
-
-    }
-
-    ul h3{
-            display: inline-block;
-            overflow-wrap: break-word;
-            word-wrap: break-word;
-            word-break: break-word;
-            text-wrap: wrap;
-
-    }
-    .posts-list {
-        margin-right: 0 ;
-        margin-left: 0;
-        max-height: 90%;
-        margin-bottom: 35em;
+        max-height: 22%;
         width: 100%;
-
     }
-
-
-    #emoji-grid{
-        letter-spacing: 0.2em;
+    
+    /* New */
+    #emoji-search {
+        align-items: center;
+        border: 1px gray solid;
+        max-height: 10%;
+        border-radius: 2px;
     }
-    .user-posts{
-        height: 100%;
-    }
-    .user-posts ul{
-        max-height: 100%;
-    }
-   
-
   }
 
   @media (width >=401) and (width <= 416) {
@@ -873,49 +737,35 @@ footer p {
   }
 
 @media (width <= 400px) {
-   .content-container{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    display: block;
-   }
-    .form-hidden{
-        margin-top: -20em;
-    }
-    #title{
-        margin-top: 3em;
-    }
     .navLinks, .user-info {
         right: 10px;
     }
-    .postsContainer{
-        margin-bottom: 14em;
-        align-items: center;
-    }
+
     .post-form {
-        display: block;
-        margin-left: 0;
+        /* display: block; */
+        /* margin-left: 0; */
         width: 50%;
         align-self: center;
-        margin-top: 3em;
+        /* margin-top: 3em; */
+        margin-top: 20px;
         margin-right: 10%;
     }
 
     .post {
         justify-content: center;
-        margin-left: -2em;  
-        margin-right: 2em;
+        /* margin-left: -2em; */
+        margin-left: -20px;  
+        /* margin-right: -2em; */
+        margin-right: 20px;
         margin-bottom: 5%;
-        max-width: 100%;
     }
 
     .post p {
         overflow-x: hidden;
-        overflow-wrap: break-word; 
+        /* overflow-wrap: break-word; 
         align-items: flex-start;
         word-wrap: break-word;
-        height: fit-content;
-        
+        height: fit-content; */
     }
 
     .post-status-bar {
@@ -945,95 +795,4 @@ footer p {
     .user-posts {
         margin-bottom: 35px;
     }
-    
-    .postsContainer {
-        width: 100%; 
-        overflow-x: hidden; 
-    }
-    ul {
-        max-width: 100%;
-        max-height: 60%;
-        overflow-y: scroll;
-        overflow-x: none;
-    }
-    ul p{
-        display: inline-block;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        word-break: break-word;
-        text-wrap: wrap;
-
-    }
-
-    ul h3{
-            display: inline-block;
-            overflow-wrap: break-word;
-            word-wrap: break-word;
-            word-break: break-word;
-            text-wrap: wrap;
-
-    }
-    .user-posts{
-        height: 100%;
-    }
-    .user-posts ul{
-        max-height: 100%;
-    }
-    .big-post{
-        margin-top: 50em;
-    }
-    .posts-list {
-        margin-right: 0 ;
-        margin-left: 0;
-        max-height: 90%;
-        width: 100%;
-        margin-top: -2em;
-    }
-}
-
-/* Post-Sorting Form Styling */
-#sortByForm {
-    margin-top: 200px;
-}
-
-.dropdown {
-    position: absolute;
-    top: 0;
-    z-index: 10;
-    margin-top: 150px;
-    right: 60px;
-}
-
-.dropdownOptions {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    width: 100%;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 9;
-}
-
-.dropdownOptions a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdownOptions a:hover {
-    background-color: #f1f1f1;
-}
-
-.show {
-    display: block;
-}
-
-.dropdownButton {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: white;
-    cursor: pointer;
-    right: 0;
 }

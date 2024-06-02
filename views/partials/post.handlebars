@@ -22,6 +22,7 @@
             {{/ifEqual}}
             
         <p class = 'liketext' id= 'likes-{{id}}'>{{calculateLikes likes}} <span id = 'likes2'>likes</span></p>
+        {{!-- DIFFERENCE: <p class = 'liketext' id= 'likes-{{id}}'>{{likes.length}} <span id = 'likes2'>likes</span></p> --}}
         </span>
         <span class = "postedby">
             <span>Posted by {{username}} on  {{timestamp}}</span>
@@ -55,6 +56,9 @@
                 likes.textContent = `${currentLikes + 1} likes`;
                 likeButton.style.color = 'red';
             }
+
+            /* DIFFERENCE: likes.textContent = `${isLiked ? currentLikes - 1 : currentLikes + 1} likes`;
+                        likeButton.style.color = isLiked ? '' : 'red'; */
         } else {
             console.log("Failed to update like");
         }
@@ -62,7 +66,6 @@
         console.error('Error liking the post:', error);
     }
 }
-
 
     async function handleDeleteClick(event) {
         const buttonElement = event.target.closest('.delete-button');
