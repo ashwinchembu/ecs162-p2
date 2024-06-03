@@ -244,13 +244,6 @@ app.post('/posts', async (req, res) => {
     res.redirect('/');
 });
 
-async function addPost(title, content, rating, user) {
-    await db.run(
-        'INSERT INTO posts (title, content, username, timestamp, likes, rating) VALUES (?, ?, ?, ?, ?)',
-        [title, content, user.username, formatPostDate(new Date()), JSON.stringify([]), rating]
-    );
-}
-
 app.post('/like/:id', async (req, res) => {
     // Update post likes
     let worked = await updatePostLikes(req,res);
@@ -508,10 +501,10 @@ async function getPosts(order = 'newest', filter = '') {
 }
 
 // Function to add a new post
-async function addPost(title, content, user) {
+async function addPost(title, content, rating, user) {
     await db.run(
         'INSERT INTO posts (title, content, username, timestamp, likes, tags, rating) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [title, content, user.username, formatPostDate(new Date()), JSON.stringify([])]
+        [title, content, user.username, formatPostDate(new Date()), JSON.stringify([]), "", rating]
     );
 }
 
