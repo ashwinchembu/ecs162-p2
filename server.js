@@ -240,9 +240,16 @@ app.get('/error', (req, res) => {
 // Additional routes
 app.post('/posts', async (req, res) => {
     // Add a new post and redirect to home
-    addPost(req.body.title, req.body.content, await getCurrentUser(req));
+    addPost(req.body.title, req.body.content, req.body.rating, await getCurrentUser(req));
     res.redirect('/');
 });
+
+async function addPost(title, content, rating, user) {
+    await db.run(
+        'INSERT INTO posts (title, content, username, timestamp, likes, rating) VALUES (?, ?, ?, ?, ?)',
+        [title, content, user.username, formatPostDate(new Date()), JSON.stringify([]), rating]
+    );
+}
 
 app.post('/like/:id', async (req, res) => {
     // Update post likes

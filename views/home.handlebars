@@ -151,9 +151,42 @@
 
 // Event listener for document to retrieve rating
 document.addEventListener('DOMContentLoaded', function() {
-        
-    });
+    const stars = document.querySelectorAll('.star');
+    userRating = document.getElementById('rating');
 
+    stars.forEach(star => {
+        // Colors star if mouse hovers over it
+        star.addEventListener('mouseHover', function() {
+            rateValue = this.id.split('-')[0];
+            highlightStars(rateValue);
+        })
+
+        // Only colors stars that have been clicked
+        star.addEventListener('mouseNoHover', function() {
+            highlightStars(userRating.value);
+        })
+        
+        // Updates coloring stars that have been clicked
+        star.addEventListener('click', function() {
+            rateValue = this.id.split('-')[0];
+            updateStars(rateValue);
+        });
+    })
+
+    function highlightStars(value) {
+        stars.forEach(star => {
+            if (star.id.split('-')[1] <= value) {
+                star.style.color = 'gold';
+            }
+        });
+    }
+
+    function updateStars(value) {
+        highlightStars(value);
+        rating = value;
+        ratingDisplay.textContent = 'Rating: ${rating}';
+    }
+});
 </script>
 
 {{! JavaScript for Sort-By Functionality }}

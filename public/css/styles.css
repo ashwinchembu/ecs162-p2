@@ -1,4 +1,9 @@
 /***** Main Page Styling *****/
+.ratingContainer {
+    display: flex;
+    flex-direction: row;
+}
+
 #ratingText {
 
 }
@@ -25,7 +30,6 @@
 .star.selected ~ .star {
     color: gold;
 }
-
 
 
 /*******************/
@@ -627,6 +631,7 @@ footer p {
         padding: 15px;
         
     }
+
     .content-container {
         flex-direction: column;
         overflow-y: scroll;
