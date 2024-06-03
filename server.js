@@ -240,6 +240,7 @@ app.get('/error', (req, res) => {
 // Additional routes
 app.post('/posts', async (req, res) => {
     // Add a new post and redirect to home
+    console.log(req.body.rating)
     addPost(req.body.title, req.body.content, req.body.rating, await getCurrentUser(req));
     res.redirect('/');
 });

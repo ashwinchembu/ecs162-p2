@@ -11,21 +11,22 @@
                 <textarea id="content" name="content" placeholder="What's the vibe, gamer?" required></textarea><br><br>
 
                 <!-- Star rating system -->
+                    <span id="ratingText">Game rating: </span>
                     <div class="ratingStars">
-                        <span class="star" id="star-1">★</span>
-                        <span class="star" id="star-2">★</span>
-                        <span class="star" id="star-3">★</span>
-                        <span class="star" id="star-4">★</span>
                         <span class="star" id="star-5">★</span>
+                        <span class="star" id="star-4">★</span>
+                        <span class="star" id="star-3">★</span>
+                        <span class="star" id="star-2">★</span>
+                        <span class="star" id="star-1">★</span>
                     </div>
 
-                    <input type="hidden" id="rating" value="0">
+                    <input type="hidden" id="rating" name="rating" value="0">
 
                 <div class="form-actions">
                     <button type="button" class="emoji-button" onclick="toggleEmojiPanel()">😀</button>
                     <button type="submit" class="post-button">Post</button>
 
-                    <span id="ratingText">Game rating: </span>
+
                 </div>
             </form>
 
@@ -152,41 +153,45 @@
 // Event listener for document to retrieve rating
 document.addEventListener('DOMContentLoaded', function() {
     const stars = document.querySelectorAll('.star');
-    userRating = document.getElementById('rating');
+    const userRating = document.getElementById('rating');
+    const ratingDisplay = document.getElementById('ratingText');
 
     stars.forEach(star => {
-        // Colors star if mouse hovers over it
-        star.addEventListener('mouseHover', function() {
-            rateValue = this.id.split('-')[0];
+        // Highlights stars on mouseover
+        star.addEventListener('mouseover', function() {
+            const rateValue = this.id.split('-')[1];
             highlightStars(rateValue);
-        })
+        });
 
-        // Only colors stars that have been clicked
-        star.addEventListener('mouseNoHover', function() {
+        // Resets stars when mouse is not hovering
+        star.addEventListener('mouseout', function() {
             highlightStars(userRating.value);
-        })
-        
-        // Updates coloring stars that have been clicked
+        });
+
+        // Sets the rating when a star is clicked
         star.addEventListener('click', function() {
-            rateValue = this.id.split('-')[0];
+            const rateValue = this.id.split('-')[1];
+            userRating.value = rateValue;
             updateStars(rateValue);
         });
-    })
+    });
 
     function highlightStars(value) {
         stars.forEach(star => {
             if (star.id.split('-')[1] <= value) {
                 star.style.color = 'gold';
+            } else {
+                star.style.color = 'gray';
             }
         });
     }
 
     function updateStars(value) {
         highlightStars(value);
-        rating = value;
-        ratingDisplay.textContent = 'Rating: ${rating}';
+        ratingDisplay.textContent = 'Game rating: ' + value;
     }
 });
+
 </script>
 
 {{! JavaScript for Sort-By Functionality }}
