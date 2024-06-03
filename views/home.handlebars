@@ -10,9 +10,22 @@
                 <input type="text" id="title" name="title" placeholder="Title" required><br><br>
                 <textarea id="content" name="content" placeholder="What's the vibe, gamer?" required></textarea><br><br>
 
+                <!-- Star rating system -->
+                    <div class="ratingStars">
+                        <span class="star" id="star-1">★</span>
+                        <span class="star" id="star-2">★</span>
+                        <span class="star" id="star-3">★</span>
+                        <span class="star" id="star-4">★</span>
+                        <span class="star" id="star-5">★</span>
+                    </div>
+
+                    <input type="hidden" id="rating" value="0">
+
                 <div class="form-actions">
                     <button type="button" class="emoji-button" onclick="toggleEmojiPanel()">😀</button>
                     <button type="submit" class="post-button">Post</button>
+
+                    <span id="ratingText">Game rating: </span>
                 </div>
             </form>
 
@@ -128,6 +141,16 @@
     </script>
 </div>
 
+{{! JavaScript for Rating Functionality }}
+<script>
+
+// Event listener for document to retrieve rating
+document.addEventListener('DOMContentLoaded', function() {
+        
+    });
+
+</script>
+
 {{! JavaScript for Sort-By Functionality }}
 <script>
     // Shows dropdown when user clicks on Sort By button
@@ -151,16 +174,6 @@
         localStorage.setItem('postOrder', option);
     }
 
-    // Adjusts the height of the posts list based on the footer height
-        function adjustPostsListHeight() {
-            const footerHeight = document.getElementById('footing').offsetHeight;
-            const headerHeight = document.querySelector('heading').offsetHeight;
-            const contentContainer = document.querySelector('.content-container');
-            const additionalOffset = 100;
-            const availableHeight = window.innerHeight - footerHeight - headerHeight - additionalOffset;
-            contentContainer.style.height = availableHeight + 'px';
-        }
-
     function getSortOption() {
         const order = localStorage.getItem('postOrder');
         const label = localStorage.getItem('sortLabel');
@@ -170,10 +183,8 @@
     }
 
     // Event listener for document load to retrieve stored sort option
-        document.addEventListener('DOMContentLoaded', function() {
-            getSortOption();
-            adjustPostsListHeight();
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+        getSortOption();
+    });
 
-window.addEventListener('resize', adjustPostsListHeight);
 </script>

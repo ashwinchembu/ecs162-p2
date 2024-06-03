@@ -1,4 +1,34 @@
 /***** Main Page Styling *****/
+#ratingText {
+
+}
+.ratingStars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.star {
+    font-size: 30px;
+    cursor: pointer;
+    color: gray;
+    transition: color 0.2s;
+}
+
+.star:hover,
+.star:hover ~ .star {
+    color: gold;
+}
+
+.star.selected,
+.star.selected ~ .star {
+    color: gold;
+}
+
+
+
+/*******************/
 body, html {
     display: flex;
     flex-direction: column;
@@ -28,6 +58,9 @@ header {
     /*height: 4.5em;*/
     z-index: 1;
     background-color: rgba(255, 255, 255, 0.8);
+
+    /* New */
+    height: 8%;
 }
 
 .HomeBackground {
@@ -99,11 +132,11 @@ h1 {
 
 .user-info {
     /* top: 2em; */
-    top: 12px;
     max-width: 30em;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    top: 12px;
 }
 
 .user-info:hover, .navLinks:hover {
@@ -152,14 +185,22 @@ a:hover {
 }
 
 .content-container {
-    display: flex;
-    /* flex-direction: row */
+    /* display: flex;
+    flex-direction: row;
+    flex: 1;
     align-items: center;
     justify-content: center;
     height: 100%;
     padding: 20px;
     width: 100%;
-    /*overflow: hidden;*/
+    overflow: hidden; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+    width: 100%;
 }
 
 .content-container::-webkit-scrollbar {
@@ -217,11 +258,14 @@ a:hover {
 
 #title {
     /* margin-top: 15px;
-    overflow: auto;*/
+    overflow: auto; 
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 100%;  */
+
     overflow: hidden;
     white-space: nowrap;
     display: inline-block;
-    /* max-width: 100%*/
 }
 
 .emoji-button {
@@ -267,16 +311,25 @@ a:hover {
     padding: 20px;
     box-sizing: border-box;
     height: calc(100vh - 4% - 50px);
+
+    /* Done */
 }
 
 /* Post-Sorting Form Styling */
+/* #sortByForm {
+    margin-top: 200px;
+} */
 
 .dropdown {
-    position: absolute;
-    /* top: 0; */
-    top: 20px;
+    /* position: absolute;
+    top: 0;
     z-index: 10;
-    /* margin-top: 150px;*/
+    margin-top: 150px;
+    right: 60px; */
+
+    position: absolute;
+    z-index: 10;
+    top: 20px;
     right: 20px;
 }
 
@@ -323,6 +376,8 @@ a:hover {
     overflow-x: hidden;
     flex-grow: 1;
     margin-top: 60px;
+
+    /* Done */
 }
 
 .post p {
@@ -350,6 +405,14 @@ a:hover {
 
 h2, h3 {
     color: darkGreen;
+}
+
+h3 {
+    display: inline-block;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    text-wrap: wrap;
 }
 
 .post {
@@ -581,9 +644,22 @@ footer p {
         height: 20%; */
     }
 
+    /* .dropdown {
+        margin-top: -100px;
+    } */
+
     .content-container::-webkit-scrollbar {
         display: none;
     }
+
+    /* .postsContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+    } */
 
     .posts-list {
         min-width: 90%;
@@ -632,7 +708,27 @@ footer p {
     footer p {
         text-align: center;
     }
+
+    /* .user-posts {
+        max-height: 75%;
+        min-height: 30%;
+        margin-bottom: 3.5em;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        white-space: nowrap;
+        display: inline-block;
+    } */
   }
+
+  /* Maybe rid of this */
+/*   @media (width <=1279) and (width >= 575) {
+    .content-container {
+        margin-top: 100px;
+    }
+    .postsContainer{
+        margin-top: 0px;
+    }
+  } */
 
   @media (width >= 781px) and (width <=890) {
     .profile-container {
@@ -657,6 +753,7 @@ footer p {
     }
 }
 
+/* New */
 @media (width <= 600px) {
     header {
         flex-direction: column;
@@ -670,13 +767,73 @@ footer p {
         margin-top: 40px;
     }
 
+    /* New */
     .logo, h1 {
         justify-content: center;
     }
 
+    /* New */
     .logo img {
         width: 50px;
     }
+}
+
+  @media (width <= 574px) {
+
+    /* .content-container{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        display: block;
+       } */
+
+    /* .form-hidden{
+        margin-top: -20em;
+    } */
+
+    /* New */
+    .select-text {
+        font-size: 15%;
+        margin-right: -40px;
+        margin-left: -40px;
+        min-width: 15%;
+    }
+
+    /* New */
+    /* header {
+        flex-direction: column;
+        align-items: flex-start;
+        height: 15%;
+    }
+
+    /* #title{
+        margin-top: 3em;
+    } */
+
+    .navLinks, .user-info {
+        /* Maybe rid of?: 
+        right: 10px; */
+
+        /* New 3 */
+        width: 100%;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+    /* New */
+    .logo, h1 {
+        justify-content: center;
+    }
+
+    /* New */
+    .logo img {
+        width: 50px;
+    } */
+
+    /* .postsContainer{
+        margin-bottom: 14em;
+        align-items: center;
+    } */
 
     .post-form {
         margin-top: 50px;
@@ -689,18 +846,37 @@ footer p {
         margin-right: 10%;
         max-height: 20%; */
     }
-}
 
-  @media (width <= 574px) {
-    .select-text {
-        font-size: 15%;
-        margin-right: -40px;
-        margin-left: -40px;
-        min-width: 15%;
+    /* .post {
+        justify-content: center;
+        margin-left: -2em;  
+        margin-right: 2em;
+        margin-bottom: 5%;
+        max-width: 100%;
     }
+
+    .post p {
+        overflow-x: hidden;
+        overflow-wrap: break-word; 
+        align-items: flex-start;
+        word-wrap: break-word;
+        height: fit-content;
+        
+    } */
+
+    /* .post-status-bar {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .interact {
+        justify-self: left;
+    } */
 
     .profile-container {
         /*margin-top: 120px;*/
+
+        /* New */
         margin-top: 100px;
     }
 
@@ -711,6 +887,53 @@ footer p {
         margin-right: 10px;
     }
 
+    /* footer p {
+        font-size: 10px;
+    } */
+
+    /* .user-posts {
+        margin-bottom: 35px;
+    } */
+
+    /* .postsContainer {
+        width: 100%; 
+        overflow-x: hidden; 
+    } */
+    
+    /* ul {
+        max-width: 100%;
+        max-height: 70%;
+        overflow-y: scroll;
+        overflow-x: none;
+    }
+    ul p{
+        display: inline-block;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        text-wrap: wrap;
+
+    }
+
+    ul h3{
+            display: inline-block;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+            text-wrap: wrap;
+
+    } */
+    
+    /* .posts-list {
+        margin-right: 0 ;
+        margin-left: 0;
+        max-height: 90%;
+        margin-bottom: 35em;
+        width: 100%;
+
+    } */
+
+    /* New */
     #emoji-grid {
         align-items: center;
         overflow-y: hidden;
@@ -728,44 +951,53 @@ footer p {
         max-height: 10%;
         border-radius: 2px;
     }
-  }
+  } 
 
-  @media (width >=401) and (width <= 416) {
-    footer p {
-        text-align: center;
+ /*  @media (width <=485px) {
+
+    .content-container{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        display: block;
+       }
+
+    .form-hidden{
+        margin-top: -20em;
     }
-  }
-
-@media (width <= 400px) {
+    #title{
+        margin-top: 3em;
+    }
     .navLinks, .user-info {
         right: 10px;
     }
-
+    .postsContainer{
+        margin-bottom: 14em;
+        align-items: center;
+    }
     .post-form {
-        /* display: block; */
-        /* margin-left: 0; */
+        margin-left: 0;
         width: 50%;
         align-self: center;
-        /* margin-top: 3em; */
-        margin-top: 20px;
+        margin-top: 5em;
         margin-right: 10%;
     }
 
     .post {
         justify-content: center;
-        /* margin-left: -2em; */
-        margin-left: -20px;  
-        /* margin-right: -2em; */
-        margin-right: 20px;
+        margin-left: -2em;  
+        margin-right: 2em;
         margin-bottom: 5%;
+        max-width: 100%;
     }
 
     .post p {
         overflow-x: hidden;
-        /* overflow-wrap: break-word; 
+        overflow-wrap: break-word; 
         align-items: flex-start;
         word-wrap: break-word;
-        height: fit-content; */
+        height: fit-content;
+        
     }
 
     .post-status-bar {
@@ -795,4 +1027,194 @@ footer p {
     .user-posts {
         margin-bottom: 35px;
     }
+
+    .postsContainer {
+        width: 100%; 
+        overflow-x: hidden; 
+    }
+    ul {
+        max-width: 100%;
+        max-height: 70%;
+        overflow-y: scroll;
+        overflow-x: none;
+    }
+    ul p{
+        display: inline-block;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        text-wrap: wrap;
+
+    }
+
+    ul h3{
+            display: inline-block;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+            text-wrap: wrap;
+
+    }
+    .posts-list {
+        margin-right: 0 ;
+        margin-left: 0;
+        max-height: 90%;
+        margin-bottom: 35em;
+        width: 100%;
+
+    }
+
+
+    #emoji-grid{
+        letter-spacing: 0.2em;
+    }
+    .user-posts{
+        height: 100%;
+    }
+    .user-posts ul{
+        max-height: 100%;
+    }
+   
+  } */
+
+  @media (width >=401) and (width <= 416) {
+    footer p {
+        text-align: center;
+    }
+  }
+
+@media (width <= 400px) {
+   /* .content-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    display: block;
+   }
+    .form-hidden{
+        margin-top: -20em;
+    }
+    #title{
+        margin-top: 3em;
+    } */
+    .navLinks, .user-info {
+        right: 10px;
+    }
+    
+    /* .postsContainer{
+        margin-bottom: 14em;
+        align-items: center;
+    } */
+    
+    .post-form {
+        /* display: block;
+        margin-left: 0;
+        width: 50%;
+        align-self: center;
+        margin-top: 3em;
+        margin-right: 10%; */
+
+        width: 50%;
+        align-self: center;
+        margin-top: 20px;
+        margin-right: 10%;
+    }
+
+    .post {
+        /* justify-content: center;
+        margin-left: -2em;  
+        margin-right: 2em;
+        margin-bottom: 5%;
+        max-width: 100%; */
+
+        justify-content: center;
+        margin-left: -20px;  
+        margin-right: 20px;
+        margin-bottom: 5%;
+    }
+
+    .post p {
+        /* overflow-x: hidden;
+        overflow-wrap: break-word; 
+        align-items: flex-start;
+        word-wrap: break-word;
+        height: fit-content; */
+
+        overflow-x: hidden;
+    }
+
+    .post-status-bar {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .interact {
+        justify-self: left;
+    }
+
+    .profile-container {
+        margin-top: 120px;
+    }
+
+    footer {
+        height: 35px;
+        justify-content: center;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    footer p {
+        font-size: 10px;
+    }
+
+    .user-posts {
+        margin-bottom: 35px;
+    }
+    
+    /* .postsContainer {
+        width: 100%; 
+        overflow-x: hidden; 
+    }
+
+    ul {
+        max-width: 100%;
+        max-height: 60%;
+        overflow-y: scroll;
+        overflow-x: none;
+    }
+
+    ul p{
+        display: inline-block;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        text-wrap: wrap;
+    }
+
+    ul h3{
+            display: inline-block;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+            text-wrap: wrap;
+
+    }
+    .user-posts{
+        height: 100%;
+    }
+
+    .user-posts ul{
+        max-height: 100%;
+    }
+
+    .big-post{
+        margin-top: 50em;
+    }
+
+    .posts-list {
+        margin-right: 0 ;
+        margin-left: 0;
+        max-height: 90%;
+        width: 100%;
+        margin-top: -2em;
+    } */
 }
