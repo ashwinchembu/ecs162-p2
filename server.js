@@ -211,12 +211,14 @@ app.get('/emojis', async (req,res)=>{
 // We pass the posts and user variables into the home template
 //
 app.get('/', async (req, res) => {
-    const order = req.query.order || 'newest';
-    const posts = await getPosts(order);
-    const user = await getCurrentUser(req) || {};
-    const sortLabel = req.query.sortLabel || 'Newest';
-    res.render('home', { posts, user, order, sortLabel });
+        const order = req.query.order || 'newest';
+        const posts = await getPosts(order);
+        const user = await getCurrentUser(req) || {};
+        const sortLabel = req.query.sortLabel || 'Newest';
+        const filterLabel = req.query.sortLabel || 'None';
+        res.render('home', { posts, user, order, sortLabel, filterLabel });
 });
+    
 
 // Register GET route is used for error response from registration
 app.get('/register', (req, res) => {
