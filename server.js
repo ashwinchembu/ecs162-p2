@@ -211,12 +211,15 @@ app.get('/emojis', async (req,res)=>{
 // We pass the posts and user variables into the home template
 //
 app.get('/', async (req, res) => {
-        const order = req.query.order || 'newest';
-        const posts = await getPosts(order);
-        const user = await getCurrentUser(req) || {};
-        const sortLabel = req.query.sortLabel || 'Newest';
-        const filterLabel = req.query.sortLabel || 'None';
-        res.render('home', { posts, user, order, sortLabel, filterLabel });
+    const order = req.query.order || 'newest';
+    const gameFilter = req.query.gameFilter || '';
+    const posts = await getPosts(order, gameFilter);
+
+    const user = await getCurrentUser(req) || {};
+    const sortLabel = req.query.sortLabel || 'Newest';
+    const filterLabel = gameFilter || 'None';
+
+    res.render('home', { posts, user, order, sortLabel, filterLabel, gameFilter });
 });
     
 
@@ -477,14 +480,25 @@ async function handleAvatar(req, res) {
     }
 }
 
-async function getPosts(order = 'newest') {
-    if (order === 'newest') {
-        return await db.all('SELECT * FROM posts ORDER BY timestamp DESC');
-    } else if (order === 'oldest') {
-        return await db.all('SELECT * FROM posts ORDER BY timestamp ASC');
-    } else if (order === 'mostLikes') {
-        return await db.all('SELECT * FROM posts ORDER BY json_array_length(likes) DESC');
+async function getPosts(order = 'newest', filter = '') {
+    let query = 'SELECT * FROM posts';
+    let params = [];
+
+    if (filter) {
+        query += ' WHERE tags LIKE ?';
+        params.push(`%${filter}%`);
     }
+
+    if (order === 'newest') {
+        query += ' ORDER BY timestamp DESC';
+    } else if (order === 'oldest') {
+        query += ' ORDER BY timestamp ASC';
+    } else if (order === 'mostLikes') {
+        query += ' ORDER BY json_array_length(likes) DESC';
+    }
+
+    console.log(query)
+    return await db.all(query, params);
 }
 
 // Function to add a new post

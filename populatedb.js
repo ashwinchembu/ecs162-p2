@@ -24,7 +24,9 @@ async function initializeDB() {
             content TEXT NOT NULL,
             username TEXT NOT NULL,
             timestamp DATETIME NOT NULL,
-            likes TEXT NOT NULL
+            likes TEXT NOT NULL,
+            tags TEXT NOT NULL,
+            rating INTEGER
         );
     `);
 
@@ -49,7 +51,7 @@ async function initializeDB() {
             username: 'PixelPioneer',
             timestamp: '2024-01-01 10:00',
             likes: JSON.stringify([]),
-            game: 'Celeste',
+            tags: 'Celeste,Platformer,Indie',
             rating: 5
         },
         {
@@ -58,7 +60,7 @@ async function initializeDB() {
             username: 'RetroRaven',
             timestamp: '2024-01-02 12:00',
             likes: JSON.stringify([]),
-            game: 'Stardew Valley',
+            tags: 'Stardew Valley,Simulation,Relaxing',
             rating: 3
         },
         {
@@ -67,7 +69,7 @@ async function initializeDB() {
             username: 'GamerGuru',
             timestamp: '2024-01-03 14:00',
             likes: JSON.stringify([]),
-            game: 'The Legend of Zelda: Breath of the Wild',
+            tags: 'The Legend of Zelda,Action-Adventure,Open World',
             rating: 5
         },
         {
@@ -76,7 +78,7 @@ async function initializeDB() {
             username: 'SoulSeeker',
             timestamp: '2024-01-04 16:00',
             likes: JSON.stringify([]),
-            game: 'Dark Souls III',
+            tags: 'Dark Souls III,Challenging,Action RPG',
             rating: 2
         },
         {
@@ -85,7 +87,7 @@ async function initializeDB() {
             username: 'StrategySavant',
             timestamp: '2024-01-05 18:00',
             likes: JSON.stringify([]),
-            game: 'Civilization VI',
+            tags: 'Civilization VI,Strategy,Simulation',
             rating: 1
         },
         {
@@ -94,7 +96,7 @@ async function initializeDB() {
             username: 'IslandInnovator',
             timestamp: '2024-01-06 20:00',
             likes: JSON.stringify([]),
-            game: 'Animal Crossing: New Horizons',
+            tags: 'Animal Crossing,Simulation,Relaxing',
             rating: 3
         },
         {
@@ -103,7 +105,7 @@ async function initializeDB() {
             username: 'SpeedDemon',
             timestamp: '2024-01-07 22:00',
             likes: JSON.stringify([]),
-            game: 'Mario Kart 8 Deluxe',
+            tags: 'Mario Kart 8 Deluxe,Racing,Multiplayer',
             rating: 4
         },
         {
@@ -112,7 +114,7 @@ async function initializeDB() {
             username: 'PuzzleMaster',
             timestamp: '2024-01-08 09:00',
             likes: JSON.stringify([]),
-            game: 'The Witness',
+            tags: 'The Witness,Puzzle,Indie',
             rating: 5
         },
         {
@@ -121,7 +123,7 @@ async function initializeDB() {
             username: 'UnderworldExplorer',
             timestamp: '2024-01-09 11:00',
             likes: JSON.stringify([]),
-            game: 'Hades',
+            tags: 'Hades,Rogue-Like,Action',
             rating: 1
         },
         {
@@ -130,7 +132,7 @@ async function initializeDB() {
             username: 'SpaceVoyager',
             timestamp: '2024-01-10 13:00',
             likes: JSON.stringify([]),
-            game: 'No Man\'s Sky',
+            tags: 'No Man\'s Sky,Space,Exploration',
             rating: 2
         }
     ];
@@ -147,8 +149,8 @@ async function initializeDB() {
     
     await Promise.all(posts.map(post => {
         return db.run(
-            'INSERT INTO posts (title, content, username, timestamp, likes) VALUES (?, ?, ?, ?, ?)',
-            [post.title, post.content, post.username, post.timestamp, post.likes]
+            'INSERT INTO posts (title, content, username, timestamp, likes, tags, rating) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [post.title, post.content, post.username, post.timestamp, post.likes, post.tags, post.rating]
         );
     }));
 
