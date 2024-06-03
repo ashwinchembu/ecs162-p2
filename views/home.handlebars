@@ -9,6 +9,7 @@
             <form action="/posts" method="POST">
                 <input type="text" id="title" name="title" placeholder="Title" required><br><br>
                 <textarea id="content" name="content" placeholder="What's the vibe, gamer?" required></textarea><br><br>
+                <input id="tags" name="tags" placeholder="What's this post about? (comma separated)"></textarea>
 
                 <!-- Star rating system -->
                     <span id="ratingText">Game rating: </span>
@@ -26,8 +27,9 @@
                     <button type="button" class="emoji-button" onclick="toggleEmojiPanel()">😀</button>
                     <button type="submit" class="post-button">Post</button>
 
-
                 </div>
+
+
             </form>
 
             <div id="emoji-container" class="emoji-panel" style="display: none;">

@@ -74,6 +74,14 @@ app.engine(
                     return options.fn(this);
                 }
                 return options.inverse(this);
+            },
+            makeStars: function(rating) {
+                const maxStars = 5;
+                let stars = [];
+                for (let i = 0; i < maxStars; i++) {
+                    stars.push(i < rating ? 'checked' : '');
+                }
+                return stars;
             }
         },
     })
@@ -241,7 +249,7 @@ app.get('/error', (req, res) => {
 app.post('/posts', async (req, res) => {
     // Add a new post and redirect to home
     console.log(req.body.rating)
-    addPost(req.body.title, req.body.content, req.body.rating, await getCurrentUser(req));
+    addPost(req.body.title, req.body.content, req.body.rating, req.body.tags, await getCurrentUser(req));
     res.redirect('/');
 });
 
@@ -502,10 +510,10 @@ async function getPosts(order = 'newest', filter = '') {
 }
 
 // Function to add a new post
-async function addPost(title, content, rating, user) {
+async function addPost(title, content, rating, tags, user) {
     await db.run(
         'INSERT INTO posts (title, content, username, timestamp, likes, tags, rating) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [title, content, user.username, formatPostDate(new Date()), JSON.stringify([]), "", rating]
+        [title, content, user.username, formatPostDate(new Date()), JSON.stringify([]), tags, rating]
     );
 }
 

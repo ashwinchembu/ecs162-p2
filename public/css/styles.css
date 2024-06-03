@@ -32,6 +32,20 @@
 }
 
 
+.ratingDisplay {
+    display: flex;
+    flex-direction: row;
+}
+
+.ratingDisplay .fa-star {
+    color: #d3d3d3; /* Light gray for empty stars */
+}
+
+.ratingDisplay .fa-star.checked {
+    color: #ff9800; /* Amber for filled stars */
+}
+
+
 /*******************/
 body, html {
     display: flex;
@@ -171,6 +185,14 @@ a:hover {
 }
 
 /***** Post Submission Form Styling *****/
+
+#features{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: #4CAF50;
+}
 #title::placeholder, #content::placeholder {
     color: rgb(0, 0, 0, 0.4);
     z-index: 20;

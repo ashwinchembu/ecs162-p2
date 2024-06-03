@@ -10,7 +10,18 @@
     <div class= "post-content preserve-newlines">
         <!-- the post -->
         <p class = 'content'>{{content}}</p>
-        <div class="ratingDisplay">{{rating}}</div>
+        <div id="features">
+        <div class="ratingDisplay">
+            {{#each (makeStars rating)}}
+                <span class="fa fa-star {{this}}"></span>
+            {{/each}}
+        </div>
+        <div class="tagDisplay">
+                <p class="tags-container" data-tags="{{tags}}">
+                    <!-- Tags will be populated here by JavaScript -->
+                </p>
+            </div>
+        </div>
         <div class="post-status-bar">
             <span class = "interact">
             {{#ifEqual user.username  username}}
@@ -32,7 +43,29 @@
     </div>
 </div>
 <script>
-
+    document.addEventListener("DOMContentLoaded", function() {
+        const posts = document.querySelectorAll(".post");
+        posts.forEach(post => {
+            const tagsContainer = post.querySelector(".tags-container");
+            const tagsString = tagsContainer.getAttribute("data-tags");
+            if (tagsString) {
+                // Split the tags by commas, trim each tag, and filter out any empty tags
+                const tagsArray = tagsString.split(',').map(tag => tag.trim()).filter(tag => tag !== "");
+                // Clear any existing content in tagsContainer before appending tags
+                tagsContainer.innerHTML = '';
+                tagsArray.forEach(tag => {
+                    const tagLink = document.createElement("a");
+                    tagLink.href = `http://localhost:3000/?order=newest&sortLabel=Newest&gameFilter=${tag}`;
+                    tagLink.className = "tag-link";
+                    tagLink.textContent = tag;
+                    tagsContainer.appendChild(tagLink);
+                    tagsContainer.appendChild(document.createTextNode(" ")); // Add space between tags
+                });
+            } else {
+                tagsContainer.textContent = "No tags available";
+            }
+        });
+    });
    async function handleLikeClick(event) {
     const postId = event.target.getAttribute('data-id');
     const likeButton = event.target.closest('.like-button');
