@@ -217,9 +217,8 @@ app.get('/', async (req, res) => {
 
     const user = await getCurrentUser(req) || {};
     const sortLabel = req.query.sortLabel || 'Newest';
-    const filterLabel = gameFilter || 'None';
 
-    res.render('home', { posts, user, order, sortLabel, filterLabel, gameFilter });
+    res.render('home', { posts, user, order, sortLabel, gameFilter });
 });
     
 
@@ -504,7 +503,7 @@ async function getPosts(order = 'newest', filter = '') {
 // Function to add a new post
 async function addPost(title, content, user) {
     await db.run(
-        'INSERT INTO posts (title, content, username, timestamp, likes) VALUES (?, ?, ?, ?, ?)',
+        'INSERT INTO posts (title, content, username, timestamp, likes, tags, rating) VALUES (?, ?, ?, ?, ?, ?, ?)',
         [title, content, user.username, formatPostDate(new Date()), JSON.stringify([])]
     );
 }
