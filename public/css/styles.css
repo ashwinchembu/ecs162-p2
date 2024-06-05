@@ -680,11 +680,6 @@ footer p {
     .HomeBackground {
         width: 100%;
     }
-    .content-container {
-        flex-direction: column;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
 }
 
 /* BIGGER SCREENS */
@@ -708,7 +703,7 @@ footer p {
     .content-container {
         flex-direction: column;
         overflow-x: hidden;
-        overflow-y: scroll; /* Ensuring content container is scrollable */
+        overflow-y: auto; /* Ensuring content container is scrollable */
     }
 
     .like-button {
@@ -726,13 +721,14 @@ footer p {
     }
 
     #title {
+        margin-top: 20em;
         min-height: 20px;
         max-height: 20px;
     }
 
     #content {
-        min-height: 70px;
-        max-height: 70px;
+        min-height: 5%;
+        max-height: 10%;
     }
 
     body::-webkit-scrollbar {
@@ -742,9 +738,33 @@ footer p {
     html::-webkit-scrollbar {
         display: none;
     }
-
+    #emoji-container{
+        margin-top: -7em;
+        max-width: 100%;
+        min-height: 100%;
+    }
+    #emoji-search{
+        max-width: 100%;
+    }
+    #emoji-grid {
+        overflow-x: hidden;
+        overflow-y: auto;
+        min-height: 100%;
+        max-width: 100%;
+    }
+    
     .post-form {
-        max-height: 100%;
+        max-height: 25%;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-x: hidden;
+    }
+
+    .post-form input, .post-form textarea{
+        max-height: 10%;
+        margin-right: 0;
     }
 
     .content-container::-webkit-scrollbar {
@@ -753,16 +773,17 @@ footer p {
 
     .postsContainer {
         margin-top: 0;
-        overflow-y: visible; 
+        overflow-y: auto; /* Ensuring postsContainer is not scrollable */
     }
 
     .posts-list {
         min-width: 90%;
-        overflow-y: visible; 
+        overflow-y: auto; /* Ensuring posts-list is not scrollable */
     }
 
     ul {
-        overflow-y: visible; 
+        margin-top: 0;
+        overflow-y: auto; /* Ensuring ul is not scrollable */
     }
 
     .post {
@@ -795,6 +816,11 @@ footer p {
 
     footer p {
         text-align: center;
+    }
+
+    .postFunctions{
+        max-height: 10%;
+        max-width: 20%;
     }
 }
 
@@ -1010,13 +1036,15 @@ footer p {
 
     /* New */
     #emoji-grid {
+
+        overflow-x: hidden;
+        overflow-y: auto;
+        min-height: 100%;
+        max-width: 100%;
         align-items: center;
-        overflow-y: hidden;
-        overflow-x: scroll;
-        white-space: nowrap;
+        white-space: normal;
         display: inline-block;
-        max-height: 22%;
-        width: 100%;
+
     }
     
     /* New */
