@@ -1,14 +1,13 @@
 {{! Partial for a single post }}
 <div id = "post-{{id}}" class="post">
     <div class="post-avatar">
-        <!-- the user's avatar -->
+        <!-- The user's avatar -->
             <img src="/avatars/{{username}}.png" alt="{{username}}'s avatar" class="avatar">
             <h3>{{title}}</h3>
-
     </div>
 
     <div class= "post-content preserve-newlines">
-        <!-- the post -->
+        <!-- The post -->
         <p class = 'content'>{{content}}</p>
         
         <div id="features">
@@ -39,7 +38,7 @@
         <p class = 'liketext' id= 'likes-{{id}}'>{{calculateLikes likes}} <span id = 'likes2'>likes</span></p>
         </span>
         <span class = "postedby">
-            <span>Posted by {{username}} on  {{timestamp}}</span>
+            <span>Posted by {{username}} on {{timestamp}}</span>
         </span>        
         </div>
     </div>
@@ -68,7 +67,7 @@
             }
         });
     });
-   async function handleLikeClick(event) {
+    async function handleLikeClick(event) {
     const postId = event.target.getAttribute('data-id');
     const likeButton = event.target.closest('.like-button');
     const isLiked = likeButton.style.color === 'red';
@@ -93,10 +92,8 @@
                 likeButton.style.color = 'red';
             }
         } else {
-            console.log("Failed to update like");
         }
     } catch (error) {
-        console.error('Error liking the post:', error);
     }
 }
 
@@ -120,7 +117,6 @@
             }        
         }
         catch (error) {
-            console.error('Error deleting the post:', error);
         }       
         
     }    

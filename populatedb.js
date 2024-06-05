@@ -61,7 +61,7 @@ async function initializeDB() {
             timestamp: '2024-01-02 12:00',
             likes: JSON.stringify([]),
             tags: 'Stardew Valley,Simulation,Relaxing',
-            rating: 3
+            rating: 5
         },
         {
             title: 'Epic Adventures in "The Legend of Zelda: Breath of the Wild"',
@@ -79,7 +79,7 @@ async function initializeDB() {
             timestamp: '2024-01-04 16:00',
             likes: JSON.stringify([]),
             tags: 'Dark Souls III,Challenging,Action RPG',
-            rating: 2
+            rating: 4
         },
         {
             title: 'Building Empires in "Civilization VI"',
@@ -88,7 +88,7 @@ async function initializeDB() {
             timestamp: '2024-01-05 18:00',
             likes: JSON.stringify([]),
             tags: 'Civilization VI,Strategy,Simulation',
-            rating: 1
+            rating: 5
         },
         {
             title: 'Unwinding with "Animal Crossing: New Horizons"',
@@ -97,7 +97,7 @@ async function initializeDB() {
             timestamp: '2024-01-06 20:00',
             likes: JSON.stringify([]),
             tags: 'Animal Crossing,Simulation,Relaxing',
-            rating: 3
+            rating: 4
         },
         {
             title: 'Racing Thrills in "Mario Kart 8 Deluxe"',
@@ -106,16 +106,16 @@ async function initializeDB() {
             timestamp: '2024-01-07 22:00',
             likes: JSON.stringify([]),
             tags: 'Mario Kart 8 Deluxe,Racing,Multiplayer',
-            rating: 4
+            rating: 5
         },
         {
             title: 'Puzzle Solving in "The Witness"',
-            content: '"The Witness" offers a unique puzzle-solving experience that challenges my mind. The beautiful island setting adds to the overall charm.',
+            content: '"The Witness" offers a unique puzzle-solving experience, but the difficulty spikes can be frustrating. Some puzzles feel overly obtuse and took away from my enjoyment.',
             username: 'PuzzleMaster',
             timestamp: '2024-01-08 09:00',
             likes: JSON.stringify([]),
             tags: 'The Witness,Puzzle,Indie',
-            rating: 5
+            rating: 2
         },
         {
             title: 'Action-Packed Adventure in "Hades"',
@@ -124,11 +124,11 @@ async function initializeDB() {
             timestamp: '2024-01-09 11:00',
             likes: JSON.stringify([]),
             tags: 'Hades,Rogue-Like,Action',
-            rating: 1
+            rating: 4
         },
         {
             title: 'Exploring Space in "No Man\'s Sky"',
-            content: '"No Man\'s Sky" offers a vast universe to explore. The sheer scale of the game and the ability to discover new planets and creatures is truly impressive.',
+            content: 'While "No Man\'s Sky" offers a vast universe to explore, I found the gameplay to be repetitive and the procedural generation lacking in variety. The initial excitement wore off quickly, and I was left wanting more meaningful interactions and content.',
             username: 'SpaceVoyager',
             timestamp: '2024-01-10 13:00',
             likes: JSON.stringify([]),

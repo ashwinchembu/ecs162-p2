@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
    
-    <!-- font awesome for the trashcan icon -->
+    <!-- Font awesome for the trashcan icon -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">    
    
     <title>{{{appName}}}</title>
@@ -22,14 +22,14 @@
 
         <nav>
             <ul>
-                <!-- conditional rendering based on variables - Is the user logged in?-->
+                <!-- Conditional rendering based on variables - Is the user logged in?-->
                 {{#if loggedIn}}
                 <div class="user-info">
                     <li><a href="/">Home</a></li>
                     <li><a href="/profile">Profile</a></li>
                     <li><a href="/logout">Logout <span>{{user.username}}</span> </a></li>
                     
-                        <!-- conditional rendering based on variables -->
+                        <!-- Conditional rendering based on variables -->
                         <img src="{{#if user.avatar_url }}
                                        {{user.avatar_url}}
                                     {{else}}
@@ -51,7 +51,7 @@
     {{{body}}}
 
     <footer>
-        <p>© {{{copyrightYear}}} {{{appName}}}. Background by freepik. All rights reserved.</p>
+        <p>© {{{copyrightYear}}} {{{appName}}} by Ashwin Chembu and Rawan Dirhalleh. Background by freepik. All rights reserved.</p>
     </footer>
 </body>
 </html>

@@ -5,12 +5,12 @@
 
 <div class="profile-container">
     <div class="profile-avatar">
-        <!-- Correct path for the default avatar image -->
+        <!-- Path for the default avatar image -->
         <img src="/avatars/{{user.username}}.png" alt="{{user.username}}'s avatar" class="avatar">
     </div>
     
     <section class="profile-info">
-        <!-- user profile info -->
+        <!-- User profile info -->
         <p class = 'title'>User Profile</p>
         <p>Username: {{user.username}}</p>
         <p>Member Since: {{user.memberSince}}</p>
@@ -20,7 +20,6 @@
 <h2>Your {{{postNeoType}}}s</h2>
 
 <section class="user-posts">
-    <!-- you'll need to make this conditional and #each expression work -->
     {{#if user.posts.length}}
         <ul>
             {{#each user.posts}}
@@ -30,7 +29,6 @@
             {{/each}}
         </ul>
     {{else}}
-        <!-- fix this up with some helper functions and other handlebars expressions, or add you own character -->
         <p class='nothing'>No posts yet. :&#40;</p>
     {{/if}}
 </section>

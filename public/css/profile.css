@@ -1,24 +1,24 @@
-.profile-container{
-    width: 30%;
+.profile-container {
+    width: fit-content;
     display: flex;
     justify-content: start;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 10px;
-    margin-top: 100px;
+    margin-top: 5em;
 }
 
-.profile-avatar{
+.profile-avatar {
     height: auto;    
 }
 
-.avatar{
-    width: 10em;
+.avatar {
+    width: 6em;
     height: auto; 
     border-radius: 10px;
 }
 
-.profile-info{
+.profile-info {
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -26,25 +26,36 @@
     margin-left: 2em;
 }
 
-.profile-info p{
+.profile-info p {
     margin: 0.2em;
     color: darkgreen;
 }
 
-.title{
+.title {
     text-decoration: bold;
     font-size: 22px;
     margin: none;
 }
 
-.user-posts{
-    height: 40%;
+.user-posts {
+    height: 60%;
     width: 70%;
     overflow-y: scroll;
+    display: flex;
+    justify-content: center;
 }
 
-.user-posts li{
+.user-posts::-webkit-scrollbar {
+    display: none;
+}
+
+.user-posts li {
     list-style: none;
+}
+
+ul {
+    width: 100%;
+    margin-right: 1em;
 }
 
 h2 {
@@ -60,17 +71,21 @@ h2 {
     background-color: rgba(255, 255, 255, 0.8);
     padding: 10px;
     border-radius: 5px;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
 }
 
 @media screen and (max-width: 890px) {
     .profile-container {
-        width: 80%;
         flex-direction: column;
         align-items: center;
     }
 
     .avatar {
-        width: 8em;
+        width: 6em;
+        margin-top: 5px;
     }
 
     .profile-info {
@@ -85,7 +100,6 @@ h2 {
     }
 
     .user-posts {
-        height: auto;
         width: 100%;
         overflow-y: visible;
     }
@@ -95,9 +109,15 @@ h2 {
     }
 }
 
+@media (width <= 890px) and (width >= 781px) {
+    .profile-container {
+        margin-top: 13em;
+    }
+}
+
 @media screen and (max-width: 780px) {
     .profile-container {
-        width: 50%;
+        width: fit-content;
         padding: 5px;
     }
 
@@ -123,5 +143,11 @@ h2 {
 
     .user-posts p {
         font-size: 18px;
+    }
+}
+
+@media (width <= 600px) {
+    .profile-container {
+        margin-top: 7em;
     }
 }

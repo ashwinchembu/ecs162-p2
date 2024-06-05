@@ -10,12 +10,12 @@
 <section class="login-register">
     <section class = "login-area">
         <h2>Login</h2>
-        <!-- errors will appear here -->
+        <!-- Errors appear here -->
         {{#if loginError}}
             <p style="color: red;">{{loginError}}</p>
         {{/if}}
         <form action="/login" method="POST">
-            <!-- the login form goes here -->        
+            <!-- Login form -->        
             <input type="text" id="username" name="username" placeholder = "Username" required><br><br>
              <button type="submit" id="login-button"><img src="/images/PlayStationSquare.png" alt = "PlayStation Square Button" class = PSButtons id="PSSquare">     Login</button>
         </form>
@@ -28,12 +28,12 @@
 
     <section class = "register-area">
         <h2>Register</h2>
-        <!-- errors will appear here -->
+        <!-- Errors appear here -->
         {{#if regError}}
             <p style="color: red;">{{regError}}</p>
         {{/if}}
         <form action="/register" method="POST">
-            <!-- the registration form goes here -->
+            <!-- Registration form -->
             <input type="text" id="username" name="username" placeholder = "Username" required><br><br>
             <button type="submit" id="register-button">Register <img src="/images/PlayStationCircle.png" alt = "PlayStation Circle Button" class = PSButtons id="PSCircle"> </button>
         </form>
