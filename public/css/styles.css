@@ -680,17 +680,25 @@ footer p {
     .HomeBackground {
         width: 100%;
     }
+    .content-container {
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
 }
 
 /* BIGGER SCREENS */
+/* BIGGER SCREENS */
 @media (width <= 1279px) {
-    /* #gameFilter{
-        width: 30%;
-    } */
-    #search{
+    body, html {
+        flex-direction: column;
+        overflow-y: hidden; /* Hide scrollbars for body and html */
+        overflow-x: hidden;
+    }
+
+    #search {
         text-align: center;
         padding: 15px;
-        
     }
 
     #title {
@@ -699,9 +707,8 @@ footer p {
 
     .content-container {
         flex-direction: column;
-        overflow-y: auto;
         overflow-x: hidden;
-        /* margin-top: 50px; */
+        overflow-y: scroll; /* Ensuring content container is scrollable */
     }
 
     .like-button {
@@ -718,20 +725,14 @@ footer p {
         margin-left: -15px;
     }
 
-    #title{
+    #title {
         min-height: 20px;
         max-height: 20px;
     }
-    
-    #content{
+
+    #content {
         min-height: 70px;
         max-height: 70px;
-    }
-
-    body, html {
-        flex-direction: column;
-        overflow-y: auto;
-        overflow-x: hidden;
     }
 
     body::-webkit-scrollbar {
@@ -744,55 +745,25 @@ footer p {
 
     .post-form {
         max-height: 100%;
-        
-        /* z-index: 3000;
-        padding-top: 5em;
-        padding-bottom: 5em;
-        margin-bottom: -100px;
-        width: 50%;
-        margin-left: -60px;
-        margin-top: 5em;
-        height: 20%; */
     }
-
-    /* .dropdown {
-        margin-top: -100px;
-    } */
 
     .content-container::-webkit-scrollbar {
         display: none;
     }
 
     .postsContainer {
-        overflow-y: auto;
-        height: auto;
         margin-top: 0;
+        overflow-y: visible; 
     }
-
-    /* .postsContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        padding: 10px;
-        box-sizing: border-box;
-    } */
 
     .posts-list {
         min-width: 90%;
-        /* display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-width: 50%;
-        width: 100%;
-        margin: 0 auto;
-        padding: 10px;
-        box-sizing: border-box;
-        margin-top: 2em;
-        margin-left: -7%;
-        min-height: 75%;
-        max-height: 100%; */
-    } 
+        overflow-y: visible; 
+    }
+
+    ul {
+        overflow-y: visible; 
+    }
 
     .post {
         max-width: 700px;
@@ -825,17 +796,9 @@ footer p {
     footer p {
         text-align: center;
     }
+}
 
-    /* .user-posts {
-        max-height: 75%;
-        min-height: 30%;
-        margin-bottom: 3.5em;
-        overflow-y: hidden;
-        overflow-x: scroll;
-        white-space: nowrap;
-        display: inline-block;
-    } */
-  }
+
 
   /* Maybe rid of this */
 /*   @media (width <=1279) and (width >= 575) {
