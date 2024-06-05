@@ -751,6 +751,7 @@ footer p {
         overflow-y: auto;
         min-height: 100%;
         max-width: 100%;
+        letter-spacing: 3px;
     }
     
     .post-form {
@@ -784,12 +785,14 @@ footer p {
     ul {
         margin-top: 0;
         overflow-y: auto; /* Ensuring ul is not scrollable */
+        min-width: 90%;
+
     }
 
     .post {
-        max-width: 700px;
         margin-left: 0px;
         margin-right: 10px;
+        min-width: 90%;
     }
 
     .post h3 {
@@ -821,6 +824,10 @@ footer p {
     .postFunctions{
         max-height: 10%;
         max-width: 20%;
+    }
+
+    .filterBar{
+        max-width: 40%;
     }
 }
 
@@ -1036,7 +1043,7 @@ footer p {
 
     /* New */
     #emoji-grid {
-
+        letter-spacing: auto;
         overflow-x: hidden;
         overflow-y: auto;
         min-height: 100%;
