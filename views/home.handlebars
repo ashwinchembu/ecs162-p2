@@ -42,10 +42,12 @@
     <!-- Container holding sorting button and list of posts -->
     <div class="postsContainer">
         <div class="postFunctions">
-            <div class="filterBar">
-                <input type="text" name="gameFilter" id="gameFilter" placeholder="Search by tag">
-                <button id="search" type="submit">🔍</button>
-            </div>
+            <form id="filterForm" method="get" action="/">
+                <div class="filterBar">
+                    <input type="text" name="gameFilter" id="gameFilter" placeholder="Search by tag">
+                    <button id="search" type="submit">🔍</button>
+                </div>
+            </form>
 
             <form id="sortByForm" method="get" action="/">
                 <div class="dropdown" id="dropdown">
@@ -206,6 +208,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('dropdownOptions').classList.remove('show');
         }
     });
+
+    
 
     // Sets selected sorting option
     function setSortOption(option, label) {
