@@ -493,6 +493,7 @@ async function getPosts(order = 'newest', filter = '') {
 
     if (filter) {
         query += ' WHERE tags LIKE ?';
+        console.log({filter});
         params.push(`%${filter}%`);
     }
 
