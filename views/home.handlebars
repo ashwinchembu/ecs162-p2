@@ -10,10 +10,7 @@
             <form action="/posts" method="POST">
                 <input type="text" id="title" name="title" placeholder="Title" required><br><br>
                 <textarea id="content" name="content" placeholder="What's the vibe, gamer?" required></textarea><br><br>
-<input id="tags" name="tags" placeholder="What's this post about? (comma separated)"></textarea>
-
-
-
+                <input id="tags" name="tags" placeholder="What's this post about? (comma separated)"></textarea>
 
                 <!-- Star rating system -->
                 <div class="ratingContainer">
@@ -29,17 +26,11 @@
                     <input type="hidden" id="rating" name="rating" value="0">
                 </div>
 
-
                 <div class="form-actions">
                     <button type="button" class="emoji-button" onclick="toggleEmojiPanel()">😀</button>
                     <button type="submit" class="post-button">Post</button>
-
-
-
-
                 </div>
             </form>
-
 
             <div id="emoji-container" class="emoji-panel" style="display: none;">
                 <!-- input field for the emoji search -->
@@ -49,7 +40,6 @@
         </section>
     {{/if}}
 
-
     <!-- container holding sorting button and list of posts -->
     <div class="postsContainer">
         <div class="postFunctions">
@@ -57,7 +47,6 @@
                 <input type="text" name="gameFilter" id="gameFilter" placeholder="Search by tag">
                 <button id="search" type="submit">🔍</button>
             </div>
-
 
             <form id="sortByForm" method="get" action="/">
                 <div class="dropdown" id="dropdown">
@@ -72,7 +61,6 @@
                 <input type="hidden" name="sortLabel" id="sortLabel" value="{{sortLabel}}">
             </form>
         </div>
-
 
         <section class="posts-list">
             <!-- recent posts -->
@@ -91,7 +79,6 @@
     </div>
 </section>
 
-
     {{! JavaScript for Emoji Integration }}
     <script>
         let allEmojis = [];  // Global list to hold all emojis
@@ -99,7 +86,6 @@
         async function toggleEmojiPanel() {
             const container = document.getElementById('emoji-container');
             container.style.display = container.style.display === 'none' ? 'block' : 'none';
-
 
             if(container.style.display === 'block' && allEmojis.length == 0){
                 const apiKey = "%EMOJI%";
