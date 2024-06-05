@@ -2,37 +2,53 @@
 .ratingContainer {
     display: flex;
     flex-direction: row;
-}
+    align-items: center;
 
-#ratingText {
-
-}
-.ratingStars {
-    display: flex;
-    flex-direction: row-reverse;
     justify-content: center;
     margin-bottom: 10px;
 }
 
-.star {
+/*#ratingDisplay {
+
+}*/
+
+.ratingStars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.ratingStars .form-star {
+/*.star {*/
     font-size: 30px;
     cursor: pointer;
     color: gray;
     transition: color 0.2s;
 }
 
+.ratingStars .form-star.selected, 
+.ratingStars.form-star.selected ~ .form-star, 
+.ratingStars .form-star:hover, 
+.ratingStars.form-star:hover ~ .form-star {
+
+/*
 .star:hover,
-.star:hover ~ .star {
+.star:hover ~ .star {*/
     color: gold;
 }
 
-.star.selected,
+/* .star.selected,
 .star.selected ~ .star {
     color: gold;
+} */
+
+.postFunctions {
+    display: flex;
+    flex-direction: row;
 }
 
-
-.ratingDisplay {
+.filterBar {
     display: flex;
     flex-direction: row;
 }
@@ -43,6 +59,22 @@
 
 .ratingDisplay .fa-star.checked {
     color: #ff9800; /* Amber for filled stars */
+}
+
+.tag-link {
+    color: white; 
+    background-color: #4CAF50; 
+    padding: 5px 15px; 
+    border-radius: 15px; 
+    text-align: center; 
+    display: inline-block; 
+    text-decoration: none; 
+    margin: 2px 0;
+}
+
+.tag-link:hover {
+    background-color: darkGreen;
+    color: white;
 }
 
 
@@ -61,7 +93,7 @@ body, html {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    overflow-y: hidden;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -72,13 +104,12 @@ header {
     top: 0;
     align-items: center;
     width: 100%;
-    height: 8%;
     /*height: 4.5em;*/
     z-index: 1;
     background-color: rgba(255, 255, 255, 0.8);
 
     /* New */
-    height: 8%;
+    height: 4em;
 }
 
 .HomeBackground {
@@ -186,17 +217,25 @@ a:hover {
 
 /***** Post Submission Form Styling *****/
 
-#features{
+#features {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     color: #4CAF50;
 }
-#title::placeholder, #content::placeholder {
+
+#title::placeholder, #content::placeholder, #tags::placeholder {
     color: rgb(0, 0, 0, 0.4);
     z-index: 20;
     vertical-align: top;
+}
+
+#title, #tags {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
 }
 
 #content {
@@ -204,10 +243,22 @@ a:hover {
     padding: 12px 20px;
     box-sizing: border-box;
     border: 2px solid #ccc;
-    border-radius: 4px;
     background-color: #f8f8f8;
     min-height: 200px;
     resize: vertical;
+}
+
+#title,  #content, #tags {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#tags {
+    padding: 12px 20px;
 }
 
 .content-container {
@@ -227,6 +278,7 @@ a:hover {
     height: 100%;
     padding: 20px;
     width: 100%;
+    overflow: hidden;
 }
 
 .content-container::-webkit-scrollbar {
@@ -280,18 +332,6 @@ a:hover {
     flex-direction: row; 
     margin-bottom: 10px;
     /* overflow: auto;  */
-}
-
-#title {
-    /* margin-top: 15px;
-    overflow: auto; 
-    white-space: nowrap;
-    display: inline-block;
-    max-width: 100%;  */
-
-    overflow: hidden;
-    white-space: nowrap;
-    display: inline-block;
 }
 
 .emoji-button {
@@ -356,8 +396,7 @@ a:hover {
 
     position: absolute;
     z-index: 10;
-    top: 20px;
-    right: 20px;
+    right: 30px;
 }
 
 .dropdownOptions {
@@ -404,21 +443,21 @@ a:hover {
     overflow-y: scroll;
     overflow-x: hidden;
     flex-grow: 1;
-    margin-top: 60px;
+    margin-top: 10px;
 
     /* Done */
 }
 
-#gameFilter{
+#gameFilter {
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 12px;
-    height: 3em;
-    width: 20%;
+    font-size: 15px;
+    height: 2.5em;
+    width: 120px;
     margin-right: 1em;
     z-index: 9;
-
+    margin-left: 3.5em;
 }
 
 #search{
@@ -645,20 +684,24 @@ footer p {
 
 /* BIGGER SCREENS */
 @media (width <= 1279px) {
-    #gameFilter{
+    /* #gameFilter{
         width: 30%;
-    }
+    } */
     #search{
         text-align: center;
         padding: 15px;
         
     }
 
+    #title {
+        padding: 20px 20px;
+    }
+
     .content-container {
         flex-direction: column;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden;
-        margin-top: 80px;
+        /* margin-top: 50px; */
     }
 
     .like-button {
@@ -687,7 +730,7 @@ footer p {
 
     body, html {
         flex-direction: column;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden;
     }
 
@@ -718,6 +761,12 @@ footer p {
 
     .content-container::-webkit-scrollbar {
         display: none;
+    }
+
+    .postsContainer {
+        overflow-y: auto;
+        height: auto;
+        margin-top: 0;
     }
 
     /* .postsContainer {
@@ -811,13 +860,8 @@ footer p {
         margin-top: 0; 
     }
 
-    .dropdown {
-        top: 10px;
-        right: 10px;
-    }
-
     .posts-list {
-        margin-top: 50px;
+        margin-top: 10px;
     }
 }
 
@@ -826,7 +870,7 @@ footer p {
     header {
         flex-direction: column;
         align-items: flex-start;
-        height: 15%;
+        height: 6em;
     }
 
     .navLinks, .user-info {
@@ -1145,6 +1189,32 @@ footer p {
    
   } */
 
+  @media (width <= 484px) {
+    .postFunctions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .filterBar {
+        align-self: center;
+        width: 100%;
+        z-index: 10;
+    }
+
+    .dropdown {
+        margin-top: 70px;
+        align-self: center;
+        width: auto;
+    }
+
+    .posts-list {
+        margin-top: 70px;
+    }
+  }
+
+
   @media (width >=401) and (width <= 416) {
     footer p {
         text-align: center;
@@ -1164,6 +1234,11 @@ footer p {
     #title{
         margin-top: 3em;
     } */
+
+    /* .content-container {
+        margin-top: 70px;
+    } */
+
     .navLinks, .user-info {
         right: 10px;
     }
@@ -1285,4 +1360,16 @@ footer p {
         width: 100%;
         margin-top: -2em;
     } */
+}
+
+@media (height >= 600px) and (width <= 1279px) {
+    .content-container {
+        margin-top: 4em;
+    }
+}
+
+@media (height >= 600px) and (width <= 600px) {
+    .content-container {
+        margin-top: 6em;
+    }
 }

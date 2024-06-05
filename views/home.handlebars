@@ -1,6 +1,7 @@
 {{! Use the main layout }}
 {{!< main }}
 
+
 {{! New Post Submission Form }}
 <section class="content-container">
     {{#if loggedIn}}
@@ -9,28 +10,36 @@
             <form action="/posts" method="POST">
                 <input type="text" id="title" name="title" placeholder="Title" required><br><br>
                 <textarea id="content" name="content" placeholder="What's the vibe, gamer?" required></textarea><br><br>
-                <input id="tags" name="tags" placeholder="What's this post about? (comma separated)"></textarea>
+<input id="tags" name="tags" placeholder="What's this post about? (comma separated)"></textarea>
+
+
+
 
                 <!-- Star rating system -->
+                <div class="ratingContainer">
                     <span id="ratingText">Game rating: </span>
                     <div class="ratingStars">
-                        <span class="star" id="star-5">★</span>
-                        <span class="star" id="star-4">★</span>
-                        <span class="star" id="star-3">★</span>
-                        <span class="star" id="star-2">★</span>
-                        <span class="star" id="star-1">★</span>
+                        <span class="fa fa-star form-star" id="star-5"></span>
+                        <span class="fa fa-star form-star" id="star-4"></span>
+                        <span class="fa fa-star form-star" id="star-3"></span>
+                        <span class="fa fa-star form-star" id="star-2"></span>
+                        <span class="fa fa-star form-star" id="star-1"></span>
                     </div>
 
                     <input type="hidden" id="rating" name="rating" value="0">
+                </div>
+
 
                 <div class="form-actions">
                     <button type="button" class="emoji-button" onclick="toggleEmojiPanel()">😀</button>
                     <button type="submit" class="post-button">Post</button>
 
+
+
+
                 </div>
-
-
             </form>
+
 
             <div id="emoji-container" class="emoji-panel" style="display: none;">
                 <!-- input field for the emoji search -->
@@ -40,25 +49,30 @@
         </section>
     {{/if}}
 
+
     <!-- container holding sorting button and list of posts -->
     <div class="postsContainer">
-        <form id="sortByForm" method="get" action="/">
-            <div class="dropdown" id="dropdown">
-                <button type="button" class="dropdownButton" id="sortButton">Sort By: {{sortLabel}}</button>
-                <div class="dropdownOptions" id="dropdownOptions">
-                    <a href="#" onclick="setSortOption('newest', 'Newest')">Newest</a>
-                    <a href="#" onclick="setSortOption('oldest', 'Oldest')">Oldest</a>
-                    <a href="#" onclick="setSortOption('mostLikes', 'Most Likes')">Most Likes</a>
-                </div>
+        <div class="postFunctions">
+            <div class="filterBar">
+                <input type="text" name="gameFilter" id="gameFilter" placeholder="Search by tag">
+                <button id="search" type="submit">🔍</button>
             </div>
-            <input type="hidden" name="order" id="sortOrder" value="{{order}}">
-            <input type="hidden" name="sortLabel" id="sortLabel" value="{{sortLabel}}">
 
-            <input type="text" name="gameFilter" id="gameFilter" placeholder="Search by tag">
-            <button id="search" type="submit">🔍</button>
-        </form>
 
-        
+            <form id="sortByForm" method="get" action="/">
+                <div class="dropdown" id="dropdown">
+                    <button type="button" class="dropdownButton" id="sortButton">Sort By: {{sortLabel}}</button>
+                    <div class="dropdownOptions" id="dropdownOptions">
+                        <a href="#" onclick="setSortOption('newest', 'Newest')">Newest</a>
+                        <a href="#" onclick="setSortOption('oldest', 'Oldest')">Oldest</a>
+                        <a href="#" onclick="setSortOption('mostLikes', 'Most Likes')">Most Likes</a>
+                    </div>
+                </div>
+                <input type="hidden" name="order" id="sortOrder" value="{{order}}">
+                <input type="hidden" name="sortLabel" id="sortLabel" value="{{sortLabel}}">
+            </form>
+        </div>
+
 
         <section class="posts-list">
             <!-- recent posts -->
@@ -154,7 +168,7 @@
 
 // Event listener for document to retrieve rating
 document.addEventListener('DOMContentLoaded', function() {
-    const stars = document.querySelectorAll('.star');
+    const stars = document.querySelectorAll('.form-star');
     const userRating = document.getElementById('rating');
     const ratingDisplay = document.getElementById('ratingText');
 

@@ -10,18 +10,20 @@
     <div class= "post-content preserve-newlines">
         <!-- the post -->
         <p class = 'content'>{{content}}</p>
+        
         <div id="features">
-        <div class="ratingDisplay">
-            {{#each (makeStars rating)}}
-                <span class="fa fa-star {{this}}"></span>
-            {{/each}}
-        </div>
-        <div class="tagDisplay">
+            <div class="ratingDisplay">
+                {{#each (makeStars rating)}}
+                    <span class="fa fa-star {{this}}"></span>
+                {{/each}}
+            </div>
+            <div class="tagDisplay">
                 <p class="tags-container" data-tags="{{tags}}">
                     <!-- Tags will be populated here by JavaScript -->
                 </p>
             </div>
         </div>
+
         <div class="post-status-bar">
             <span class = "interact">
             {{#ifEqual user.username  username}}
