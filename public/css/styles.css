@@ -170,7 +170,11 @@ h1 {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    top: 12px;
+    margin-top: -25px;
+}
+
+.navLinks {
+    margin-top: -15px;
 }
 
 .user-info:hover, .navLinks:hover {
@@ -666,8 +670,12 @@ footer p {
         margin-left: -15px;
     }
 
-    .navLinks, .user-info {
-        margin-top: 0px;
+    .user-info {
+        margin-top: -10px;
+    }
+
+    .navLinks {
+        margin-top: 0;
     }
 
     #title {
@@ -789,12 +797,6 @@ footer p {
     }
 }
 
-  @media (width >= 781px) and (width <=890) {
-    .profile-container {
-        /*padding-top: 4000px;*/
-    }
-  }
-
   @media (max-width: 768px) {
     .postsContainer {
         width: 90%;
@@ -813,7 +815,7 @@ footer p {
         height: 6em;
     }
 
-    .navLinks, .user-info {
+    .user-info {
         width: 100%;
         justify-content: center;
         margin-top: 50px;
@@ -830,6 +832,10 @@ footer p {
     .logo img {
         width: 50px;
     }
+
+    .navLinks {
+        margin-top: 55px;
+    }
 }
 
   @media (width <= 574px) {
@@ -840,7 +846,7 @@ footer p {
         min-width: 15%;
     }
 
-    .navLinks, .user-info {
+    .user-info {
         width: 100%;
         justify-content: center;
     }
@@ -968,10 +974,6 @@ footer p {
         justify-self: left;
     }
 
-    .profile-container {
-        /*margin-top: 120px;*/
-    }
-
     footer {
         height: 35px;
         justify-content: center;
@@ -992,6 +994,10 @@ footer p {
     .postFunctions {
         display: flex;
         flex-direction: column;
+    }
+
+    #filterForm {
+        margin-left: 6em;
     }
 
     .dropdown {
